@@ -21,3 +21,8 @@ DataWrapper.propTypes = {
 DataWrapper.childContextTypes = {
   data: React.PropTypes.object.isRequired,
 };
+
+DataWrapper.defaultProps = {
+  data: {},
+  children: null,
+};
