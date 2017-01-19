@@ -24,10 +24,11 @@ export default class AppHandler extends React.Component {
     const children = React.Children.map(this.props.children, child =>
       React.cloneElement(child, { data: this.state.data }),
     );
+
     return (<div>
-      <MainMenu items={sitemap.items.children} icons={sitemap.icons} />
+      <MainMenu items={sitemap.items.children} />
       {children}
-      <Footer items={sitemap.items.children} addresses={sitemap.addresses} />
+      <Footer items={sitemap.items.children} />
     </div>);
   }
 }
