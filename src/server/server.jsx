@@ -6,7 +6,7 @@ import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import bodyParser from 'body-parser';
 import DataWrapper from './dataWrapper';
-import config from '../../config';
+import config from '../config';
 import routes from '../shared/config/routes';
 import LogUtil from '../shared/utils/logUtil';
 import PlaceController from './controllers/placeController';

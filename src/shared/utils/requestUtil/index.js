@@ -25,4 +25,12 @@ export default class RequestUtil {
       entity: data,
     });
   }
+
+  static put(url, data) {
+    return client({
+      method: 'PUT',
+      path: url,
+      entity: data,
+    });
+  }
 }

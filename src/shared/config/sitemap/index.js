@@ -1,15 +1,15 @@
 import AppHandler from '../../components/AppHandler';
-import HomeSection from '../../components/sections/home';
+import LocationListSection from '../../components/sections/location/list';
 
 
 export default {
   items: {
     component: AppHandler,
-    default: HomeSection,
+    default: LocationListSection,
     children: [{
-      title: 'Inicio',
-      url: '/inicio',
-      component: HomeSection,
+      title: 'Plantel',
+      url: '/location',
+      component: LocationListSection,
     }],
   },
 };

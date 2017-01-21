@@ -46,4 +46,15 @@ export default class StringUtil {
   static truncate(string, limit) {
     return (string && string.length > limit) ? `${string.substr(0, limit - 1)} ...` : string;
   }
+
+  static getFormStatus(status) {
+    if (status === 'saving') {
+      return 'guardando cambios...';
+    } else if (status === 'saved') {
+      return 'cambios guardados.';
+    } else if (status === 'error') {
+      return 'error, favor de reportarlo.';
+    }
+    return null;
+  }
 }

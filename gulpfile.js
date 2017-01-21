@@ -7,7 +7,7 @@ var replace = require('gulp-replace');
 var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-var config = require('./config');
+var config = require('./src/config');
 
 
 gulp.task('sprites:generatejs', () => {
