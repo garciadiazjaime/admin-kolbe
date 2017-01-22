@@ -14,6 +14,7 @@ import PeriodEditSection from '../../components/sections/period/edit';
 
 import GradeListSection from '../../components/sections/grade/list';
 import GradeAddSection from '../../components/sections/grade/add';
+import GradeEditSection from '../../components/sections/grade/edit';
 
 export default(
   <Router history={browserHistory}>
@@ -33,6 +34,7 @@ export default(
           <Route path=":periodId/grade">
             <IndexRoute component={GradeListSection} />
             <Route path="add" component={GradeAddSection} />
+            <Route path=":gradeId/edit" component={GradeEditSection} />
           </Route>
         </Route>
       </Route>

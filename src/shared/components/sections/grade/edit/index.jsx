@@ -1,17 +1,18 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
-import PeriodController from '../../../../../client/controllers/periodController';
+import GradeController from '../../../../../client/controllers/gradeController';
 import LogUtil from '../../../../utils/logUtil';
 import InputElement from '../../../elements/inputElement';
 import StringUtil from '../../../../utils/stringUtil';
 
-export default class PeriodEdit extends React.Component {
+export default class GradeEdit extends React.Component {
 
   constructor(args) {
     super(args);
     this.locationId = this.props.params.locationId;
     this.periodId = this.props.params.periodId;
-    this.controller = new PeriodController(this.locationId);
+    this.gradeId = this.props.params.gradeId;
+    this.controller = new GradeController(this.locationId, this.periodId);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -21,8 +22,8 @@ export default class PeriodEdit extends React.Component {
   }
 
   componentDidMount() {
-    if (this.periodId) {
-      this.controller.get(this.periodId)
+    if (this.gradeId) {
+      this.controller.get(this.gradeId)
         .then((results) => {
           if (results.entity.status) {
             this.setState({
@@ -60,7 +61,7 @@ export default class PeriodEdit extends React.Component {
     this.setState({
       status: 'saving',
     });
-    this.controller.update(this.periodId, this.state.data)
+    this.controller.update(this.gradeId, this.state.data)
       .then(() => {
         this.setState({
           status: 'saved',
@@ -109,10 +110,11 @@ export default class PeriodEdit extends React.Component {
   }
 }
 
-PeriodEdit.propTypes = {
+GradeEdit.propTypes = {
   params: React.PropTypes.shape({
     locationId: React.PropTypes.string.isRequired,
     periodId: React.PropTypes.string.isRequired,
+    gradeId: React.PropTypes.string.isRequired,
   }).isRequired,
   location: React.PropTypes.shape({
     pathname: React.PropTypes.string.isRequired,
