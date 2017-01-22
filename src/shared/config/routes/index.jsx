@@ -4,6 +4,8 @@ import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
 import AppHandler from '../../components/AppHandler';
 
+import DashboardSection from '../../components/sections/dashboard';
+
 import LocationListSection from '../../components/sections/location/list';
 import LocationAddSection from '../../components/sections/location/add';
 import LocationEditSection from '../../components/sections/location/edit';
@@ -24,10 +26,14 @@ import StudentListSection from '../../components/sections/student/list';
 import StudentAddSection from '../../components/sections/student/add';
 import StudentEditSection from '../../components/sections/student/edit';
 
+import ActivityListSection from '../../components/sections/activity/list';
+import ActivityAddSection from '../../components/sections/activity/add';
+import ActivityEditSection from '../../components/sections/activity/edit';
+
 export default(
   <Router history={browserHistory}>
     <Route path="/" component={AppHandler}>
-      <IndexRoute component={LocationListSection} />
+      <IndexRoute component={DashboardSection} />
 
       <Route path="location">
         <IndexRoute component={LocationListSection} />
@@ -59,6 +65,12 @@ export default(
             </Route>
           </Route>
         </Route>
+      </Route>
+
+      <Route path="activity">
+        <IndexRoute component={ActivityListSection} />
+        <Route path="add" component={ActivityAddSection} />
+        <Route path=":activityId/edit" component={ActivityEditSection} />
       </Route>
     </Route>
   </Router>
