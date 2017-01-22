@@ -23,4 +23,8 @@ export default class PeriodController {
   update(entityId, data) {
     return RequestUtil.put(`${this.apiUrl}/${entityId}`, data);
   }
+
+  delete(entityId) {
+    return RequestUtil.delete(`${this.apiUrl}/${entityId}`);
+  }
 }
