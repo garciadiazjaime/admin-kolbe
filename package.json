@@ -4,7 +4,7 @@
   "description": "Kolbe Admin",
   "main": "start.js",
   "scripts": {
-    "test": "npm run lint && npm run unittest",
+    "test": "npm run lint",
     "unittest": "./node_modules/.bin/mocha --require ignore-styles test/.setup.js test/**/*-test.js",
     "dev": "./node_modules/.bin/webpack-dev-server",
     "build": "npm run build-be && npm run build-fe && npm run assets && npm run minify",

@@ -12,6 +12,7 @@ export default class PeriodList extends React.Component {
   constructor(args) {
     super(args);
     this.locationId = this.props.params.locationId;
+    this.baseUrl = `/location/${this.locationId}/period`;
     this.controller = new PeriodController(this.locationId);
     this.state = {
       data: [],
@@ -39,8 +40,8 @@ export default class PeriodList extends React.Component {
     if (data.length) {
       return data.map(item => <tr key={item._id}>
         <td>{item.name}</td>
-        <td><Link to={`./period/${item._id}/edit`}><i className="glyphicon glyphicon-pencil" /></Link></td>
-        <td><Link to={`./period/${item._id}/grupo`}><i className="glyphicon glyphicon-zoom-in" /></Link></td>
+        <td><Link to={`${this.baseUrl}/${item._id}/edit`}><i className="glyphicon glyphicon-pencil" /></Link></td>
+        <td><Link to={`${this.baseUrl}/${item._id}/grupo`}><i className="glyphicon glyphicon-zoom-in" /></Link></td>
       </tr>);
     }
     return null;
@@ -48,6 +49,11 @@ export default class PeriodList extends React.Component {
 
   render() {
     return (<div className="container-fluid">
+      <div className="row">
+        <div className="col-sm-12">
+          <Link to={`${this.baseUrl}/add`} className="pull-right"><i className="glyphicon glyphicon-plus" /></Link>
+        </div>
+      </div>
       <div className="row">
         <div className="col-sm-12">
           <table className="table table-striped">

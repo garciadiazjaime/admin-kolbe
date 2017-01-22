@@ -1,36 +1,21 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
-import LocationController from '../../../../../client/controllers/locationController';
+import PeriodController from '../../../../../client/controllers/periodController';
 import LogUtil from '../../../../utils/logUtil';
 import InputElement from '../../../elements/inputElement';
 import StringUtil from '../../../../utils/stringUtil';
 
-export default class LocationEdit extends React.Component {
+export default class PeriodCreate extends React.Component {
 
-  constructor() {
-    super();
-    this.controller = new LocationController();
+  constructor(args) {
+    super(args);
+    this.locationId = this.props.params.locationId;
+    this.controller = new PeriodController(this.locationId);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       data: {},
     };
-  }
-
-  componentDidMount() {
-    if (this.props.params.locationId) {
-      this.controller.get(this.props.params.locationId)
-        .then((results) => {
-          if (results.entity.status) {
-            this.setState({
-              data: results.entity.data,
-            });
-          }
-        })
-        .catch(error => LogUtil.log(error));
-    } else {
-      LogUtil.log(`[ERROR::LOADING] ${this.props.location.pathname}`);
-    }
   }
 
   handleChange(prop, value) {
@@ -44,7 +29,7 @@ export default class LocationEdit extends React.Component {
     this.setState({
       status: 'saving',
     });
-    this.controller.update(this.props.params.locationId, this.state.data)
+    this.controller.save(this.state.data)
       .then(() => {
         this.setState({
           status: 'saved',
@@ -84,11 +69,9 @@ export default class LocationEdit extends React.Component {
   }
 }
 
-LocationEdit.propTypes = {
+
+PeriodCreate.propTypes = {
   params: React.PropTypes.shape({
     locationId: React.PropTypes.string.isRequired,
-  }).isRequired,
-  location: React.PropTypes.shape({
-    pathname: React.PropTypes.string.isRequired,
   }).isRequired,
 };
