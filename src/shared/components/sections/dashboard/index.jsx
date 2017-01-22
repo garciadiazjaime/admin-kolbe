@@ -22,7 +22,8 @@ export default class DashBoard extends React.Component {
       <div className="row">
         <div className="col-sm-12">
           <Link to="/location">Planteles</Link> <br />
-          <Link to="/activity">Actividades</Link>
+          <Link to="/activity">Actividades</Link> <br />
+          <Link to="/document">Documents</Link> <br />
         </div>
       </div>
     </div>);

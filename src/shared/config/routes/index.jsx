@@ -30,6 +30,10 @@ import ActivityListSection from '../../components/sections/activity/list';
 import ActivityAddSection from '../../components/sections/activity/add';
 import ActivityEditSection from '../../components/sections/activity/edit';
 
+import DocumentListSection from '../../components/sections/document/list';
+import DocumentAddSection from '../../components/sections/document/add';
+import DocumentEditSection from '../../components/sections/document/edit';
+
 export default(
   <Router history={browserHistory}>
     <Route path="/" component={AppHandler}>
@@ -71,6 +75,12 @@ export default(
         <IndexRoute component={ActivityListSection} />
         <Route path="add" component={ActivityAddSection} />
         <Route path=":activityId/edit" component={ActivityEditSection} />
+      </Route>
+
+      <Route path="document">
+        <IndexRoute component={DocumentListSection} />
+        <Route path="add" component={DocumentAddSection} />
+        <Route path=":documentId/edit" component={DocumentEditSection} />
       </Route>
     </Route>
   </Router>
