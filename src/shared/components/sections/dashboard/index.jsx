@@ -24,6 +24,8 @@ export default class DashBoard extends React.Component {
           <Link to="/location">Planteles</Link> <br />
           <Link to="/activity">Actividades</Link> <br />
           <Link to="/document">Documents</Link> <br />
+          <Link to="/newsletter">Boletines</Link> <br />
+          <Link to="/parent">Padres</Link> <br />
         </div>
       </div>
     </div>);

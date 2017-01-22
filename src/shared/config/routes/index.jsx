@@ -34,6 +34,14 @@ import DocumentListSection from '../../components/sections/document/list';
 import DocumentAddSection from '../../components/sections/document/add';
 import DocumentEditSection from '../../components/sections/document/edit';
 
+import NewsletterListSection from '../../components/sections/newsletter/list';
+import NewsletterAddSection from '../../components/sections/newsletter/add';
+import NewsletterEditSection from '../../components/sections/newsletter/edit';
+
+import ParentListSection from '../../components/sections/parent/list';
+import ParentAddSection from '../../components/sections/parent/add';
+import ParentEditSection from '../../components/sections/parent/edit';
+
 export default(
   <Router history={browserHistory}>
     <Route path="/" component={AppHandler}>
@@ -81,6 +89,18 @@ export default(
         <IndexRoute component={DocumentListSection} />
         <Route path="add" component={DocumentAddSection} />
         <Route path=":documentId/edit" component={DocumentEditSection} />
+      </Route>
+
+      <Route path="newsletter">
+        <IndexRoute component={NewsletterListSection} />
+        <Route path="add" component={NewsletterAddSection} />
+        <Route path=":newsletterId/edit" component={NewsletterEditSection} />
+      </Route>
+
+      <Route path="parent">
+        <IndexRoute component={ParentListSection} />
+        <Route path="add" component={ParentAddSection} />
+        <Route path=":parentId/edit" component={ParentEditSection} />
       </Route>
     </Route>
   </Router>
