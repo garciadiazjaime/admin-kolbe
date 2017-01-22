@@ -1,6 +1,6 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
-import LocationController from '../../../../../client/controllers/locationController';
+import ActivityController from '../../../../../client/controllers/activityController';
 import LogUtil from '../../../../utils/logUtil';
 import InputElement from '../../../elements/inputElement';
 import StringUtil from '../../../../utils/stringUtil';
@@ -9,8 +9,8 @@ export default class LocationEdit extends React.Component {
 
   constructor(args) {
     super(args);
-    this.entityId = this.props.params.locationId;
-    this.controller = new LocationController();
+    this.entityId = this.props.params.activityId;
+    this.controller = new ActivityController();
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -110,7 +110,7 @@ export default class LocationEdit extends React.Component {
 
 LocationEdit.propTypes = {
   params: React.PropTypes.shape({
-    locationId: React.PropTypes.string.isRequired,
+    activityId: React.PropTypes.string.isRequired,
   }).isRequired,
   location: React.PropTypes.shape({
     pathname: React.PropTypes.string.isRequired,

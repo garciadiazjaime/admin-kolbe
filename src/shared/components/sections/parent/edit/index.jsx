@@ -1,16 +1,16 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
-import LocationController from '../../../../../client/controllers/locationController';
+import ParentController from '../../../../../client/controllers/parentController';
 import LogUtil from '../../../../utils/logUtil';
 import InputElement from '../../../elements/inputElement';
 import StringUtil from '../../../../utils/stringUtil';
 
-export default class LocationEdit extends React.Component {
+export default class ParentEdit extends React.Component {
 
   constructor(args) {
     super(args);
-    this.entityId = this.props.params.locationId;
-    this.controller = new LocationController();
+    this.entityId = this.props.params.parentId;
+    this.controller = new ParentController();
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -108,9 +108,9 @@ export default class LocationEdit extends React.Component {
   }
 }
 
-LocationEdit.propTypes = {
+ParentEdit.propTypes = {
   params: React.PropTypes.shape({
-    locationId: React.PropTypes.string.isRequired,
+    parentId: React.PropTypes.string.isRequired,
   }).isRequired,
   location: React.PropTypes.shape({
     pathname: React.PropTypes.string.isRequired,

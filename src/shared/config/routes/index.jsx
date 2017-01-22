@@ -4,6 +4,8 @@ import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
 import AppHandler from '../../components/AppHandler';
 
+import DashboardSection from '../../components/sections/dashboard';
+
 import LocationListSection from '../../components/sections/location/list';
 import LocationAddSection from '../../components/sections/location/add';
 import LocationEditSection from '../../components/sections/location/edit';
@@ -24,10 +26,26 @@ import StudentListSection from '../../components/sections/student/list';
 import StudentAddSection from '../../components/sections/student/add';
 import StudentEditSection from '../../components/sections/student/edit';
 
+import ActivityListSection from '../../components/sections/activity/list';
+import ActivityAddSection from '../../components/sections/activity/add';
+import ActivityEditSection from '../../components/sections/activity/edit';
+
+import DocumentListSection from '../../components/sections/document/list';
+import DocumentAddSection from '../../components/sections/document/add';
+import DocumentEditSection from '../../components/sections/document/edit';
+
+import NewsletterListSection from '../../components/sections/newsletter/list';
+import NewsletterAddSection from '../../components/sections/newsletter/add';
+import NewsletterEditSection from '../../components/sections/newsletter/edit';
+
+import ParentListSection from '../../components/sections/parent/list';
+import ParentAddSection from '../../components/sections/parent/add';
+import ParentEditSection from '../../components/sections/parent/edit';
+
 export default(
   <Router history={browserHistory}>
     <Route path="/" component={AppHandler}>
-      <IndexRoute component={LocationListSection} />
+      <IndexRoute component={DashboardSection} />
 
       <Route path="location">
         <IndexRoute component={LocationListSection} />
@@ -59,6 +77,30 @@ export default(
             </Route>
           </Route>
         </Route>
+      </Route>
+
+      <Route path="activity">
+        <IndexRoute component={ActivityListSection} />
+        <Route path="add" component={ActivityAddSection} />
+        <Route path=":activityId/edit" component={ActivityEditSection} />
+      </Route>
+
+      <Route path="document">
+        <IndexRoute component={DocumentListSection} />
+        <Route path="add" component={DocumentAddSection} />
+        <Route path=":documentId/edit" component={DocumentEditSection} />
+      </Route>
+
+      <Route path="newsletter">
+        <IndexRoute component={NewsletterListSection} />
+        <Route path="add" component={NewsletterAddSection} />
+        <Route path=":newsletterId/edit" component={NewsletterEditSection} />
+      </Route>
+
+      <Route path="parent">
+        <IndexRoute component={ParentListSection} />
+        <Route path="add" component={ParentAddSection} />
+        <Route path=":parentId/edit" component={ParentEditSection} />
       </Route>
     </Route>
   </Router>
