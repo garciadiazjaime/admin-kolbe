@@ -14,6 +14,7 @@ export default class PeriodEdit extends React.Component {
     this.controller = new PeriodController(this.locationId);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.state = {
       data: {},
     };
@@ -42,6 +43,19 @@ export default class PeriodEdit extends React.Component {
     this.setState(state);
   }
 
+  handleDelete() {
+    this.setState({
+      status: 'deleting',
+    });
+    this.controller.delete(this.periodId)
+      .then(() => {
+        this.setState({
+          status: 'deleted',
+        });
+      })
+      .catch(error => LogUtil.log(error));
+  }
+
   handleSubmit() {
     this.setState({
       status: 'saving',
@@ -62,26 +76,35 @@ export default class PeriodEdit extends React.Component {
 
   render() {
     return (<div className="container-fluid">
-      <table className="table table-striped">
-        <tbody>
-          <tr>
-            <th>Nombre</th>
-            <td>
-              <InputElement name="name" value={this.state.data.name} onChange={this.handleChange} />
-            </td>
-          </tr>
-          <tr>
-            <td colSpan="2" className="text-right">
-              <input type="submit" onClick={this.handleSubmit} value="Guardar" className="btn btn-primary" />
-            </td>
-          </tr>
-          <tr>
-            <td colSpan="2" className="text-right">
-              { StringUtil.getFormStatus(this.state.status) }
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="row">
+        <div className="col-sm-12">
+          <table className="table table-striped">
+            <tbody>
+              <tr>
+                <th>Nombre</th>
+                <td>
+                  <InputElement name="name" value={this.state.data.name} onChange={this.handleChange} />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="2" className="text-right">
+                  <input type="submit" onClick={this.handleSubmit} value="Guardar" className="btn btn-primary" />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="2" className="text-right">
+                  { StringUtil.getFormStatus(this.state.status) }
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm-12">
+          <button to={`/location/${this.locationId}/period/${this.periodId}`} className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar Periodo</button>
+        </div>
+      </div>
     </div>);
   }
 }

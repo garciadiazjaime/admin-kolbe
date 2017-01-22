@@ -45,26 +45,30 @@ export default class PeriodCreate extends React.Component {
 
   render() {
     return (<div className="container-fluid">
-      <table className="table table-striped">
-        <tbody>
-          <tr>
-            <th>Nombre</th>
-            <td>
-              <InputElement name="name" value={this.state.data.name} onChange={this.handleChange} />
-            </td>
-          </tr>
-          <tr>
-            <td colSpan="2" className="text-right">
-              <input type="submit" onClick={this.handleSubmit} value="Guardar" className="btn btn-primary" />
-            </td>
-          </tr>
-          <tr>
-            <td colSpan="2" className="text-right">
-              { StringUtil.getFormStatus(this.state.status) }
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="row">
+        <div className="col-sm-12">
+          <table className="table table-striped">
+            <tbody>
+              <tr>
+                <th>Nombre</th>
+                <td>
+                  <InputElement name="name" value={this.state.data.name} onChange={this.handleChange} />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="2" className="text-right">
+                  <input type="submit" onClick={this.handleSubmit} value="Guardar" className="btn btn-primary" />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="2" className="text-right">
+                  { StringUtil.getFormStatus(this.state.status) }
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>);
   }
 }

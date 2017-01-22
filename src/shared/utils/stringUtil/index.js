@@ -51,9 +51,13 @@ export default class StringUtil {
     if (status === 'saving') {
       return 'guardando cambios...';
     } else if (status === 'saved') {
-      return 'cambios guardados.';
+      return 'Cambios guardados.';
     } else if (status === 'error') {
-      return 'error, favor de reportarlo.';
+      return 'Error, favor de reportarlo.';
+    } else if (status === 'deleting') {
+      return 'eliminando información...';
+    } else if (status === 'deleted') {
+      return 'Información eliminada.';
     }
     return null;
   }
