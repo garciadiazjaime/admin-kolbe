@@ -12,11 +12,11 @@ export default class PeriodController {
     return RequestUtil.get(this.apiUrl);
   }
 
-  get(locationId) {
-    return RequestUtil.get(`${this.apiUrl}/${locationId}`);
+  get(entityId) {
+    return RequestUtil.get(`${this.apiUrl}/${entityId}`);
   }
 
-  update(locationId, data) {
-    return RequestUtil.put(`${this.apiUrl}/${locationId}`, data);
+  update(entityId, data) {
+    return RequestUtil.put(`${this.apiUrl}/${entityId}`, data);
   }
 }

@@ -39,8 +39,8 @@ export default class PeriodList extends React.Component {
     if (data.length) {
       return data.map(item => <tr key={item._id}>
         <td>{item.name}</td>
-        <td><Link to={`./period/${item._id}/edit`}><i className="glyphicon glyphicon-pencil" /></Link></td>
-        <td><Link to={`./period/${item._id}/grupo`}><i className="glyphicon glyphicon-zoom-in" /></Link></td>
+        <td><Link to={`/location/${this.props.params.locationId}/period/${item._id}/edit`}><i className="glyphicon glyphicon-pencil" /></Link></td>
+        <td><Link to={`/location/${this.props.params.locationId}/period/${item._id}/grupo`}><i className="glyphicon glyphicon-zoom-in" /></Link></td>
       </tr>);
     }
     return null;

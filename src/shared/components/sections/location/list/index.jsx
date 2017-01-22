@@ -11,18 +11,18 @@ export default class LocationList extends React.Component {
 
   constructor() {
     super();
-    this.locationController = new LocationController();
+    this.controller = new LocationController();
     this.state = {
-      location: [],
+      data: [],
     };
   }
 
   componentDidMount() {
-    this.locationController.list()
+    this.controller.list()
       .then((results) => {
         if (results.entity.status) {
           this.setState({
-            location: _.isArray(results.entity.data) ? results.entity.data : [],
+            data: _.isArray(results.entity.data) ? results.entity.data : [],
           });
         }
       })
@@ -30,8 +30,8 @@ export default class LocationList extends React.Component {
   }
 
   renderLocation() {
-    if (this.state.location.length) {
-      return this.state.location.map(item => <tr key={item._id}>
+    if (this.state.data.length) {
+      return this.state.data.map(item => <tr key={item._id}>
         <td>{item.name}</td>
         <td><Link to={`/location/${item._id}/edit`}><i className="glyphicon glyphicon-pencil" /></Link></td>
         <td><Link to={`/location/${item._id}/period`}><i className="glyphicon glyphicon-zoom-in" /></Link></td>

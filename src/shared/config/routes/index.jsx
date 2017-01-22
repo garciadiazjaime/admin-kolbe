@@ -3,11 +3,12 @@ import React from 'react';
 import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
 import AppHandler from '../../components/AppHandler';
+
 import LocationListSection from '../../components/sections/location/list';
 import LocationEditSection from '../../components/sections/location/edit';
 
 import PeriodListSection from '../../components/sections/period/list';
-// <IndexRoute component={LocationListSection} />
+import PeriodEditSection from '../../components/sections/period/edit';
 
 export default(
   <Router history={browserHistory}>
@@ -21,6 +22,8 @@ export default(
 
         <Route path=":locationId/period">
           <IndexRoute component={PeriodListSection} />
+
+          <Route path=":periodId/edit" component={PeriodEditSection} />
         </Route>
       </Route>
     </Route>

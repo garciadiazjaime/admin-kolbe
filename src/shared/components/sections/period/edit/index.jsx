@@ -1,15 +1,17 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
-import LocationController from '../../../../../client/controllers/locationController';
+import PeriodController from '../../../../../client/controllers/periodController';
 import LogUtil from '../../../../utils/logUtil';
 import InputElement from '../../../elements/inputElement';
 import StringUtil from '../../../../utils/stringUtil';
 
-export default class LocationEdit extends React.Component {
+export default class PeriodEdit extends React.Component {
 
-  constructor() {
-    super();
-    this.controller = new LocationController();
+  constructor(args) {
+    super(args);
+    this.locationId = this.props.params.locationId;
+    this.periodId = this.props.params.periodId;
+    this.controller = new PeriodController(this.locationId);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
@@ -18,8 +20,8 @@ export default class LocationEdit extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.params.locationId) {
-      this.controller.get(this.props.params.locationId)
+    if (this.periodId) {
+      this.controller.get(this.periodId)
         .then((results) => {
           if (results.entity.status) {
             this.setState({
@@ -44,7 +46,7 @@ export default class LocationEdit extends React.Component {
     this.setState({
       status: 'saving',
     });
-    this.controller.update(this.props.params.locationId, this.state.data)
+    this.controller.update(this.periodId, this.state.data)
       .then(() => {
         this.setState({
           status: 'saved',
@@ -84,9 +86,10 @@ export default class LocationEdit extends React.Component {
   }
 }
 
-LocationEdit.propTypes = {
+PeriodEdit.propTypes = {
   params: React.PropTypes.shape({
     locationId: React.PropTypes.string.isRequired,
+    periodId: React.PropTypes.string.isRequired,
   }).isRequired,
   location: React.PropTypes.shape({
     pathname: React.PropTypes.string.isRequired,
