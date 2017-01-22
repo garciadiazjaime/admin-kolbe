@@ -44,6 +44,11 @@ export default class LocationList extends React.Component {
     return (<div className="container-fluid">
       <div className="row">
         <div className="col-sm-12">
+          <Link to="/location/add" className="pull-right"><i className="glyphicon glyphicon-plus" /></Link>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm-12">
           <table className="table table-striped">
             <thead>
               <tr>

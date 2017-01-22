@@ -6,6 +6,7 @@ import AppHandler from '../../components/AppHandler';
 
 import LocationListSection from '../../components/sections/location/list';
 import LocationEditSection from '../../components/sections/location/edit';
+import LocationCreateSection from '../../components/sections/location/create';
 
 import PeriodListSection from '../../components/sections/period/list';
 import PeriodEditSection from '../../components/sections/period/edit';
@@ -17,7 +18,7 @@ export default(
 
       <Route path="location">
         <IndexRoute component={LocationListSection} />
-
+        <Route path="add" component={LocationCreateSection} />
         <Route path=":locationId/edit" component={LocationEditSection} />
 
         <Route path=":locationId/period">
