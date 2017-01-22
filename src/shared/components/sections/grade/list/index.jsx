@@ -3,24 +3,25 @@
 import React from 'react';
 import { Link } from 'react-router';
 import _ from 'lodash';
-import PeriodController from '../../../../../client/controllers/periodController';
+import GradeController from '../../../../../client/controllers/gradeController';
 import LogUtil from '../../../../utils/logUtil';
 // const style = require('./style.scss');
 
-export default class PeriodList extends React.Component {
+export default class GradeList extends React.Component {
 
   constructor(args) {
     super(args);
     this.locationId = this.props.params.locationId;
-    this.baseUrl = `/location/${this.locationId}/period`;
-    this.controller = new PeriodController(this.locationId);
+    this.periodId = this.props.params.periodId;
+    this.baseUrl = `/location/${this.locationId}/period/${this.periodId}/grade`;
+    this.controller = new GradeController(this.locationId, this.periodId);
     this.state = {
       data: [],
     };
   }
 
   componentDidMount() {
-    if (this.props.params.locationId) {
+    if (this.periodId) {
       this.controller.list()
         .then((results) => {
           if (results.entity.status) {
@@ -41,7 +42,7 @@ export default class PeriodList extends React.Component {
       return data.map(item => <tr key={item._id}>
         <td>{item.name}</td>
         <td><Link to={`${this.baseUrl}/${item._id}/edit`}><i className="glyphicon glyphicon-pencil" /></Link></td>
-        <td><Link to={`${this.baseUrl}/${item._id}/grade`}><i className="glyphicon glyphicon-zoom-in" /></Link></td>
+        <td><Link to={`${this.baseUrl}/${item._id}/grupo`}><i className="glyphicon glyphicon-zoom-in" /></Link></td>
       </tr>);
     }
     return null;
@@ -59,9 +60,9 @@ export default class PeriodList extends React.Component {
           <table className="table table-striped">
             <thead>
               <tr>
-                <th>Nombre del Periodo</th>
+                <th>Nombre del Grado</th>
                 <th>Editar</th>
-                <th>Grados</th>
+                <th>Grupos</th>
               </tr>
             </thead>
             <tbody>
@@ -74,9 +75,10 @@ export default class PeriodList extends React.Component {
   }
 }
 
-PeriodList.propTypes = {
+GradeList.propTypes = {
   params: React.PropTypes.shape({
     locationId: React.PropTypes.string.isRequired,
+    periodId: React.PropTypes.string.isRequired,
   }).isRequired,
   location: React.PropTypes.shape({
     pathname: React.PropTypes.string.isRequired,

@@ -5,7 +5,7 @@ import LogUtil from '../../../../utils/logUtil';
 import InputElement from '../../../elements/inputElement';
 import StringUtil from '../../../../utils/stringUtil';
 
-export default class PeriodCreate extends React.Component {
+export default class PeriodAdd extends React.Component {
 
   constructor(args) {
     super(args);
@@ -74,7 +74,7 @@ export default class PeriodCreate extends React.Component {
 }
 
 
-PeriodCreate.propTypes = {
+PeriodAdd.propTypes = {
   params: React.PropTypes.shape({
     locationId: React.PropTypes.string.isRequired,
   }).isRequired,
