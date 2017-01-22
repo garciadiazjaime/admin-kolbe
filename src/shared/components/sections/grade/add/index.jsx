@@ -1,15 +1,17 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
-import LocationController from '../../../../../client/controllers/locationController';
+import GradeController from '../../../../../client/controllers/gradeController';
 import LogUtil from '../../../../utils/logUtil';
 import InputElement from '../../../elements/inputElement';
 import StringUtil from '../../../../utils/stringUtil';
 
-export default class LocationAdd extends React.Component {
+export default class GradeAdd extends React.Component {
 
-  constructor() {
-    super();
-    this.controller = new LocationController();
+  constructor(args) {
+    super(args);
+    this.locationId = this.props.params.locationId;
+    this.periodId = this.props.params.periodId;
+    this.controller = new GradeController(this.locationId, this.periodId);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
@@ -71,3 +73,11 @@ export default class LocationAdd extends React.Component {
     </div>);
   }
 }
+
+
+GradeAdd.propTypes = {
+  params: React.PropTypes.shape({
+    locationId: React.PropTypes.string.isRequired,
+    periodId: React.PropTypes.string.isRequired,
+  }).isRequired,
+};

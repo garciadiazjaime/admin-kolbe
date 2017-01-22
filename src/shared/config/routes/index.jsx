@@ -5,12 +5,15 @@ import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 import AppHandler from '../../components/AppHandler';
 
 import LocationListSection from '../../components/sections/location/list';
+import LocationAddSection from '../../components/sections/location/add';
 import LocationEditSection from '../../components/sections/location/edit';
-import LocationCreateSection from '../../components/sections/location/add';
 
 import PeriodListSection from '../../components/sections/period/list';
+import PeriodAddSection from '../../components/sections/period/add';
 import PeriodEditSection from '../../components/sections/period/edit';
-import PeriodCreateSection from '../../components/sections/period/add';
+
+import GradeListSection from '../../components/sections/grade/list';
+import GradeAddSection from '../../components/sections/grade/add';
 
 export default(
   <Router history={browserHistory}>
@@ -19,13 +22,18 @@ export default(
 
       <Route path="location">
         <IndexRoute component={LocationListSection} />
-        <Route path="add" component={LocationCreateSection} />
+        <Route path="add" component={LocationAddSection} />
         <Route path=":locationId/edit" component={LocationEditSection} />
 
         <Route path=":locationId/period">
           <IndexRoute component={PeriodListSection} />
-          <Route path="add" component={PeriodCreateSection} />
+          <Route path="add" component={PeriodAddSection} />
           <Route path=":periodId/edit" component={PeriodEditSection} />
+
+          <Route path=":periodId/grade">
+            <IndexRoute component={GradeListSection} />
+            <Route path="add" component={GradeAddSection} />
+          </Route>
         </Route>
       </Route>
     </Route>
