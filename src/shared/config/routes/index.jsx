@@ -16,6 +16,10 @@ import GradeListSection from '../../components/sections/grade/list';
 import GradeAddSection from '../../components/sections/grade/add';
 import GradeEditSection from '../../components/sections/grade/edit';
 
+import GroupListSection from '../../components/sections/group/list';
+import GroupAddSection from '../../components/sections/group/add';
+import GroupEditSection from '../../components/sections/group/edit';
+
 export default(
   <Router history={browserHistory}>
     <Route path="/" component={AppHandler}>
@@ -35,6 +39,13 @@ export default(
             <IndexRoute component={GradeListSection} />
             <Route path="add" component={GradeAddSection} />
             <Route path=":gradeId/edit" component={GradeEditSection} />
+
+            <Route path=":gradeId/group">
+              <IndexRoute component={GroupListSection} />
+              <Route path="add" component={GroupAddSection} />
+              <Route path=":groupId/edit" component={GroupEditSection} />
+
+            </Route>
           </Route>
         </Route>
       </Route>

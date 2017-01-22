@@ -3,25 +3,26 @@
 import React from 'react';
 import { Link } from 'react-router';
 import _ from 'lodash';
-import GradeController from '../../../../../client/controllers/gradeController';
+import GroupController from '../../../../../client/controllers/groupController';
 import LogUtil from '../../../../utils/logUtil';
 // const style = require('./style.scss');
 
-export default class GradeList extends React.Component {
+export default class GroupList extends React.Component {
 
   constructor(args) {
     super(args);
     this.locationId = this.props.params.locationId;
     this.periodId = this.props.params.periodId;
-    this.baseUrl = `/location/${this.locationId}/period/${this.periodId}/grade`;
-    this.controller = new GradeController(this.locationId, this.periodId);
+    this.gradeId = this.props.params.gradeId;
+    this.baseUrl = `/location/${this.locationId}/period/${this.periodId}/grade/${this.gradeId}/group`;
+    this.controller = new GroupController(this.locationId, this.periodId, this.gradeId);
     this.state = {
       data: [],
     };
   }
 
   componentDidMount() {
-    if (this.periodId) {
+    if (this.gradeId) {
       this.controller.list()
         .then((results) => {
           if (results.entity.status) {
@@ -42,7 +43,7 @@ export default class GradeList extends React.Component {
       return data.map(item => <tr key={item._id}>
         <td>{item.name}</td>
         <td><Link to={`${this.baseUrl}/${item._id}/edit`}><i className="glyphicon glyphicon-pencil" /></Link></td>
-        <td><Link to={`${this.baseUrl}/${item._id}/group`}><i className="glyphicon glyphicon-zoom-in" /></Link></td>
+        <td><Link to={`${this.baseUrl}/${item._id}/student`}><i className="glyphicon glyphicon-zoom-in" /></Link></td>
       </tr>);
     }
     return null;
@@ -60,9 +61,9 @@ export default class GradeList extends React.Component {
           <table className="table table-striped">
             <thead>
               <tr>
-                <th>Nombre del Grado</th>
+                <th>Nombre del Grupo</th>
                 <th>Editar</th>
-                <th>Grupos</th>
+                <th>Alumnos</th>
               </tr>
             </thead>
             <tbody>
@@ -75,10 +76,11 @@ export default class GradeList extends React.Component {
   }
 }
 
-GradeList.propTypes = {
+GroupList.propTypes = {
   params: React.PropTypes.shape({
     locationId: React.PropTypes.string.isRequired,
     periodId: React.PropTypes.string.isRequired,
+    gradeId: React.PropTypes.string.isRequired,
   }).isRequired,
   location: React.PropTypes.shape({
     pathname: React.PropTypes.string.isRequired,
