@@ -1,40 +1,23 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
-import GradeController from '../../../../../client/controllers/gradeController';
+import GroupController from '../../../../../client/controllers/groupController';
 import LogUtil from '../../../../utils/logUtil';
 import InputElement from '../../../elements/inputElement';
 import StringUtil from '../../../../utils/stringUtil';
 
-export default class GradeEdit extends React.Component {
+export default class GradeAdd extends React.Component {
 
   constructor(args) {
     super(args);
     this.locationId = this.props.params.locationId;
     this.periodId = this.props.params.periodId;
     this.gradeId = this.props.params.gradeId;
-    this.controller = new GradeController(this.locationId, this.periodId);
+    this.controller = new GroupController(this.locationId, this.periodId, this.gradeId);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
     this.state = {
       data: {},
     };
-  }
-
-  componentDidMount() {
-    if (this.gradeId) {
-      this.controller.get(this.gradeId)
-        .then((results) => {
-          if (results.entity.status) {
-            this.setState({
-              data: results.entity.data,
-            });
-          }
-        })
-        .catch(error => LogUtil.log(error));
-    } else {
-      LogUtil.log(`[ERROR::LOADING] ${this.props.location.pathname}`);
-    }
   }
 
   handleChange(prop, value) {
@@ -44,24 +27,11 @@ export default class GradeEdit extends React.Component {
     this.setState(state);
   }
 
-  handleDelete() {
-    this.setState({
-      status: 'deleting',
-    });
-    this.controller.delete(this.periodId)
-      .then(() => {
-        this.setState({
-          status: 'deleted',
-        });
-      })
-      .catch(error => LogUtil.log(error));
-  }
-
   handleSubmit() {
     this.setState({
       status: 'saving',
     });
-    this.controller.update(this.gradeId, this.state.data)
+    this.controller.save(this.state.data)
       .then(() => {
         this.setState({
           status: 'saved',
@@ -101,22 +71,15 @@ export default class GradeEdit extends React.Component {
           </table>
         </div>
       </div>
-      <div className="row">
-        <div className="col-sm-12">
-          <button to={`/location/${this.locationId}/period/${this.periodId}`} className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar Periodo</button>
-        </div>
-      </div>
     </div>);
   }
 }
 
-GradeEdit.propTypes = {
+
+GradeAdd.propTypes = {
   params: React.PropTypes.shape({
     locationId: React.PropTypes.string.isRequired,
     periodId: React.PropTypes.string.isRequired,
     gradeId: React.PropTypes.string.isRequired,
-  }).isRequired,
-  location: React.PropTypes.shape({
-    pathname: React.PropTypes.string.isRequired,
   }).isRequired,
 };
