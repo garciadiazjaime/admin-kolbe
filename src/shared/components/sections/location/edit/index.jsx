@@ -7,19 +7,21 @@ import StringUtil from '../../../../utils/stringUtil';
 
 export default class LocationEdit extends React.Component {
 
-  constructor() {
-    super();
+  constructor(args) {
+    super(args);
+    this.locationId = this.props.params.locationId;
     this.controller = new LocationController();
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.state = {
       data: {},
     };
   }
 
   componentDidMount() {
-    if (this.props.params.locationId) {
-      this.controller.get(this.props.params.locationId)
+    if (this.locationId) {
+      this.controller.get(this.locationId)
         .then((results) => {
           if (results.entity.status) {
             this.setState({
@@ -40,11 +42,24 @@ export default class LocationEdit extends React.Component {
     this.setState(state);
   }
 
+  handleDelete() {
+    this.setState({
+      status: 'deleting',
+    });
+    this.controller.delete(this.locationId)
+      .then(() => {
+        this.setState({
+          status: 'deleted',
+        });
+      })
+      .catch(error => LogUtil.log(error));
+  }
+
   handleSubmit() {
     this.setState({
       status: 'saving',
     });
-    this.controller.update(this.props.params.locationId, this.state.data)
+    this.controller.update(this.locationId, this.state.data)
       .then(() => {
         this.setState({
           status: 'saved',
@@ -60,26 +75,35 @@ export default class LocationEdit extends React.Component {
 
   render() {
     return (<div className="container-fluid">
-      <table className="table table-striped">
-        <tbody>
-          <tr>
-            <th>Nombre</th>
-            <td>
-              <InputElement name="name" value={this.state.data.name} onChange={this.handleChange} />
-            </td>
-          </tr>
-          <tr>
-            <td colSpan="2" className="text-right">
-              <input type="submit" onClick={this.handleSubmit} value="Guardar" className="btn btn-primary" />
-            </td>
-          </tr>
-          <tr>
-            <td colSpan="2" className="text-right">
-              { StringUtil.getFormStatus(this.state.status) }
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="row">
+        <div className="col-sm-12">
+          <table className="table table-striped">
+            <tbody>
+              <tr>
+                <th>Nombre</th>
+                <td>
+                  <InputElement name="name" value={this.state.data.name} onChange={this.handleChange} />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="2" className="text-right">
+                  <input type="submit" onClick={this.handleSubmit} value="Guardar" className="btn btn-primary" />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="2" className="text-right">
+                  { StringUtil.getFormStatus(this.state.status) }
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm-12">
+          <button to="/location/delete" className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar Plantel</button>
+        </div>
+      </div>
     </div>);
   }
 }

@@ -33,4 +33,11 @@ export default class RequestUtil {
       entity: data,
     });
   }
+
+  static delete(url) {
+    return client({
+      method: 'DELETE',
+      path: url,
+    });
+  }
 }
