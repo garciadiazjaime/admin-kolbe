@@ -2,8 +2,7 @@
 import React from 'react';
 import LocationController from '../../../../../client/controllers/locationController';
 import LogUtil from '../../../../utils/logUtil';
-import InputElement from '../../../elements/inputElement';
-import StringUtil from '../../../../utils/stringUtil';
+import LocationForm from '../form';
 
 export default class LocationEdit extends React.Component {
 
@@ -11,9 +10,8 @@ export default class LocationEdit extends React.Component {
     super(args);
     this.entityId = this.props.params.locationId;
     this.controller = new LocationController();
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
+    this.submitAction = this.submitAction.bind(this);
+    this.deleteAction = this.deleteAction.bind(this);
     this.state = {
       data: {},
     };
@@ -35,76 +33,16 @@ export default class LocationEdit extends React.Component {
     }
   }
 
-  handleChange(prop, value) {
-    const { state } = this;
-    state.data[prop] = value;
-    state.status = '';
-    this.setState(state);
+  submitAction(data) {
+    return this.controller.update(this.entityId, data);
   }
 
-  handleDelete() {
-    this.setState({
-      status: 'deleting',
-    });
-    this.controller.delete(this.entityId)
-      .then(() => {
-        this.setState({
-          status: 'deleted',
-        });
-      })
-      .catch(error => LogUtil.log(error));
-  }
-
-  handleSubmit() {
-    this.setState({
-      status: 'saving',
-    });
-    this.controller.update(this.entityId, this.state.data)
-      .then(() => {
-        this.setState({
-          status: 'saved',
-        });
-      })
-      .catch((error) => {
-        LogUtil.log(`[ERROR::UPDATING] ${error}`);
-        this.setState({
-          status: 'error',
-        });
-      });
+  deleteAction() {
+    return this.controller.delete(this.entityId);
   }
 
   render() {
-    return (<div className="container-fluid">
-      <div className="row">
-        <div className="col-sm-12">
-          <table className="table table-striped">
-            <tbody>
-              <tr>
-                <th>Nombre</th>
-                <td>
-                  <InputElement name="name" value={this.state.data.name} onChange={this.handleChange} />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="2" className="text-right">
-                  <input type="submit" onClick={this.handleSubmit} value="Guardar" className="btn btn-primary" />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="2" className="text-right">
-                  { StringUtil.getFormStatus(this.state.status) }
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-12">
-          <button to="/location/delete" className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar</button>
-        </div>
-      </div>
-    </div>);
+    return (<LocationForm params={this.props.params} location={this.props.location} data={this.state.data} submitAction={this.submitAction} deleteAction={this.deleteAction} />);
   }
 }
 
