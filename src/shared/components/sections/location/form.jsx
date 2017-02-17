@@ -59,36 +59,53 @@ export default class LocationForm extends React.Component {
     return (<div className="container-fluid">
       <div className="row">
         <div className="col-sm-12">
-          <table className="table table-striped">
-            <tbody>
-              <tr>
-                <th>Nombre</th>
-                <td>
-                  <InputElement name="name" value={this.state.data.name} onChange={this.handleChange} />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="2" className="text-right">
-                  <input type="submit" onClick={this.handleSubmit} value="Guardar" className="btn btn-primary" />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="2" className="text-right">
-                  { StringUtil.getFormStatus(this.state.status) }
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="form-horizontal">
+            <legend>Datos Generales</legend>
+            <div className="form-group">
+              <label htmlFor="name" className="col-sm-2 control-label">Nombre</label>
+              <div className="col-sm-10">
+                <InputElement name="name" value={this.state.data.name} onChange={this.handleChange} />
+              </div>
+            </div>
+
+
+            <legend>Acceso</legend>
+            <div className="form-group">
+              <label htmlFor="user" className="col-sm-2 control-label">Usuario</label>
+              <div className="col-sm-10">
+                <InputElement name="user" value={this.state.data.user} onChange={this.handleChange} />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password" className="col-sm-2 control-label">Contraseña</label>
+              <div className="col-sm-10">
+                <InputElement name="password" value={this.state.data.password} onChange={this.handleChange} />
+              </div>
+            </div>
+            <hr />
+            <div className="form-group">
+              <div className="col-sm-offset-2 col-sm-10">
+                {
+                  this.props.deleteAction ?
+                    <span>
+                      <button to="/location/delete" className="btn btn-danger" onClick={this.handleDelete}>Eliminar</button>
+                      <span>&nbsp;&nbsp;</span>
+                    </span>
+                    : null
+                }
+                <button className="btn btn-primary" onClick={this.handleSubmit} value="Guardar">Guardar</button>
+              </div>
+            </div>
+
+            <div className="form-group">
+              <div className="col-sm-offset-2 col-sm-10">
+                { StringUtil.getFormStatus(this.state.status) }
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      {
-        this.props.deleteAction ?
-          <div className="row">
-            <div className="col-sm-12">
-              <button to="/location/delete" className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar</button>
-            </div>
-          </div> : null
-      }
     </div>);
   }
 }
