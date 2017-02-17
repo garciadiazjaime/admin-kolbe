@@ -52,7 +52,7 @@ export default class DocumentList extends React.Component {
           <table className="table table-striped">
             <thead>
               <tr>
-                <th>Nombre de la Actividad</th>
+                <th>Nombre del Documento</th>
                 <th>Editar</th>
               </tr>
             </thead>

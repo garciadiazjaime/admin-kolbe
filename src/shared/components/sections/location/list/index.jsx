@@ -54,7 +54,7 @@ export default class LocationList extends React.Component {
               <tr>
                 <th>Nombre del Plantel</th>
                 <th>Editar</th>
-                <th>Periodo</th>
+                <th>Niveles</th>
               </tr>
             </thead>
             <tbody>

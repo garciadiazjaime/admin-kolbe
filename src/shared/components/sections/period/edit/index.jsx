@@ -102,7 +102,7 @@ export default class PeriodEdit extends React.Component {
       </div>
       <div className="row">
         <div className="col-sm-12">
-          <button to={`/location/${this.locationId}/period/${this.periodId}`} className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar Periodo</button>
+          <button to={`/location/${this.locationId}/period/${this.periodId}`} className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar</button>
         </div>
       </div>
     </div>);

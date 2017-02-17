@@ -101,7 +101,7 @@ export default class NewsletterEdit extends React.Component {
       </div>
       <div className="row">
         <div className="col-sm-12">
-          <button to="/location/delete" className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar Plantel</button>
+          <button to="/location/delete" className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar</button>
         </div>
       </div>
     </div>);
