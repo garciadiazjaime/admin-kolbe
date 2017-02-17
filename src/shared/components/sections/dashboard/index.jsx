@@ -11,7 +11,6 @@ export default class DashBoard extends React.Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
   }
 
   render() {
