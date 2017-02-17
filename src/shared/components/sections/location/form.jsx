@@ -1,6 +1,5 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
-import _ from 'lodash';
 import LogUtil from '../../../utils/logUtil';
 import InputElement from '../../elements/inputElement';
 import StringUtil from '../../../utils/stringUtil';
@@ -43,13 +42,10 @@ export default class LocationForm extends React.Component {
       status: initialStatus,
     });
     action(this.state.data)
-      .then((results) => {
-        const newstate = _.assign({}, this.state);
-        newstate.status = results.entity.status ? successStatus : 'error';
-        if (results.entity.data.userId) {
-          newstate.data.userId = results.entity.data.userId;
-        }
-        this.setState(newstate);
+      .then(() => {
+        this.setState({
+          status: successStatus,
+        });
       })
       .catch((error) => {
         LogUtil.log(`[ERROR] ${error}`);
@@ -60,8 +56,6 @@ export default class LocationForm extends React.Component {
   }
 
   render() {
-    const { data } = this.props;
-    console.log('LocationForm', data);
     return (<div className="container-fluid">
       <div className="row">
         <div className="col-sm-12">
@@ -77,16 +71,16 @@ export default class LocationForm extends React.Component {
 
             <legend>Acceso</legend>
             <div className="form-group">
-              <label htmlFor="username" className="col-sm-2 control-label">Usuario</label>
+              <label htmlFor="user" className="col-sm-2 control-label">Usuario</label>
               <div className="col-sm-10">
-                <InputElement name="username" value={this.state.data.username} onChange={this.handleChange} />
+                <InputElement name="user" value={this.state.data.user} onChange={this.handleChange} />
               </div>
             </div>
 
             <div className="form-group">
               <label htmlFor="password" className="col-sm-2 control-label">Contraseña</label>
               <div className="col-sm-10">
-                <InputElement name="password" value={this.state.data.password} onChange={this.handleChange} type="password" />
+                <InputElement name="password" value={this.state.data.password} onChange={this.handleChange} />
               </div>
             </div>
             <hr />
@@ -119,10 +113,8 @@ export default class LocationForm extends React.Component {
 LocationForm.propTypes = {
   submitAction: React.PropTypes.func.isRequired,
   deleteAction: React.PropTypes.func,
-  data: React.PropTypes.shape({}),
 };
 
 LocationForm.defaultProps = {
   deleteAction: null,
-  data: {},
 };
