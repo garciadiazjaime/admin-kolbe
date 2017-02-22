@@ -3,7 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import _ from 'lodash';
-import ActivityController from '../../../../../client/controllers/activityController';
+import LocationController from '../../../../../client/controllers/locationController';
 import LogUtil from '../../../../utils/logUtil';
 // const style = require('./style.scss');
 
@@ -11,7 +11,7 @@ export default class LocationList extends React.Component {
 
   constructor() {
     super();
-    this.controller = new ActivityController();
+    this.controller = new LocationController();
     this.state = {
       data: [],
     };
@@ -33,7 +33,8 @@ export default class LocationList extends React.Component {
     if (this.state.data.length) {
       return this.state.data.map(item => <tr key={item._id}>
         <td>{item.name}</td>
-        <td><Link to={`/activity/${item._id}/edit`}><i className="glyphicon glyphicon-pencil" /></Link></td>
+        <td><Link to={`/location/${item._id}/edit`}><i className="glyphicon glyphicon-pencil" /></Link></td>
+        <td><Link to={`/location/${item._id}/level`}><i className="glyphicon glyphicon-zoom-in" /></Link></td>
       </tr>);
     }
     return null;
@@ -43,7 +44,7 @@ export default class LocationList extends React.Component {
     return (<div className="container-fluid">
       <div className="row">
         <div className="col-sm-12">
-          <Link to="/activity/add" className="pull-right"><i className="glyphicon glyphicon-plus" /></Link>
+          <Link to="/location/add" className="pull-right"><i className="glyphicon glyphicon-plus" /></Link>
         </div>
       </div>
       <div className="row">
@@ -51,8 +52,9 @@ export default class LocationList extends React.Component {
           <table className="table table-striped">
             <thead>
               <tr>
-                <th>Nombre de la Actividad</th>
+                <th>Nombre del Plantel</th>
                 <th>Editar</th>
+                <th>Niveles</th>
               </tr>
             </thead>
             <tbody>
