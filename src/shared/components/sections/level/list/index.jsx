@@ -3,17 +3,17 @@
 import React from 'react';
 import { Link } from 'react-router';
 import _ from 'lodash';
-import PeriodController from '../../../../../client/controllers/periodController';
+import LevelController from '../../../../../client/controllers/levelController';
 import LogUtil from '../../../../utils/logUtil';
 // const style = require('./style.scss');
 
-export default class PeriodList extends React.Component {
+export default class LevelList extends React.Component {
 
   constructor(args) {
     super(args);
     this.locationId = this.props.params.locationId;
-    this.baseUrl = `/location/${this.locationId}/period`;
-    this.controller = new PeriodController(this.locationId);
+    this.baseUrl = `/location/${this.locationId}/level`;
+    this.controller = new LevelController(this.locationId);
     this.state = {
       data: [],
     };
@@ -59,7 +59,7 @@ export default class PeriodList extends React.Component {
           <table className="table table-striped">
             <thead>
               <tr>
-                <th>Nombre del Periodo</th>
+                <th>Nombre del Nivel</th>
                 <th>Editar</th>
                 <th>Grados</th>
               </tr>
@@ -74,7 +74,7 @@ export default class PeriodList extends React.Component {
   }
 }
 
-PeriodList.propTypes = {
+LevelList.propTypes = {
   params: React.PropTypes.shape({
     locationId: React.PropTypes.string.isRequired,
   }).isRequired,

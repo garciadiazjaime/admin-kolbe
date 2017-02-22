@@ -2,10 +2,10 @@
 import RequestUtil from '../../../shared/utils/requestUtil';
 import constants from '../../../shared/config/constants';
 
-export default class PeriodController {
+export default class LevelController {
 
   constructor(locationId) {
-    this.apiUrl = `${constants.baseUrl}api/location/${locationId}/period`;
+    this.apiUrl = `${constants.baseUrl}api/location/${locationId}/level`;
   }
 
   list() {

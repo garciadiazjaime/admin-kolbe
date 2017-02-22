@@ -10,9 +10,9 @@ import LocationListSection from '../../components/sections/location/list';
 import LocationAddSection from '../../components/sections/location/add';
 import LocationEditSection from '../../components/sections/location/edit';
 
-import PeriodListSection from '../../components/sections/period/list';
-import PeriodAddSection from '../../components/sections/period/add';
-import PeriodEditSection from '../../components/sections/period/edit';
+import LevelListSection from '../../components/sections/level/list';
+import LevelAddSection from '../../components/sections/level/add';
+import LevelEditSection from '../../components/sections/level/edit';
 
 import GradeListSection from '../../components/sections/grade/list';
 import GradeAddSection from '../../components/sections/grade/add';
@@ -52,12 +52,12 @@ export default(
         <Route path="add" component={LocationAddSection} />
         <Route path=":locationId/edit" component={LocationEditSection} />
 
-        <Route path=":locationId/period">
-          <IndexRoute component={PeriodListSection} />
-          <Route path="add" component={PeriodAddSection} />
-          <Route path=":periodId/edit" component={PeriodEditSection} />
+        <Route path=":locationId/level">
+          <IndexRoute component={LevelListSection} />
+          <Route path="add" component={LevelAddSection} />
+          <Route path=":levelId/edit" component={LevelEditSection} />
 
-          <Route path=":periodId/grade">
+          <Route path=":levelId/grade">
             <IndexRoute component={GradeListSection} />
             <Route path="add" component={GradeAddSection} />
             <Route path=":gradeId/edit" component={GradeEditSection} />

@@ -10,11 +10,11 @@ export default class StudentEdit extends React.Component {
   constructor(args) {
     super(args);
     this.locationId = this.props.params.locationId;
-    this.periodId = this.props.params.periodId;
+    this.levelId = this.props.params.levelId;
     this.gradeId = this.props.params.gradeId;
     this.groupId = this.props.params.groupId;
     this.entityId = this.props.params.studentId;
-    this.controller = new StudentController(this.locationId, this.periodId, this.gradeId, this.groupId);
+    this.controller = new StudentController(this.locationId, this.levelId, this.gradeId, this.groupId);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -105,7 +105,7 @@ export default class StudentEdit extends React.Component {
       </div>
       <div className="row">
         <div className="col-sm-12">
-          <button to={`/location/${this.locationId}/period/${this.periodId}`} className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar</button>
+          <button to={`/location/${this.locationId}/level/${this.levelId}`} className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar</button>
         </div>
       </div>
     </div>);
@@ -115,7 +115,7 @@ export default class StudentEdit extends React.Component {
 StudentEdit.propTypes = {
   params: React.PropTypes.shape({
     locationId: React.PropTypes.string.isRequired,
-    periodId: React.PropTypes.string.isRequired,
+    levelId: React.PropTypes.string.isRequired,
     gradeId: React.PropTypes.string.isRequired,
     groupId: React.PropTypes.string.isRequired,
     studentId: React.PropTypes.string.isRequired,

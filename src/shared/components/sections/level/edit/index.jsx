@@ -1,21 +1,39 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
-import PeriodController from '../../../../../client/controllers/periodController';
+import LevelController from '../../../../../client/controllers/levelController';
 import LogUtil from '../../../../utils/logUtil';
 import InputElement from '../../../elements/inputElement';
 import StringUtil from '../../../../utils/stringUtil';
 
-export default class PeriodAdd extends React.Component {
+export default class LevelEdit extends React.Component {
 
   constructor(args) {
     super(args);
     this.locationId = this.props.params.locationId;
-    this.controller = new PeriodController(this.locationId);
+    this.levelId = this.props.params.levelId;
+    this.controller = new LevelController(this.locationId);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.state = {
       data: {},
     };
+  }
+
+  componentDidMount() {
+    if (this.levelId) {
+      this.controller.get(this.levelId)
+        .then((results) => {
+          if (results.entity.status) {
+            this.setState({
+              data: results.entity.data,
+            });
+          }
+        })
+        .catch(error => LogUtil.log(error));
+    } else {
+      LogUtil.log(`[ERROR::LOADING] ${this.props.location.pathname}`);
+    }
   }
 
   handleChange(prop, value) {
@@ -25,11 +43,24 @@ export default class PeriodAdd extends React.Component {
     this.setState(state);
   }
 
+  handleDelete() {
+    this.setState({
+      status: 'deleting',
+    });
+    this.controller.delete(this.levelId)
+      .then(() => {
+        this.setState({
+          status: 'deleted',
+        });
+      })
+      .catch(error => LogUtil.log(error));
+  }
+
   handleSubmit() {
     this.setState({
       status: 'saving',
     });
-    this.controller.save(this.state.data)
+    this.controller.update(this.levelId, this.state.data)
       .then(() => {
         this.setState({
           status: 'saved',
@@ -69,13 +100,21 @@ export default class PeriodAdd extends React.Component {
           </table>
         </div>
       </div>
+      <div className="row">
+        <div className="col-sm-12">
+          <button to={`/location/${this.locationId}/level/${this.levelId}`} className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar</button>
+        </div>
+      </div>
     </div>);
   }
 }
 
-
-PeriodAdd.propTypes = {
+LevelEdit.propTypes = {
   params: React.PropTypes.shape({
     locationId: React.PropTypes.string.isRequired,
+    levelId: React.PropTypes.string.isRequired,
+  }).isRequired,
+  location: React.PropTypes.shape({
+    pathname: React.PropTypes.string.isRequired,
   }).isRequired,
 };

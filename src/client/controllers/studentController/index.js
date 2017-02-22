@@ -4,8 +4,8 @@ import constants from '../../../shared/config/constants';
 
 export default class StudentController {
 
-  constructor(locationId, periodId, gradeId, groupId) {
-    this.apiUrl = `${constants.baseUrl}api/location/${locationId}/period/${periodId}/grade/${gradeId}/group/${groupId}/student`;
+  constructor(locationId, levelId, gradeId, groupId) {
+    this.apiUrl = `${constants.baseUrl}api/location/${locationId}/level/${levelId}/grade/${gradeId}/group/${groupId}/student`;
   }
 
   list() {
