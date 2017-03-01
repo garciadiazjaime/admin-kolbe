@@ -1,7 +1,7 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
 import LocationController from '../../../../../client/controllers/locationController';
-import LocationForm from '../form';
+import Form from '../form';
 
 export default class LocationAdd extends React.Component {
 
@@ -16,6 +16,6 @@ export default class LocationAdd extends React.Component {
   }
 
   render() {
-    return (<LocationForm submitAction={this.submitAction} />);
+    return (<Form submitAction={this.submitAction} />);
   }
 }

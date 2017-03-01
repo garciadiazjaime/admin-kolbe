@@ -2,27 +2,24 @@
 import React from 'react';
 import LevelController from '../../../../../client/controllers/levelController';
 import LogUtil from '../../../../utils/logUtil';
-import InputElement from '../../../elements/inputElement';
-import StringUtil from '../../../../utils/stringUtil';
+import Form from '../form';
 
 export default class LevelEdit extends React.Component {
 
   constructor(args) {
     super(args);
-    this.locationId = this.props.params.locationId;
-    this.levelId = this.props.params.levelId;
-    this.controller = new LevelController(this.locationId);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
+    this.entityId = this.props.params.levelId;
+    this.controller = new LevelController(this.props.params.locationId);
+    this.submitAction = this.submitAction.bind(this);
+    this.deleteAction = this.deleteAction.bind(this);
     this.state = {
       data: {},
     };
   }
 
   componentDidMount() {
-    if (this.levelId) {
-      this.controller.get(this.levelId)
+    if (this.entityId) {
+      this.controller.get(this.entityId)
         .then((results) => {
           if (results.entity.status) {
             this.setState({
@@ -36,76 +33,16 @@ export default class LevelEdit extends React.Component {
     }
   }
 
-  handleChange(prop, value) {
-    const { state } = this;
-    state.data[prop] = value;
-    state.status = '';
-    this.setState(state);
+  submitAction(data) {
+    return this.controller.update(this.entityId, data);
   }
 
-  handleDelete() {
-    this.setState({
-      status: 'deleting',
-    });
-    this.controller.delete(this.levelId)
-      .then(() => {
-        this.setState({
-          status: 'deleted',
-        });
-      })
-      .catch(error => LogUtil.log(error));
-  }
-
-  handleSubmit() {
-    this.setState({
-      status: 'saving',
-    });
-    this.controller.update(this.levelId, this.state.data)
-      .then(() => {
-        this.setState({
-          status: 'saved',
-        });
-      })
-      .catch((error) => {
-        LogUtil.log(`[ERROR::UPDATING] ${error}`);
-        this.setState({
-          status: 'error',
-        });
-      });
+  deleteAction() {
+    return this.controller.delete(this.entityId);
   }
 
   render() {
-    return (<div className="container-fluid">
-      <div className="row">
-        <div className="col-sm-12">
-          <table className="table table-striped">
-            <tbody>
-              <tr>
-                <th>Nombre</th>
-                <td>
-                  <InputElement name="name" value={this.state.data.name} onChange={this.handleChange} />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="2" className="text-right">
-                  <input type="submit" onClick={this.handleSubmit} value="Guardar" className="btn btn-primary" />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="2" className="text-right">
-                  { StringUtil.getFormStatus(this.state.status) }
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-12">
-          <button to={`/location/${this.locationId}/level/${this.levelId}`} className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar</button>
-        </div>
-      </div>
-    </div>);
+    return (<Form params={this.props.params} location={this.props.location} data={this.state.data} submitAction={this.submitAction} deleteAction={this.deleteAction} />);
   }
 }
 

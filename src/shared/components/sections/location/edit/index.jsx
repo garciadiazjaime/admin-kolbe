@@ -2,7 +2,7 @@
 import React from 'react';
 import LocationController from '../../../../../client/controllers/locationController';
 import LogUtil from '../../../../utils/logUtil';
-import LocationForm from '../form';
+import Form from '../form';
 
 export default class LocationEdit extends React.Component {
 
@@ -42,7 +42,7 @@ export default class LocationEdit extends React.Component {
   }
 
   render() {
-    return (<LocationForm params={this.props.params} location={this.props.location} data={this.state.data} submitAction={this.submitAction} deleteAction={this.deleteAction} />);
+    return (<Form params={this.props.params} location={this.props.location} data={this.state.data} submitAction={this.submitAction} deleteAction={this.deleteAction} />);
   }
 }
 

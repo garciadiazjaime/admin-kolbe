@@ -5,7 +5,7 @@ import LogUtil from '../../../utils/logUtil';
 import InputElement from '../../elements/inputElement';
 import StringUtil from '../../../utils/stringUtil';
 
-export default class LocationForm extends React.Component {
+export default class LevelForm extends React.Component {
 
   constructor(args) {
     super(args);
@@ -114,11 +114,11 @@ export default class LocationForm extends React.Component {
   }
 }
 
-LocationForm.propTypes = {
+LevelForm.propTypes = {
   submitAction: React.PropTypes.func.isRequired,
   deleteAction: React.PropTypes.func,
 };
 
-LocationForm.defaultProps = {
+LevelForm.defaultProps = {
   deleteAction: null,
 };
