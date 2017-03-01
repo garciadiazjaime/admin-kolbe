@@ -60,8 +60,6 @@ export default class LevelForm extends React.Component {
   }
 
   render() {
-    const { data } = this.props;
-    console.log('LevelForm', data);
     return (<div className="container-fluid">
       <div className="row">
         <div className="col-sm-12">
@@ -119,10 +117,8 @@ export default class LevelForm extends React.Component {
 LevelForm.propTypes = {
   submitAction: React.PropTypes.func.isRequired,
   deleteAction: React.PropTypes.func,
-  data: React.PropTypes.shape({}),
 };
 
 LevelForm.defaultProps = {
   deleteAction: null,
-  data: {},
 };

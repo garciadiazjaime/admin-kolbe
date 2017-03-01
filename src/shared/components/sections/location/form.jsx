@@ -1,5 +1,6 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
+import _ from 'lodash';
 import LogUtil from '../../../utils/logUtil';
 import InputElement from '../../elements/inputElement';
 import StringUtil from '../../../utils/stringUtil';
@@ -42,10 +43,13 @@ export default class LocationForm extends React.Component {
       status: initialStatus,
     });
     action(this.state.data)
-      .then(() => {
-        this.setState({
-          status: successStatus,
-        });
+      .then((results) => {
+        const newstate = _.assign({}, this.state);
+        newstate.status = results.entity.status ? successStatus : 'error';
+        if (results.entity.data.userId) {
+          newstate.data.userId = results.entity.data.userId;
+        }
+        this.setState(newstate);
       })
       .catch((error) => {
         LogUtil.log(`[ERROR] ${error}`);
@@ -71,16 +75,16 @@ export default class LocationForm extends React.Component {
 
             <legend>Acceso</legend>
             <div className="form-group">
-              <label htmlFor="user" className="col-sm-2 control-label">Usuario</label>
+              <label htmlFor="username" className="col-sm-2 control-label">Usuario</label>
               <div className="col-sm-10">
-                <InputElement name="user" value={this.state.data.user} onChange={this.handleChange} />
+                <InputElement name="username" value={this.state.data.username} onChange={this.handleChange} />
               </div>
             </div>
 
             <div className="form-group">
               <label htmlFor="password" className="col-sm-2 control-label">Contraseña</label>
               <div className="col-sm-10">
-                <InputElement name="password" value={this.state.data.password} onChange={this.handleChange} />
+                <InputElement name="password" value={this.state.data.password} onChange={this.handleChange} type="password" />
               </div>
             </div>
             <hr />
