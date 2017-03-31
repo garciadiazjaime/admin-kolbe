@@ -60,6 +60,7 @@ export default class LocationForm extends React.Component {
   }
 
   render() {
+    console.log('delete this', this.props.data);
     return (<div className="container-fluid">
       <div className="row">
         <div className="col-sm-12">
@@ -117,8 +118,10 @@ export default class LocationForm extends React.Component {
 LocationForm.propTypes = {
   submitAction: React.PropTypes.func.isRequired,
   deleteAction: React.PropTypes.func,
+  data: React.PropTypes.shape({}),
 };
 
 LocationForm.defaultProps = {
   deleteAction: null,
+  data: {},
 };
