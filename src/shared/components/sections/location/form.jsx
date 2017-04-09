@@ -60,7 +60,8 @@ export default class LocationForm extends React.Component {
   }
 
   render() {
-    console.log('delete this', this.props.data);
+    const { data } = this.props;
+    console.log('LocationForm', data);
     return (<div className="container-fluid">
       <div className="row">
         <div className="col-sm-12">

@@ -60,7 +60,8 @@ export default class LevelForm extends React.Component {
   }
 
   render() {
-    console.log('delete this', this.props.data);
+    const { data } = this.props;
+    console.log('LevelForm', data);
     return (<div className="container-fluid">
       <div className="row">
         <div className="col-sm-12">

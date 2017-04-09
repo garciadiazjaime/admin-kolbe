@@ -1,6 +1,6 @@
 /* eslint max-len: [2, 500, 4] */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
 function renderLocation(data) {
@@ -11,7 +11,7 @@ function renderLocation(data) {
   </tr>);
 }
 
-export default function LocationList({ data }) {
+export default function LocationList({ locations }) {
   return (<div className="container-fluid">
     <div className="row">
       <div className="col-sm-12">
@@ -29,7 +29,7 @@ export default function LocationList({ data }) {
             </tr>
           </thead>
           <tbody>
-            {renderLocation(data)}
+            {renderLocation(locations)}
           </tbody>
         </table>
       </div>
@@ -38,9 +38,9 @@ export default function LocationList({ data }) {
 }
 
 LocationList.propTypes = {
-  data: React.PropTypes.arrayOf(React.PropTypes.object),
+  locations: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 LocationList.defaultProps = {
-  data: [],
+  locations: [],
 };
