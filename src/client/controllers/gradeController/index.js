@@ -4,8 +4,8 @@ import constants from '../../../shared/config/constants';
 
 export default class GradeController {
 
-  constructor(locationId, periodId) {
-    this.apiUrl = `${constants.baseUrl}api/location/${locationId}/period/${periodId}/grade`;
+  constructor(locationId, levelId) {
+    this.apiUrl = `${constants.baseUrl}api/location/${locationId}/level/${levelId}/grade`;
   }
 
   list() {

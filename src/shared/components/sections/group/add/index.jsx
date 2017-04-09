@@ -10,9 +10,9 @@ export default class GradeAdd extends React.Component {
   constructor(args) {
     super(args);
     this.locationId = this.props.params.locationId;
-    this.periodId = this.props.params.periodId;
+    this.levelId = this.props.params.levelId;
     this.gradeId = this.props.params.gradeId;
-    this.controller = new GroupController(this.locationId, this.periodId, this.gradeId);
+    this.controller = new GroupController(this.locationId, this.levelId, this.gradeId);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
@@ -79,7 +79,7 @@ export default class GradeAdd extends React.Component {
 GradeAdd.propTypes = {
   params: React.PropTypes.shape({
     locationId: React.PropTypes.string.isRequired,
-    periodId: React.PropTypes.string.isRequired,
+    levelId: React.PropTypes.string.isRequired,
     gradeId: React.PropTypes.string.isRequired,
   }).isRequired,
 };

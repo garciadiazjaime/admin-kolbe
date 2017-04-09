@@ -4,8 +4,8 @@ import constants from '../../../shared/config/constants';
 
 export default class GroupController {
 
-  constructor(locationId, periodId, gradeId) {
-    this.apiUrl = `${constants.baseUrl}api/location/${locationId}/period/${periodId}/grade/${gradeId}/group`;
+  constructor(locationId, levelId, gradeId) {
+    this.apiUrl = `${constants.baseUrl}api/location/${locationId}/level/${levelId}/grade/${gradeId}/group`;
   }
 
   list() {

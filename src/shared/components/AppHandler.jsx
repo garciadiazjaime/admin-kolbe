@@ -1,11 +1,9 @@
-/* eslint max-len: [2, 500, 4] */
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import sitemap from '../config/sitemap';
 import MainMenu from './layout/menu/menu1';
 import Footer from './layout/footer/footer1';
 import GaUtil from '../utils/gaUtil';
-
 
 export default class AppHandler extends React.Component {
 
@@ -34,11 +32,11 @@ export default class AppHandler extends React.Component {
 }
 
 AppHandler.propTypes = {
-  children: React.PropTypes.shape({}),
+  children: PropTypes.shape({}),
 };
 
 AppHandler.contextTypes = {
-  data: React.PropTypes.object,
+  data: PropTypes.object,
 };
 
 AppHandler.defaultProps = {

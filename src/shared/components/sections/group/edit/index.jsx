@@ -10,10 +10,10 @@ export default class GroupEdit extends React.Component {
   constructor(args) {
     super(args);
     this.locationId = this.props.params.locationId;
-    this.periodId = this.props.params.periodId;
+    this.levelId = this.props.params.levelId;
     this.gradeId = this.props.params.gradeId;
     this.entityId = this.props.params.groupId;
-    this.controller = new GroupController(this.locationId, this.periodId, this.gradeId);
+    this.controller = new GroupController(this.locationId, this.levelId, this.gradeId);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -104,7 +104,7 @@ export default class GroupEdit extends React.Component {
       </div>
       <div className="row">
         <div className="col-sm-12">
-          <button to={`/location/${this.locationId}/period/${this.periodId}`} className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar</button>
+          <button to={`/location/${this.locationId}/level/${this.levelId}`} className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar</button>
         </div>
       </div>
     </div>);
@@ -114,7 +114,7 @@ export default class GroupEdit extends React.Component {
 GroupEdit.propTypes = {
   params: React.PropTypes.shape({
     locationId: React.PropTypes.string.isRequired,
-    periodId: React.PropTypes.string.isRequired,
+    levelId: React.PropTypes.string.isRequired,
     gradeId: React.PropTypes.string.isRequired,
     groupId: React.PropTypes.string.isRequired,
   }).isRequired,

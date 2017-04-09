@@ -12,16 +12,16 @@ export default class GradeList extends React.Component {
   constructor(args) {
     super(args);
     this.locationId = this.props.params.locationId;
-    this.periodId = this.props.params.periodId;
-    this.baseUrl = `/location/${this.locationId}/period/${this.periodId}/grade`;
-    this.controller = new GradeController(this.locationId, this.periodId);
+    this.levelId = this.props.params.levelId;
+    this.baseUrl = `/location/${this.locationId}/level/${this.levelId}/grade`;
+    this.controller = new GradeController(this.locationId, this.levelId);
     this.state = {
       data: [],
     };
   }
 
   componentDidMount() {
-    if (this.periodId) {
+    if (this.levelId) {
       this.controller.list()
         .then((results) => {
           if (results.entity.status) {
@@ -78,7 +78,7 @@ export default class GradeList extends React.Component {
 GradeList.propTypes = {
   params: React.PropTypes.shape({
     locationId: React.PropTypes.string.isRequired,
-    periodId: React.PropTypes.string.isRequired,
+    levelId: React.PropTypes.string.isRequired,
   }).isRequired,
   location: React.PropTypes.shape({
     pathname: React.PropTypes.string.isRequired,

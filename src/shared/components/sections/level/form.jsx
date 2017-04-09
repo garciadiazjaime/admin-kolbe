@@ -5,7 +5,7 @@ import LogUtil from '../../../utils/logUtil';
 import InputElement from '../../elements/inputElement';
 import StringUtil from '../../../utils/stringUtil';
 
-export default class LocationForm extends React.Component {
+export default class LevelForm extends React.Component {
 
   constructor(args) {
     super(args);
@@ -61,7 +61,7 @@ export default class LocationForm extends React.Component {
 
   render() {
     const { data } = this.props;
-    console.log('LocationForm', data);
+    console.log('LevelForm', data);
     return (<div className="container-fluid">
       <div className="row">
         <div className="col-sm-12">
@@ -116,13 +116,13 @@ export default class LocationForm extends React.Component {
   }
 }
 
-LocationForm.propTypes = {
+LevelForm.propTypes = {
   submitAction: React.PropTypes.func.isRequired,
   deleteAction: React.PropTypes.func,
   data: React.PropTypes.shape({}),
 };
 
-LocationForm.defaultProps = {
+LevelForm.defaultProps = {
   deleteAction: null,
   data: {},
 };

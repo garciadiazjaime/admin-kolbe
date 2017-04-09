@@ -1,15 +1,15 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
-import LocationController from '../../../../../client/controllers/locationController';
+import LevelController from '../../../../../client/controllers/levelController';
 import LogUtil from '../../../../utils/logUtil';
 import Form from '../form';
 
-export default class LocationEdit extends React.Component {
+export default class LevelEdit extends React.Component {
 
   constructor(args) {
     super(args);
-    this.entityId = this.props.params.locationId;
-    this.controller = new LocationController();
+    this.entityId = this.props.params.levelId;
+    this.controller = new LevelController(this.props.params.locationId);
     this.submitAction = this.submitAction.bind(this);
     this.deleteAction = this.deleteAction.bind(this);
     this.state = {
@@ -46,9 +46,10 @@ export default class LocationEdit extends React.Component {
   }
 }
 
-LocationEdit.propTypes = {
+LevelEdit.propTypes = {
   params: React.PropTypes.shape({
     locationId: React.PropTypes.string.isRequired,
+    levelId: React.PropTypes.string.isRequired,
   }).isRequired,
   location: React.PropTypes.shape({
     pathname: React.PropTypes.string.isRequired,

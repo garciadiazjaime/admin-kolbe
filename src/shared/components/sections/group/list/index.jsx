@@ -12,10 +12,10 @@ export default class GroupList extends React.Component {
   constructor(args) {
     super(args);
     this.locationId = this.props.params.locationId;
-    this.periodId = this.props.params.periodId;
+    this.levelId = this.props.params.levelId;
     this.gradeId = this.props.params.gradeId;
-    this.baseUrl = `/location/${this.locationId}/period/${this.periodId}/grade/${this.gradeId}/group`;
-    this.controller = new GroupController(this.locationId, this.periodId, this.gradeId);
+    this.baseUrl = `/location/${this.locationId}/level/${this.levelId}/grade/${this.gradeId}/group`;
+    this.controller = new GroupController(this.locationId, this.levelId, this.gradeId);
     this.state = {
       data: [],
     };
@@ -79,7 +79,7 @@ export default class GroupList extends React.Component {
 GroupList.propTypes = {
   params: React.PropTypes.shape({
     locationId: React.PropTypes.string.isRequired,
-    periodId: React.PropTypes.string.isRequired,
+    levelId: React.PropTypes.string.isRequired,
     gradeId: React.PropTypes.string.isRequired,
   }).isRequired,
   location: React.PropTypes.shape({
