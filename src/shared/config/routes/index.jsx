@@ -71,9 +71,7 @@ export default(
                 <IndexRoute component={StudentListSection} />
                 <Route path="add" component={StudentAddSection} />
                 <Route path=":studentId/edit" component={StudentEditSection} />
-
               </Route>
-
             </Route>
           </Route>
         </Route>

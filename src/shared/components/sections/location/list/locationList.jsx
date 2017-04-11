@@ -3,13 +3,11 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
-function renderLocation(data) {
-  return data.map(item => <tr key={item._id}>
-    <td>{item.name}</td>
-    <td><Link to={`/location/${item._id}/edit`}><i className="glyphicon glyphicon-pencil" /></Link></td>
-    <td><Link to={`/location/${item._id}/level`}><i className="glyphicon glyphicon-zoom-in" /></Link></td>
-  </tr>);
-}
+const renderLocation = data => (data.map(item => <tr key={item._id}>
+  <td>{item.name}</td>
+  <td><Link to={`/location/${item._id}/level`}><i className="glyphicon glyphicon-zoom-in" /></Link></td>
+  <td><Link to={`/location/${item._id}/edit`}><i className="glyphicon glyphicon-pencil" /></Link></td>
+</tr>));
 
 export default function LocationList({ locations }) {
   return (<div className="container-fluid">
@@ -24,8 +22,8 @@ export default function LocationList({ locations }) {
           <thead>
             <tr>
               <th>Nombre del Plantel</th>
+              <th>Ver</th>
               <th>Editar</th>
-              <th>Niveles</th>
             </tr>
           </thead>
           <tbody>

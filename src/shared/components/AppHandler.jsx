@@ -1,9 +1,12 @@
 import React, { PropTypes } from 'react';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import sitemap from '../config/sitemap';
-import MainMenu from './layout/menu/menu1';
 import Footer from './layout/footer/footer1';
 import GaUtil from '../utils/gaUtil';
+import Menu from './layout/menu/menu2';
+
+injectTapEventPlugin();
 
 export default class AppHandler extends React.Component {
 
@@ -12,20 +15,23 @@ export default class AppHandler extends React.Component {
     this.state = {
       data: context.data ? context.data : window.data,
     };
+    this.getChildren = this.getChildren.bind(this);
   }
 
   componentDidMount() {
     GaUtil.init();
   }
 
-  render() {
-    const children = React.Children.map(this.props.children, child =>
+  getChildren() {
+    return React.Children.map(this.props.children, child =>
       React.cloneElement(child, { data: this.state.data }),
     );
+  }
 
+  render() {
     return (<div>
-      <MainMenu items={sitemap.items.children} />
-      {children}
+      <Menu />
+      {this.getChildren()}
       <Footer items={sitemap.items.children} />
     </div>);
   }
