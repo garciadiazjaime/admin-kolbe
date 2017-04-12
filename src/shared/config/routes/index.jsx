@@ -7,6 +7,7 @@ import AppHandler from '../../components/AppHandler';
 import DashboardSection from '../../components/sections/dashboard';
 
 import LocationListSection from '../../components/sections/location/list';
+import LocationShowSection from '../../components/sections/location/show';
 import LocationAddSection from '../../components/sections/location/add';
 import LocationEditSection from '../../components/sections/location/edit';
 
@@ -49,6 +50,7 @@ export default(
 
       <Route path="location">
         <IndexRoute component={LocationListSection} />
+        <Route path=":locationId" component={LocationShowSection} />
         <Route path="add" component={LocationAddSection} />
         <Route path=":locationId/edit" component={LocationEditSection} />
 

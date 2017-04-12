@@ -1,7 +1,7 @@
-import React from 'react';
+/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import AppBar from 'material-ui/AppBar';
-
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
@@ -9,11 +9,56 @@ import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { white } from 'material-ui/styles/colors';
 
-export default class Menu2 extends React.Component {
+import LocationContainer from '../../../../containers/locationContainer';
+import { fetchLocationsIfNeeded } from '../../../../actions';
+
+const style = require('./style.scss');
+
+class Menu2 extends Component {
+
+  static getMainMenu() {
+    const items = [{
+      title: 'Actividades',
+      href: '/activity',
+      id: 1,
+    }, {
+      title: 'Documentos',
+      href: '/document',
+      id: 2,
+    }, {
+      title: 'Boletines',
+      href: '/newsletter',
+      id: 3,
+    }, {
+      title: 'Padres',
+      href: '/parent',
+      id: 4,
+    }];
+    const itemsEl = items.map(item => (<MenuItem key={item.id}>
+      <Link to={item.href} title={item.title} className={style.anchor}>{item.title}</Link>
+    </MenuItem>));
+    return (<IconMenu iconButtonElement={<IconButton><MenuIcon color={white} /></IconButton>}>
+      {itemsEl}
+    </IconMenu>);
+  }
+
+  static getLocationsMenu(data) {
+    const locationsEl = data.map(item => (<MenuItem key={item._id}>
+      <Link to={`/location/${item._id}`} title={item.name} className={style.anchor}>{item.name}</Link>
+    </MenuItem>));
+    return (<IconMenu iconButtonElement={<IconButton><MoreVertIcon color={white} /></IconButton>}>
+      {locationsEl}
+    </IconMenu>);
+  }
 
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidMount() {
+    const { dispatch, selectedSchool } = this.props;
+    dispatch(fetchLocationsIfNeeded(selectedSchool));
   }
 
   handleClick(e) {
@@ -21,45 +66,27 @@ export default class Menu2 extends React.Component {
   }
 
   render() {
-    const iconElementLeft = (<IconMenu
-      iconButtonElement={<IconButton><MenuIcon color={white} /></IconButton>}
-      onTouchTap={this.handleClick}
-      onItemTouchTap={this.handleClick}
-    >
-      <MenuItem>
-        <Link to="activity" title="Actividades">Actividades</Link>
-      </MenuItem>
-      <MenuItem>
-        <Link to="document" title="Documentos">Documentos</Link>
-      </MenuItem>
-      <MenuItem>
-        <Link to="newsletter" title="Boletines">Boletines</Link>
-      </MenuItem>
-      <MenuItem>
-        <Link to="parent" title="Padres">Padres</Link>
-      </MenuItem>
-    </IconMenu>);
-
-    const iconElementRight = (<IconMenu
-      iconButtonElement={<IconButton><MoreVertIcon color={white} /></IconButton>}
-      onTouchTap={this.handleClick}
-      onItemTouchTap={this.handleClick}
-    >
-      <MenuItem>
-        <Link to="/location/1" title="Santa Fé">Santa Fé</Link>
-      </MenuItem>
-      <MenuItem>
-        <Link to="/location/2" title="Otay">Otay</Link>
-      </MenuItem>
-      <MenuItem>
-        <Link to="/location/3" title="Presidentes">Presidentes</Link>
-      </MenuItem>
-    </IconMenu>);
-
+    const { locations, isFetching, lastUpdated } = this.props;
+    console.log('isFetching', isFetching, 'lastUpdated', lastUpdated, 'locations', locations);
     return (<AppBar
       title="Koolbe Admin App"
-      iconElementLeft={iconElementLeft}
-      iconElementRight={iconElementRight}
+      iconElementLeft={Menu2.getMainMenu()}
+      iconElementRight={Menu2.getLocationsMenu(locations)}
     />);
   }
 }
+
+Menu2.propTypes = {
+  selectedSchool: PropTypes.string.isRequired,
+  locations: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  lastUpdated: PropTypes.number,
+  dispatch: PropTypes.func.isRequired,
+};
+
+Menu2.defaultProps = {
+  dispatch: {},
+  lastUpdated: null,
+};
+
+export default LocationContainer(Menu2);
