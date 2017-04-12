@@ -1,5 +1,5 @@
 import AppHandler from '../../components/AppHandler';
-import LocationListSection from '../../components/sections/location/list/locationList';
+import LocationListSection from '../../components/sections/location/list';
 
 
 export default {

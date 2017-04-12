@@ -6,7 +6,7 @@ import AppHandler from '../../components/AppHandler';
 
 import DashboardSection from '../../components/sections/dashboard';
 
-import LocationListSection from '../../components/sections/location/list/locationListContainer';
+import LocationListSection from '../../components/sections/location/list';
 import LocationAddSection from '../../components/sections/location/add';
 import LocationEditSection from '../../components/sections/location/edit';
 
