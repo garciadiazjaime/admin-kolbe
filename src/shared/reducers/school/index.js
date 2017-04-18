@@ -1,35 +1,35 @@
-import { REQUEST_LOCATION, RECEIVE_LOCATION, SELECT_LOCATION, INVALIDATE_LOCATION } from '../../actions/location';
+import { REQUEST_SCHOOL, RECEIVE_SCHOOL, SELECT_SCHOOL, INVALIDATE_SCHOOL } from '../../actions/school';
 
 
-export function selectedLocation(state = {}, action) {
+export function selectedSchool(state = '', action) {
   switch (action.type) {
-    case SELECT_LOCATION:
-      return action.location;
+    case SELECT_SCHOOL:
+      return action.schoolId;
     default:
       return state;
   }
 }
 
-function location(state = {
+function school(state = {
   isFetching: false,
   didInvalidate: false,
   data: {},
 }, action) {
   switch (action.type) {
-    case INVALIDATE_LOCATION:
+    case INVALIDATE_SCHOOL:
       return Object.assign({}, state, {
         didInvalidate: true,
       });
-    case REQUEST_LOCATION:
+    case REQUEST_SCHOOL:
       return Object.assign({}, state, {
         isFetching: true,
         didInvalidate: false,
       });
-    case RECEIVE_LOCATION:
+    case RECEIVE_SCHOOL:
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
-        data: action.location,
+        data: action.school,
         lastUpdated: action.receivedAt,
       });
     default:
@@ -37,13 +37,13 @@ function location(state = {
   }
 }
 
-export function locationById(state = { }, action) {
+export function schoolById(state = { }, action) {
   switch (action.type) {
-    case INVALIDATE_LOCATION:
-    case RECEIVE_LOCATION:
-    case REQUEST_LOCATION:
+    case INVALIDATE_SCHOOL:
+    case RECEIVE_SCHOOL:
+    case REQUEST_SCHOOL:
       return Object.assign({}, state, {
-        [action.location]: location(state[action.location], action),
+        [action.schoolId]: school(state[action.schoolId], action),
       });
     default:
       return state;

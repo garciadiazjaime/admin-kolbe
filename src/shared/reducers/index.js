@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux';
 
-import { locationsBySchool, selectedSchool, locationById, selectedLocation } from './location';
+import { schoolById, selectedSchool } from './school';
+import { locationsBySchool } from './location/list';
+import { locationById, selectedLocation } from './location';
 
 const rootReducer = combineReducers({
-  locationsBySchool,
+  schoolById,
   selectedSchool,
+  locationsBySchool,
   locationById,
   selectedLocation,
 });

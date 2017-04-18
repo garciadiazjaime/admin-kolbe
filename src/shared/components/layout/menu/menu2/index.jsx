@@ -53,6 +53,7 @@ class Menu2 extends Component {
 
   componentDidMount() {
     const { dispatch, selectedSchool } = this.props;
+    console.log('selectedSchool', selectedSchool);
     dispatch(fetchLocationsIfNeeded(selectedSchool));
   }
 

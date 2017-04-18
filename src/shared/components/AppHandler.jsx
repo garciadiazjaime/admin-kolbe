@@ -1,14 +1,17 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import sitemap from '../config/sitemap';
 import Footer from './layout/footer/footer1';
 import GaUtil from '../utils/gaUtil';
 import Menu from './layout/menu/menu2';
+import { selectSchool, fetchSchoolIfNeeded } from '../actions/school';
+import SchoolContainer from '../containers/school';
 
+const schoolId = '58f3b39a3b44ad5880370db6';
 injectTapEventPlugin();
 
-export default class AppHandler extends React.Component {
+class AppHandler extends Component {
 
   constructor(props, context) {
     super(props, context);
@@ -19,7 +22,10 @@ export default class AppHandler extends React.Component {
   }
 
   componentDidMount() {
+    const { dispatch } = this.props;
     GaUtil.init();
+    dispatch(selectSchool(schoolId));
+    dispatch(fetchSchoolIfNeeded(schoolId));
   }
 
   getChildren() {
@@ -39,6 +45,7 @@ export default class AppHandler extends React.Component {
 
 AppHandler.propTypes = {
   children: PropTypes.shape({}),
+  dispatch: PropTypes.func.isRequired,
 };
 
 AppHandler.contextTypes = {
@@ -47,4 +54,7 @@ AppHandler.contextTypes = {
 
 AppHandler.defaultProps = {
   children: {},
+  dispatch: {},
 };
+
+export default SchoolContainer(AppHandler);

@@ -2,22 +2,7 @@ import fetch from 'isomorphic-fetch';
 
 export const REQUEST_LOCATIONS = 'REQUEST_LOCATIONS';
 export const RECEIVE_LOCATIONS = 'RECEIVE_LOCATIONS';
-export const SELECT_SCHOOL = 'SELECT_SCHOOL';
-export const INVALIDATE_SCHOOL = 'INVALIDATE_SCHOOL';
 
-export function selectSchool(school) {
-  return {
-    type: SELECT_SCHOOL,
-    school,
-  };
-}
-
-export function invalidateSchool(school) {
-  return {
-    type: INVALIDATE_SCHOOL,
-    school,
-  };
-}
 
 function requestLocations(school) {
   return {
