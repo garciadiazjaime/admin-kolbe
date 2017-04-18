@@ -50,8 +50,8 @@ export default(
 
       <Route path="location">
         <IndexRoute component={LocationListSection} />
-        <Route path=":locationId" component={LocationShowSection} />
         <Route path="add" component={LocationAddSection} />
+        <Route path=":locationId" component={LocationShowSection} />
         <Route path=":locationId/edit" component={LocationEditSection} />
 
         <Route path=":locationId/level">

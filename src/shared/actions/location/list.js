@@ -19,7 +19,6 @@ export function invalidateSchool(school) {
   };
 }
 
-
 function requestLocations(school) {
   return {
     type: REQUEST_LOCATIONS,
@@ -45,7 +44,7 @@ function fetchLocations(school) {
   };
 }
 
-function shouldFetchPosts(state, school) {
+function shouldFetchLocations(state, school) {
   const locations = state.locationsBySchool[school];
   if (!locations) {
     return true;
@@ -57,7 +56,7 @@ function shouldFetchPosts(state, school) {
 
 export function fetchLocationsIfNeeded(school) {
   return (dispatch, getState) => {
-    if (shouldFetchPosts(getState(), school)) {
+    if (shouldFetchLocations(getState(), school)) {
       return dispatch(fetchLocations(school));
     }
     return null;

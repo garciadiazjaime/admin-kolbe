@@ -3,9 +3,9 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
-import LocationContainer from '../../../../containers/locationContainer';
+import LocationsContainer from '../../../../containers/location/list';
 
-import { fetchLocationsIfNeeded } from '../../../../actions';
+import { fetchLocationsIfNeeded } from '../../../../actions/location/list';
 
 class LocationList extends Component {
 
@@ -31,11 +31,6 @@ class LocationList extends Component {
     const { locations, isFetching, lastUpdated } = this.props;
     console.log('isFetching', isFetching, 'lastUpdated', lastUpdated);
     return (<div className="container-fluid">
-      <div className="row">
-        <div className="col-sm-12">
-          <Link to="/location/add" className="pull-right"><i className="glyphicon glyphicon-plus" /></Link>
-        </div>
-      </div>
       <div className="row">
         <div className="col-sm-12">
           <table className="table table-striped">
@@ -69,4 +64,4 @@ LocationList.defaultProps = {
   lastUpdated: null,
 };
 
-export default LocationContainer(LocationList);
+export default LocationsContainer(LocationList);

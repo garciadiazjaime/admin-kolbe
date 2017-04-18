@@ -1,41 +1,34 @@
 /* eslint max-len: [2, 500, 4] */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+// import { Link } from 'react-router';
 
-import LocationContainer from '../../../../containers/locationContainer';
+import LocationContainer from '../../../../containers/location';
 
-import { fetchLocationsIfNeeded } from '../../../../actions';
+import { fetchLocationIfNeeded } from '../../../../actions/location';
 
-class LocationList extends Component {
+class LocationShow extends Component {
 
-  static renderLocation(locations) {
-    return (locations.map(item => <tr key={item._id}>
-      <td>{item.name}</td>
-      <td><Link to={`/location/${item._id}/level`}><i className="glyphicon glyphicon-zoom-in" /></Link></td>
-      <td><Link to={`/location/${item._id}/edit`}><i className="glyphicon glyphicon-pencil" /></Link></td>
-    </tr>));
+  static renderLocation(location) {
+    console.log('location', location);
+    return null;
   }
 
   constructor(props) {
     super(props);
-    console.log('LocationListContainer:constructor', props);
+    console.log('LocationShowContainer:constructor', props);
   }
 
   componentDidMount() {
-    const { dispatch, selectedSchool } = this.props;
-    dispatch(fetchLocationsIfNeeded(selectedSchool));
+    const { dispatch, params } = this.props;
+    console.log('params', params);
+    dispatch(fetchLocationIfNeeded(params.locationId));
   }
 
   render() {
-    const { locations, isFetching, lastUpdated } = this.props;
+    const { location, isFetching, lastUpdated } = this.props;
     console.log('isFetching', isFetching, 'lastUpdated', lastUpdated);
     return (<div className="container-fluid">
-      <div className="row">
-        <div className="col-sm-12">
-          <Link to="/location/add" className="pull-right"><i className="glyphicon glyphicon-plus" /></Link>
-        </div>
-      </div>
       <div className="row">
         <div className="col-sm-12">
           <table className="table table-striped">
@@ -47,7 +40,7 @@ class LocationList extends Component {
               </tr>
             </thead>
             <tbody>
-              {LocationList.renderLocation(locations)}
+              {LocationShow.renderLocation(location)}
             </tbody>
           </table>
         </div>
@@ -56,17 +49,17 @@ class LocationList extends Component {
   }
 }
 
-LocationList.propTypes = {
-  selectedSchool: PropTypes.string.isRequired,
-  locations: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+LocationShow.propTypes = {
+  location: PropTypes.shape({}).isRequired,
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
   dispatch: PropTypes.func.isRequired,
+  params: PropTypes.shape({}).isRequired,
 };
 
-LocationList.defaultProps = {
+LocationShow.defaultProps = {
   dispatch: {},
   lastUpdated: null,
 };
 
-export default LocationContainer(LocationList);
+export default LocationContainer(LocationShow);

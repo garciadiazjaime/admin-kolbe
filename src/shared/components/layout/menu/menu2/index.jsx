@@ -9,8 +9,8 @@ import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { white } from 'material-ui/styles/colors';
 
-import LocationContainer from '../../../../containers/locationContainer';
-import { fetchLocationsIfNeeded } from '../../../../actions';
+import LocationContainer from '../../../../containers/location/list';
+import { fetchLocationsIfNeeded } from '../../../../actions/location/list';
 
 const style = require('./style.scss');
 
@@ -51,18 +51,9 @@ class Menu2 extends Component {
     </IconMenu>);
   }
 
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
   componentDidMount() {
     const { dispatch, selectedSchool } = this.props;
     dispatch(fetchLocationsIfNeeded(selectedSchool));
-  }
-
-  handleClick(e) {
-    console.log('handleClick', e, this);
   }
 
   render() {
