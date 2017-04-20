@@ -1,4 +1,3 @@
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import AppBar from 'material-ui/AppBar';
@@ -9,8 +8,7 @@ import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { white } from 'material-ui/styles/colors';
 
-import LocationContainer from '../../../../containers/location/list';
-import { fetchLocationsIfNeeded } from '../../../../actions/location/list';
+import SchoolContainer from '../../../../containers/school';
 
 const style = require('./style.scss');
 
@@ -43,18 +41,12 @@ class Menu2 extends Component {
   }
 
   static getLocationsMenu(data) {
-    const locationsEl = data.map(item => (<MenuItem key={item._id}>
-      <Link to={`/location/${item._id}`} title={item.name} className={style.anchor}>{item.name}</Link>
+    const locationsEl = data.map(item => (<MenuItem key={item.id}>
+      <Link to={`/location/${item.id}`} title={item.name} className={style.anchor}>{item.name}</Link>
     </MenuItem>));
     return (<IconMenu iconButtonElement={<IconButton><MoreVertIcon color={white} /></IconButton>}>
       {locationsEl}
     </IconMenu>);
-  }
-
-  componentDidMount() {
-    const { dispatch, selectedSchool } = this.props;
-    console.log('selectedSchool', selectedSchool);
-    dispatch(fetchLocationsIfNeeded(selectedSchool));
   }
 
   render() {
@@ -69,16 +61,13 @@ class Menu2 extends Component {
 }
 
 Menu2.propTypes = {
-  selectedSchool: PropTypes.string.isRequired,
   locations: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
-  dispatch: PropTypes.func.isRequired,
 };
 
 Menu2.defaultProps = {
-  dispatch: {},
   lastUpdated: null,
 };
 
-export default LocationContainer(Menu2);
+export default SchoolContainer(Menu2);

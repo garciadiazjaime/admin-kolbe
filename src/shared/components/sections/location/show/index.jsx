@@ -5,7 +5,7 @@ import React, { Component, PropTypes } from 'react';
 
 import LocationContainer from '../../../../containers/location';
 
-import { fetchLocationIfNeeded } from '../../../../actions/location';
+// import { fetchLocationIfNeeded } from '../../../../actions/location';
 
 class LocationShow extends Component {
 
@@ -20,9 +20,8 @@ class LocationShow extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, params } = this.props;
-    console.log('params', params);
-    dispatch(fetchLocationIfNeeded(params.locationId));
+    // const { dispatch, params } = this.props;
+    // dispatch(fetchLocationIfNeeded(params.locationId));
   }
 
   render() {
@@ -53,12 +52,13 @@ LocationShow.propTypes = {
   location: PropTypes.shape({}).isRequired,
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
-  dispatch: PropTypes.func.isRequired,
-  params: PropTypes.shape({}).isRequired,
 };
 
+// params: PropTypes.shape({}).isRequired,
+// dispatch: PropTypes.func.isRequired,
+// dispatch: {},
+
 LocationShow.defaultProps = {
-  dispatch: {},
   lastUpdated: null,
 };
 

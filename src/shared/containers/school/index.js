@@ -11,7 +11,16 @@ const mapStateToProps = (state) => {
     data: {},
   };
 
+  let locations = [];
+  if (school.location && school.location.length) {
+    locations = school.location.map(item => ({
+      id: item.id,
+      name: item.name,
+    }));
+  }
+
   return {
+    locations,
     selectedSchool,
     school,
     isFetching,

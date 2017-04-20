@@ -1,19 +1,19 @@
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
-  const { selectedSchool, locationsBySchool } = state;
+  const { selectedSchool, schoolById } = state;
   const {
     isFetching,
     lastUpdated,
-    items: locations,
-  } = locationsBySchool[selectedSchool] || {
+    data: school,
+  } = schoolById[selectedSchool] || {
     isFetching: true,
-    items: [],
+    data: {},
   };
 
   return {
     selectedSchool,
-    locations,
+    school,
     isFetching,
     lastUpdated,
   };
