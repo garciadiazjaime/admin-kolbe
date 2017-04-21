@@ -1,10 +1,10 @@
 import { REQUEST_LOCATION, RECEIVE_LOCATION, SELECT_LOCATION, INVALIDATE_LOCATION } from '../../actions/location';
 
 
-export function selectedLocation(state = {}, action) {
+export function selectedLocation(state = '', action) {
   switch (action.type) {
     case SELECT_LOCATION:
-      return action.location;
+      return action.locationId;
     default:
       return state;
   }

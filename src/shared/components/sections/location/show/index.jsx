@@ -1,11 +1,9 @@
 /* eslint max-len: [2, 500, 4] */
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+
 import React, { Component, PropTypes } from 'react';
 // import { Link } from 'react-router';
 
 import LocationContainer from '../../../../containers/location';
-
-// import { fetchLocationIfNeeded } from '../../../../actions/location';
 
 class LocationShow extends Component {
 
@@ -14,19 +12,9 @@ class LocationShow extends Component {
     return null;
   }
 
-  constructor(props) {
-    super(props);
-    console.log('LocationShowContainer:constructor', props);
-  }
-
-  componentDidMount() {
-    // const { dispatch, params } = this.props;
-    // dispatch(fetchLocationIfNeeded(params.locationId));
-  }
-
   render() {
-    const { location, isFetching, lastUpdated } = this.props;
-    console.log('isFetching', isFetching, 'lastUpdated', lastUpdated);
+    const { location, isFetching, lastUpdated, selectedLocation } = this.props;
+    console.log('isFetching', isFetching, 'lastUpdated', lastUpdated, 'selectedLocation', selectedLocation);
     return (<div className="container-fluid">
       <div className="row">
         <div className="col-sm-12">
@@ -52,11 +40,8 @@ LocationShow.propTypes = {
   location: PropTypes.shape({}).isRequired,
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
+  selectedLocation: PropTypes.string.isRequired,
 };
-
-// params: PropTypes.shape({}).isRequired,
-// dispatch: PropTypes.func.isRequired,
-// dispatch: {},
 
 LocationShow.defaultProps = {
   lastUpdated: null,

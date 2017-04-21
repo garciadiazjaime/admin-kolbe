@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
-  const { selectedSchool, schoolById } = state;
+  const { selectedSchool, schoolById, selectedLocation } = state;
   const {
     isFetching,
     lastUpdated,
@@ -22,6 +22,7 @@ const mapStateToProps = (state) => {
   return {
     locations,
     selectedSchool,
+    selectedLocation,
     school,
     isFetching,
     lastUpdated,

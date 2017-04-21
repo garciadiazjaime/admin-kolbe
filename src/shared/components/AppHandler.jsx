@@ -6,6 +6,7 @@ import Footer from './layout/footer/footer1';
 import GaUtil from '../utils/gaUtil';
 import Menu from './layout/menu/menu2';
 import { selectSchool, fetchSchoolIfNeeded } from '../actions/school';
+import { selectLocation } from '../actions/location';
 import SchoolContainer from '../containers/school';
 
 const schoolId = '58f3b39a3b44ad5880370db6';
@@ -22,10 +23,13 @@ class AppHandler extends Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { dispatch, params } = this.props;
     GaUtil.init();
     dispatch(selectSchool(schoolId));
     dispatch(fetchSchoolIfNeeded(schoolId));
+    if (params && params.locationId) {
+      dispatch(selectLocation(params.locationId));
+    }
   }
 
   getChildren() {
@@ -46,6 +50,7 @@ class AppHandler extends Component {
 AppHandler.propTypes = {
   children: PropTypes.shape({}),
   dispatch: PropTypes.func.isRequired,
+  params: PropTypes.shape({}),
 };
 
 AppHandler.contextTypes = {
@@ -55,6 +60,7 @@ AppHandler.contextTypes = {
 AppHandler.defaultProps = {
   children: {},
   dispatch: {},
+  params: {},
 };
 
 export default SchoolContainer(AppHandler);
