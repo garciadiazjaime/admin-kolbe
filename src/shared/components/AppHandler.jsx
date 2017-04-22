@@ -1,15 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import sitemap from '../config/sitemap';
-import Footer from './layout/footer/footer1';
 import GaUtil from '../utils/gaUtil';
 import Menu from './layout/menu/menu2';
 import { selectSchool, fetchSchoolIfNeeded } from '../actions/school';
 import { selectLocation } from '../actions/location';
 import SchoolContainer from '../containers/school';
 
-const schoolId = '58f3b39a3b44ad5880370db6';
+const schoolId = '58fbde6f393b1b1bd8536b5a';
 injectTapEventPlugin();
 
 class AppHandler extends Component {
@@ -42,7 +40,6 @@ class AppHandler extends Component {
     return (<div>
       <Menu />
       {this.getChildren()}
-      <Footer items={sitemap.items.children} />
     </div>);
   }
 }

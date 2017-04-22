@@ -68,8 +68,8 @@ class Menu2 extends Component {
   }
 
   render() {
-    const { locations, isFetching, lastUpdated, selectedLocation } = this.props;
-    console.log('isFetching', isFetching, 'lastUpdated', lastUpdated, 'locations', locations, 'selectedLocation', selectedLocation);
+    const { locations, isFetching, selectedLocation } = this.props;
+    console.log('Menu2 isFetching', isFetching);
     return (<AppBar
       title="Koolbe Admin App"
       iconElementLeft={Menu2.getMainMenu(selectedLocation)}
@@ -82,13 +82,11 @@ class Menu2 extends Component {
 Menu2.propTypes = {
   locations: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isFetching: PropTypes.bool.isRequired,
-  lastUpdated: PropTypes.number,
   dispatch: PropTypes.func.isRequired,
   selectedLocation: PropTypes.string,
 };
 
 Menu2.defaultProps = {
-  lastUpdated: null,
   selectedLocation: '',
 };
 
