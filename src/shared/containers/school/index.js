@@ -13,10 +13,7 @@ const mapStateToProps = (state) => {
 
   let locations = [];
   if (school.location && school.location.length) {
-    locations = school.location.map(item => ({
-      id: item.id,
-      name: item.name,
-    }));
+    locations = school.location.map(item => ({ id: item.id, name: item.name }));
   }
 
   return {

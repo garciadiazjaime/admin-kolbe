@@ -8,13 +8,17 @@ import LocationContainer from '../../../../containers/location';
 class LocationShow extends Component {
 
   static renderLocation(location) {
-    console.log('location', location);
+    console.log('renderLocation', location);
     return null;
   }
 
+  // componentDidMount() {
+  //   const { dispatch, selectedSchool, selectedLocation } = this.props;
+  //   dispatch(setLocation(selectedSchool, selectedLocation));
+  // }
+
   render() {
-    const { location, isFetching, lastUpdated, selectedLocation } = this.props;
-    console.log('isFetching', isFetching, 'lastUpdated', lastUpdated, 'selectedLocation', selectedLocation);
+    const { location } = this.props;
     return (<div className="container-fluid">
       <div className="row">
         <div className="col-sm-12">
@@ -38,13 +42,6 @@ class LocationShow extends Component {
 
 LocationShow.propTypes = {
   location: PropTypes.shape({}).isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  lastUpdated: PropTypes.number,
-  selectedLocation: PropTypes.string.isRequired,
-};
-
-LocationShow.defaultProps = {
-  lastUpdated: null,
 };
 
 export default LocationContainer(LocationShow);

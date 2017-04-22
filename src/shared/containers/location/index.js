@@ -2,20 +2,10 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
   const { selectedLocation, locationById } = state;
-  const {
-    isFetching,
-    lastUpdated,
-    data: location,
-  } = locationById[selectedLocation] || {
-    isFetching: true,
-    data: {},
-  };
+  const location = locationById[selectedLocation] || {};
 
   return {
-    selectedLocation,
     location,
-    isFetching,
-    lastUpdated,
   };
 };
 
