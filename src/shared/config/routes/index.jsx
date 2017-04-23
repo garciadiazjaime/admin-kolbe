@@ -102,6 +102,13 @@ export default(
         <Route path="add" component={ParentAddSection} />
         <Route path=":parentId/edit" component={ParentEditSection} />
       </Route>
+
+      <Route path="group">
+        <Route path=":groupId/activity">
+          <IndexRoute component={ActivityListSection} />
+          <Route path="add" component={ActivityAddSection} />
+        </Route>
+      </Route>
     </Route>
   </Router>
 );

@@ -1,46 +1,71 @@
 /* eslint max-len: [2, 500, 4] */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import _ from 'lodash';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import ActivityController from '../../../../../client/controllers/activityController';
+import LogUtil from '../../../../utils/logUtil';
+// const style = require('./style.scss');
 
-function renderLocation(data) {
-  return data.map(item => <tr key={item._id}>
-    <td>{item.name}</td>
-    <td><Link to={`/location/${item._id}/edit`}><i className="glyphicon glyphicon-pencil" /></Link></td>
-    <td><Link to={`/location/${item._id}/level`}><i className="glyphicon glyphicon-zoom-in" /></Link></td>
-  </tr>);
-}
+export default class LocationList extends Component {
 
-export default function LocationList({ data }) {
-  return (<div className="container-fluid">
-    <div className="row">
-      <div className="col-sm-12">
-        <Link to="/location/add" className="pull-right"><i className="glyphicon glyphicon-plus" /></Link>
+  constructor(args) {
+    super(args);
+    this.controller = new ActivityController();
+    this.state = {
+      data: [],
+    };
+  }
+
+  componentDidMount() {
+    this.controller.list()
+      .then((results) => {
+        if (results.entity.status) {
+          this.setState({
+            data: _.isArray(results.entity.data) ? results.entity.data : [],
+          });
+        }
+      })
+      .catch(error => LogUtil.log(error));
+  }
+
+  renderLocation() {
+    if (this.state.data.length) {
+      return this.state.data.map(item => <tr key={item._id}>
+        <td>{item.name}</td>
+        <td><Link to={`/activity/${item._id}/edit`}><i className="glyphicon glyphicon-pencil" /></Link></td>
+      </tr>);
+    }
+    return null;
+  }
+
+  render() {
+    const { params } = this.props;
+    return (<div>
+      <FloatingActionButton mini href={`/group/${params.groupId}/activity/add`} className="pull-right">
+        <ContentAdd />
+      </FloatingActionButton>
+      <div className="row">
+        <div className="col-sm-12">
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th>Nombre de la Actividad</th>
+                <th>Editar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.renderLocation()}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-    <div className="row">
-      <div className="col-sm-12">
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Nombre del Plantel</th>
-              <th>Editar</th>
-              <th>Niveles</th>
-            </tr>
-          </thead>
-          <tbody>
-            {renderLocation(data)}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>);
+    </div>);
+  }
 }
 
 LocationList.propTypes = {
-  data: React.PropTypes.arrayOf(React.PropTypes.object),
-};
-
-LocationList.defaultProps = {
-  data: [],
+  params: PropTypes.shape({}).isRequired,
 };
