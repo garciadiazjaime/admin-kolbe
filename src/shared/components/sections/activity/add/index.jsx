@@ -16,10 +16,12 @@ class AcitivityAdd extends Component {
 
   constructor(args) {
     super(args);
+    const { params } = this.props;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       data: {
         date: new Date(),
+        groupId: params.groupId,
       },
       valid: {},
       touch: {},
@@ -28,24 +30,27 @@ class AcitivityAdd extends Component {
     this.invalidText = 'Obligatorio';
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { params, lastUpdated } = nextProps;
+    if (lastUpdated) {
+      browserHistory.push(`/group/${params.groupId}/activity?success`);
+    }
+  }
+
   handleInputChange(event, newDate) {
-    let newState = null;
+    const newState = _.assign({}, this.state);
     if (event) {
       const { name, value } = event.target;
-      newState = _.assign({}, this.state);
       newState.data[name] = value;
       newState.valid[name] = !!value;
-      if (!this.state.touch[name]) {
-        this.state.touch[name] = true;
+      if (!newState.touch[name]) {
+        newState.touch[name] = true;
       }
     } else if (newDate) {
-      newState = _.assign({}, this.state);
       newState.data.date = newDate;
     }
 
-    if (newState) {
-      this.setState(newState);
-    }
+    this.setState(newState);
   }
 
   handleSubmit() {
@@ -55,9 +60,10 @@ class AcitivityAdd extends Component {
     const requiredFields = ['name', 'description'];
     let isReady = true;
     requiredFields.map((key) => {
-      if (!data[key]) {
+      if (isReady && !data[key]) {
         isReady = false;
       }
+      // when user clicks button we show required fields
       if (!newState.touch[key]) {
         newState.touch[key] = true;
       }
@@ -72,10 +78,7 @@ class AcitivityAdd extends Component {
   }
 
   render() {
-    const { params, isSaving, lastUpdated } = this.props;
-    if (lastUpdated) {
-      browserHistory.push(`/group/${params.groupId}/activity?success`);
-    }
+    const { params, isSaving } = this.props;
     return (<div className="container-fluid">
       <FloatingActionButton mini className="pull-right" href={`/group/${params.groupId}/activity`}>
         <ContentAdd />
