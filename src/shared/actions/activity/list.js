@@ -30,13 +30,8 @@ function fetchActivities(groupId) {
 }
 
 function shouldFetchActivities(state, groupId) {
-  const activities = state.activitiesByGroup[groupId];
-  if (!activities) {
-    return true;
-  } else if (activities.isFetching) {
-    return false;
-  }
-  return activities.didInvalidate;
+  const activities = state.activitiesByGroup[groupId] || {};
+  return activities.isFetching !== true;
 }
 
 export function fetchActivitiesAction(groupId) {

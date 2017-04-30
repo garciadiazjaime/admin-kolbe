@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
   };
 
   return {
+    selectedGroup,
     isFetching,
     lastUpdated,
     activities,

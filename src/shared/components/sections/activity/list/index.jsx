@@ -5,20 +5,23 @@ import moment from 'moment';
 import { Link } from 'react-router';
 import { Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 
-import FloatingActionButton from 'material-ui/FloatingActionButton';
 import { ContentAdd, ContentCreate } from 'material-ui/svg-icons';
 import ActivityController from '../../../../../client/controllers/activityController';
 import ActivityListContainer from '../../../../containers/activity/list';
 import { fetchActivitiesAction } from '../../../../actions/activity/list';
+import { selectGroup } from '../../../../actions/group';
 
 class LocationList extends Component {
 
   static renderActivities(data) {
+    const style = {
+      paddingLeft: '42px',
+    };
     if (data.length) {
       return data.map(item => <TableRow key={item._id}>
         <TableRowColumn>{item.name}</TableRowColumn>
-        <TableRowColumn>{moment(item.date).format('DD/MM/YYYY')}</TableRowColumn>
-        <TableRowColumn>
+        <TableRowColumn style={style}>{moment(item.date).format('DD/MM/YYYY')}</TableRowColumn>
+        <TableRowColumn style={style}>
           <Link to={`/activity/${item._id}/edit`}>
             <ContentCreate />
           </Link>
@@ -37,17 +40,20 @@ class LocationList extends Component {
   }
 
   componentDidMount() {
-    const { params } = this.props;
+    const { params, selectedGroup } = this.props;
     const { dispatch } = this.props;
+    if (!selectedGroup || selectedGroup !== params.groupId) {
+      dispatch(selectGroup(params.groupId));
+    }
     dispatch(fetchActivitiesAction(params.groupId));
   }
 
   render() {
     const { params, activities } = this.props;
     return (<div>
-      <FloatingActionButton mini href={`/group/${params.groupId}/activity/add`} className="pull-right">
+      <Link to={`/group/${params.groupId}/activity/add`} className="pull-right">
         <ContentAdd />
-      </FloatingActionButton>
+      </Link>
       <div className="clearfix" />
       <Table selectable={false} displayRowCheckbox={false}>
         <TableHeader displaySelectAll={false}>
@@ -67,8 +73,13 @@ class LocationList extends Component {
 
 LocationList.propTypes = {
   params: PropTypes.shape({}).isRequired,
+  selectedGroup: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
   activities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+};
+
+LocationList.defaultProps = {
+  selectedGroup: '',
 };
 
 export default ActivityListContainer(LocationList);

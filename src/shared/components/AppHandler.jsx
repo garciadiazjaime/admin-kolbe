@@ -5,7 +5,6 @@ import GaUtil from '../utils/gaUtil';
 import Menu from './layout/menu/menu2';
 import { selectSchool, fetchSchoolIfNeeded } from '../actions/school';
 import { selectLocation } from '../actions/location';
-import { selectGroup } from '../actions/group';
 import SchoolContainer from '../containers/school';
 
 const schoolId = '58fbde6f393b1b1bd8536b5a';
@@ -28,9 +27,6 @@ class AppHandler extends Component {
     dispatch(fetchSchoolIfNeeded(schoolId));
     if (params && params.locationId) {
       dispatch(selectLocation(params.locationId));
-    }
-    if (params && params.groupId) {
-      dispatch(selectGroup(params.groupId));
     }
   }
 

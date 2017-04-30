@@ -1,12 +1,11 @@
 /* eslint max-len: [2, 500, 4] */
 import React, { Component, PropTypes } from 'react';
-import { browserHistory } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import _ from 'lodash';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/clear';
+import { ContentClear } from 'material-ui/svg-icons';
 import LinearProgress from 'material-ui/LinearProgress';
 
 import saveActivityAction from '../../../../actions/activity';
@@ -80,9 +79,9 @@ class AcitivityAdd extends Component {
   render() {
     const { params, isSaving } = this.props;
     return (<div className="container-fluid">
-      <FloatingActionButton mini className="pull-right" href={`/group/${params.groupId}/activity`}>
-        <ContentAdd />
-      </FloatingActionButton>
+      <Link to={`/group/${params.groupId}/activity`} className="pull-right">
+        <ContentClear />
+      </Link>
       <TextField name="name" floatingLabelText="Actividad" floatingLabelFixed fullWidth onChange={this.handleInputChange} errorText={!this.state.valid.name && this.state.touch.name ? this.invalidText : null} />
       <br />
       <TextField name="description" floatingLabelText="Descripción" floatingLabelFixed multiLine rows={4} fullWidth onChange={this.handleInputChange} errorText={!this.state.valid.description && this.state.touch.description ? this.invalidText : null} />
