@@ -1,19 +1,22 @@
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
-  const { groupId, activityHelper } = state;
+  const { activityHelper } = state;
   const {
-    isSaving,
+    isProcessing,
     lastUpdated,
+    groupId,
+    data: activity,
   } = activityHelper || {
-    isSaving: true,
+    isProcessing: true,
     data: {},
   };
 
   return {
-    groupId,
-    isSaving,
+    isProcessing,
     lastUpdated,
+    activity,
+    groupId,
   };
 };
 

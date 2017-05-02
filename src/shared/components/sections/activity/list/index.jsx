@@ -14,10 +14,10 @@ import { selectGroup } from '../../../../actions/group';
 class LocationList extends Component {
 
   static renderActivities(data) {
-    const style = {
-      paddingLeft: '42px',
-    };
     if (data.length) {
+      const style = {
+        paddingLeft: '42px',
+      };
       return data.map(item => <TableRow key={item._id}>
         <TableRowColumn>{item.name}</TableRowColumn>
         <TableRowColumn style={style}>{moment(item.date).format('DD/MM/YYYY')}</TableRowColumn>
