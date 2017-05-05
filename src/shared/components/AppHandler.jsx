@@ -1,38 +1,53 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import sitemap from '../config/sitemap';
-import MainMenu from './layout/menu/menu1';
-import Footer from './layout/footer/footer1';
 import GaUtil from '../utils/gaUtil';
+import Menu from './layout/menu/menu2';
+import { selectSchool, fetchSchoolIfNeeded } from '../actions/school';
+import { selectLocation } from '../actions/location';
+import SchoolContainer from '../containers/school';
 
-export default class AppHandler extends React.Component {
+const schoolId = '58fbde6f393b1b1bd8536b5a';
+injectTapEventPlugin();
+
+class AppHandler extends Component {
 
   constructor(props, context) {
     super(props, context);
     this.state = {
       data: context.data ? context.data : window.data,
     };
+    this.getChildren = this.getChildren.bind(this);
   }
 
   componentDidMount() {
+    const { dispatch, params } = this.props;
     GaUtil.init();
+    dispatch(selectSchool(schoolId));
+    dispatch(fetchSchoolIfNeeded(schoolId));
+    if (params && params.locationId) {
+      dispatch(selectLocation(params.locationId));
+    }
+  }
+
+  getChildren() {
+    return React.Children.map(this.props.children, child =>
+      React.cloneElement(child, { data: this.state.data }),
+    );
   }
 
   render() {
-    const children = React.Children.map(this.props.children, child =>
-      React.cloneElement(child, { data: this.state.data }),
-    );
-
     return (<div>
-      <MainMenu items={sitemap.items.children} />
-      {children}
-      <Footer items={sitemap.items.children} />
+      <Menu />
+      {this.getChildren()}
     </div>);
   }
 }
 
 AppHandler.propTypes = {
   children: PropTypes.shape({}),
+  dispatch: PropTypes.func.isRequired,
+  params: PropTypes.shape({}),
 };
 
 AppHandler.contextTypes = {
@@ -41,4 +56,8 @@ AppHandler.contextTypes = {
 
 AppHandler.defaultProps = {
   children: {},
+  dispatch: {},
+  params: {},
 };
+
+export default SchoolContainer(AppHandler);

@@ -2,22 +2,6 @@ import fetch from 'isomorphic-fetch';
 
 export const REQUEST_LOCATIONS = 'REQUEST_LOCATIONS';
 export const RECEIVE_LOCATIONS = 'RECEIVE_LOCATIONS';
-export const SELECT_SCHOOL = 'SELECT_SCHOOL';
-export const INVALIDATE_SCHOOL = 'INVALIDATE_SCHOOL';
-
-export function selectSchool(school) {
-  return {
-    type: SELECT_SCHOOL,
-    school,
-  };
-}
-
-export function invalidateSchool(school) {
-  return {
-    type: INVALIDATE_SCHOOL,
-    school,
-  };
-}
 
 
 function requestLocations(school) {
@@ -45,7 +29,7 @@ function fetchLocations(school) {
   };
 }
 
-function shouldFetchPosts(state, school) {
+function shouldFetchLocations(state, school) {
   const locations = state.locationsBySchool[school];
   if (!locations) {
     return true;
@@ -57,7 +41,7 @@ function shouldFetchPosts(state, school) {
 
 export function fetchLocationsIfNeeded(school) {
   return (dispatch, getState) => {
-    if (shouldFetchPosts(getState(), school)) {
+    if (shouldFetchLocations(getState(), school)) {
       return dispatch(fetchLocations(school));
     }
     return null;

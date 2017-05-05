@@ -6,7 +6,8 @@ import AppHandler from '../../components/AppHandler';
 
 import DashboardSection from '../../components/sections/dashboard';
 
-import LocationListSection from '../../components/sections/location/list/locationListContainer';
+import LocationListSection from '../../components/sections/location/list';
+import LocationShowSection from '../../components/sections/location/show';
 import LocationAddSection from '../../components/sections/location/add';
 import LocationEditSection from '../../components/sections/location/edit';
 
@@ -50,6 +51,7 @@ export default(
       <Route path="location">
         <IndexRoute component={LocationListSection} />
         <Route path="add" component={LocationAddSection} />
+        <Route path=":locationId" component={LocationShowSection} />
         <Route path=":locationId/edit" component={LocationEditSection} />
 
         <Route path=":locationId/level">
@@ -71,9 +73,7 @@ export default(
                 <IndexRoute component={StudentListSection} />
                 <Route path="add" component={StudentAddSection} />
                 <Route path=":studentId/edit" component={StudentEditSection} />
-
               </Route>
-
             </Route>
           </Route>
         </Route>
@@ -101,6 +101,13 @@ export default(
         <IndexRoute component={ParentListSection} />
         <Route path="add" component={ParentAddSection} />
         <Route path=":parentId/edit" component={ParentEditSection} />
+      </Route>
+
+      <Route path="group">
+        <Route path=":groupId/activity">
+          <IndexRoute component={ActivityListSection} />
+          <Route path="add" component={ActivityAddSection} />
+        </Route>
       </Route>
     </Route>
   </Router>
