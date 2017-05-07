@@ -1,118 +1,58 @@
 /* eslint max-len: [2, 500, 4] */
-import React from 'react';
-import ParentController from '../../../../../client/controllers/parentController';
-import LogUtil from '../../../../utils/logUtil';
-import InputElement from '../../../elements/inputElement';
-import StringUtil from '../../../../utils/stringUtil';
+import React, { Component, PropTypes } from 'react';
+import { browserHistory } from 'react-router';
+import LinearProgress from 'material-ui/LinearProgress';
+import _ from 'lodash';
 
-export default class ParentEdit extends React.Component {
+import ParentForm from '../form';
+import ParentContainer from '../../../../containers/parent';
+import { getParent, updateParent } from '../../../../actions/parent';
+
+class ParentEdit extends Component {
 
   constructor(args) {
     super(args);
-    this.entityId = this.props.params.parentId;
-    this.controller = new ParentController();
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.state = {
-      data: {},
-    };
+    this.actionHandler = this.actionHandler.bind(this);
   }
 
   componentDidMount() {
-    if (this.entityId) {
-      this.controller.get(this.entityId)
-        .then((results) => {
-          if (results.entity.status) {
-            this.setState({
-              data: results.entity.data,
-            });
-          }
-        })
-        .catch(error => LogUtil.log(error));
-    } else {
-      LogUtil.log(`[ERROR::LOADING] ${this.props.location.pathname}`);
+    const { dispatch, params } = this.props;
+    dispatch(getParent(params.parentId));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { groupId, lastUpdated } = nextProps;
+    if (lastUpdated) {
+      browserHistory.push(`/group/${groupId}/parent?success`);
     }
   }
 
-  handleChange(prop, value) {
-    const { state } = this;
-    state.data[prop] = value;
-    state.status = '';
-    this.setState(state);
-  }
-
-  handleDelete() {
-    this.setState({
-      status: 'deleting',
-    });
-    this.controller.delete(this.entityId)
-      .then(() => {
-        this.setState({
-          status: 'deleted',
-        });
-      })
-      .catch(error => LogUtil.log(error));
-  }
-
-  handleSubmit() {
-    this.setState({
-      status: 'saving',
-    });
-    this.controller.update(this.entityId, this.state.data)
-      .then(() => {
-        this.setState({
-          status: 'saved',
-        });
-      })
-      .catch((error) => {
-        LogUtil.log(`[ERROR::UPDATING] ${error}`);
-        this.setState({
-          status: 'error',
-        });
-      });
+  actionHandler(parentId, data) {
+    const { dispatch } = this.props;
+    dispatch(updateParent(parentId, data));
   }
 
   render() {
-    return (<div className="container-fluid">
-      <div className="row">
-        <div className="col-sm-12">
-          <table className="table table-striped">
-            <tbody>
-              <tr>
-                <th>Nombre</th>
-                <td>
-                  <InputElement name="name" value={this.state.data.name} onChange={this.handleChange} />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="2" className="text-right">
-                  <input type="submit" onClick={this.handleSubmit} value="Guardar" className="btn btn-primary" />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="2" className="text-right">
-                  { StringUtil.getFormStatus(this.state.status) }
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-12">
-          <button to="/location/delete" className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar</button>
-        </div>
-      </div>
+    const { parent, lastUpdated } = this.props;
+    return _.isEmpty(parent) ? <LinearProgress mode="indeterminate" /> : (<div className="container-fluid">
+      <ParentForm action={this.actionHandler} groupId={parent.groupId} parent={parent} lastUpdated={lastUpdated} />
     </div>);
   }
 }
 
 ParentEdit.propTypes = {
-  params: React.PropTypes.shape({
-    parentId: React.PropTypes.string.isRequired,
-  }).isRequired,
-  location: React.PropTypes.shape({
-    pathname: React.PropTypes.string.isRequired,
-  }).isRequired,
+  params: PropTypes.shape({}).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  parent: PropTypes.shape({}),
+  lastUpdated: PropTypes.number,
+  groupId: PropTypes.string,
 };
+
+ParentEdit.defaultProps = {
+  parent: {},
+  lastUpdated: null,
+  groupId: null,
+};
+
+
+export default ParentContainer(ParentEdit);
