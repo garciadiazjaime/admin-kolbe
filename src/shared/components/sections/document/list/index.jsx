@@ -10,7 +10,7 @@ import DocumentListContainer from '../../../../containers/document/list';
 import { getDocuments } from '../../../../actions/document/list';
 import { selectGroup } from '../../../../actions/group';
 
-class LocationList extends Component {
+class DocumentList extends Component {
 
   static renderDocuments(data) {
     if (data.length) {
@@ -62,22 +62,22 @@ class LocationList extends Component {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false} stripedRows>
-          {LocationList.renderDocuments(documents)}
+          {DocumentList.renderDocuments(documents)}
         </TableBody>
       </Table>
     </div>);
   }
 }
 
-LocationList.propTypes = {
+DocumentList.propTypes = {
   params: PropTypes.shape({}).isRequired,
   selectedGroup: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
   documents: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
-LocationList.defaultProps = {
+DocumentList.defaultProps = {
   selectedGroup: '',
 };
 
-export default DocumentListContainer(LocationList);
+export default DocumentListContainer(DocumentList);

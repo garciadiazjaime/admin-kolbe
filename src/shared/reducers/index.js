@@ -6,6 +6,8 @@ import { activityHelper } from './activity';
 import { activitiesByGroup } from './activity/list';
 import { documentHelper } from './document';
 import { documentsByGroup } from './document/list';
+import { newsletterHelper } from './newsletter';
+import { newslettersByGroup } from './newsletter/list';
 import { selectedGroup } from './group';
 
 const rootReducer = combineReducers({
@@ -18,6 +20,8 @@ const rootReducer = combineReducers({
   activitiesByGroup,
   documentHelper,
   documentsByGroup,
+  newsletterHelper,
+  newslettersByGroup,
 });
 
 export default rootReducer;

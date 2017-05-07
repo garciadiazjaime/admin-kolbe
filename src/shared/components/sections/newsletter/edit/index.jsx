@@ -1,118 +1,58 @@
 /* eslint max-len: [2, 500, 4] */
-import React from 'react';
-import NewsletterController from '../../../../../client/controllers/newsletterController';
-import LogUtil from '../../../../utils/logUtil';
-import InputElement from '../../../elements/inputElement';
-import StringUtil from '../../../../utils/stringUtil';
+import React, { Component, PropTypes } from 'react';
+import { browserHistory } from 'react-router';
+import LinearProgress from 'material-ui/LinearProgress';
+import _ from 'lodash';
 
-export default class NewsletterEdit extends React.Component {
+import NewsletterForm from '../form';
+import NewsletterContainer from '../../../../containers/newsletter';
+import { getNewsletter, updateNewsletter } from '../../../../actions/newsletter';
+
+class NewsletterEdit extends Component {
 
   constructor(args) {
     super(args);
-    this.entityId = this.props.params.newsletterId;
-    this.controller = new NewsletterController();
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.state = {
-      data: {},
-    };
+    this.actionHandler = this.actionHandler.bind(this);
   }
 
   componentDidMount() {
-    if (this.entityId) {
-      this.controller.get(this.entityId)
-        .then((results) => {
-          if (results.entity.status) {
-            this.setState({
-              data: results.entity.data,
-            });
-          }
-        })
-        .catch(error => LogUtil.log(error));
-    } else {
-      LogUtil.log(`[ERROR::LOADING] ${this.props.location.pathname}`);
+    const { dispatch, params } = this.props;
+    dispatch(getNewsletter(params.newsletterId));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { groupId, lastUpdated } = nextProps;
+    if (lastUpdated) {
+      browserHistory.push(`/group/${groupId}/newsletter?success`);
     }
   }
 
-  handleChange(prop, value) {
-    const { state } = this;
-    state.data[prop] = value;
-    state.status = '';
-    this.setState(state);
-  }
-
-  handleDelete() {
-    this.setState({
-      status: 'deleting',
-    });
-    this.controller.delete(this.entityId)
-      .then(() => {
-        this.setState({
-          status: 'deleted',
-        });
-      })
-      .catch(error => LogUtil.log(error));
-  }
-
-  handleSubmit() {
-    this.setState({
-      status: 'saving',
-    });
-    this.controller.update(this.entityId, this.state.data)
-      .then(() => {
-        this.setState({
-          status: 'saved',
-        });
-      })
-      .catch((error) => {
-        LogUtil.log(`[ERROR::UPDATING] ${error}`);
-        this.setState({
-          status: 'error',
-        });
-      });
+  actionHandler(newsletterId, data) {
+    const { dispatch } = this.props;
+    dispatch(updateNewsletter(newsletterId, data));
   }
 
   render() {
-    return (<div className="container-fluid">
-      <div className="row">
-        <div className="col-sm-12">
-          <table className="table table-striped">
-            <tbody>
-              <tr>
-                <th>Nombre</th>
-                <td>
-                  <InputElement name="name" value={this.state.data.name} onChange={this.handleChange} />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="2" className="text-right">
-                  <input type="submit" onClick={this.handleSubmit} value="Guardar" className="btn btn-primary" />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="2" className="text-right">
-                  { StringUtil.getFormStatus(this.state.status) }
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-12">
-          <button to="/location/delete" className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar</button>
-        </div>
-      </div>
+    const { newsletter, lastUpdated } = this.props;
+    return _.isEmpty(newsletter) ? <LinearProgress mode="indeterminate" /> : (<div className="container-fluid">
+      <NewsletterForm action={this.actionHandler} groupId={newsletter.groupId} newsletter={newsletter} lastUpdated={lastUpdated} />
     </div>);
   }
 }
 
 NewsletterEdit.propTypes = {
-  params: React.PropTypes.shape({
-    newsletterId: React.PropTypes.string.isRequired,
-  }).isRequired,
-  location: React.PropTypes.shape({
-    pathname: React.PropTypes.string.isRequired,
-  }).isRequired,
+  params: PropTypes.shape({}).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  newsletter: PropTypes.shape({}),
+  lastUpdated: PropTypes.number,
+  groupId: PropTypes.string,
 };
+
+NewsletterEdit.defaultProps = {
+  newsletter: {},
+  lastUpdated: null,
+  groupId: null,
+};
+
+
+export default NewsletterContainer(NewsletterEdit);

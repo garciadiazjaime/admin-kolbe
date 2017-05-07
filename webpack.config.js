@@ -60,7 +60,8 @@ if(TARGET === 'dev' || !TARGET) {
 
     plugins: [
       new webpack.NoErrorsPlugin(),
-      new webpack.HotModuleReplacementPlugin()
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.optimize.DedupePlugin()
     ],
 
     module: {
