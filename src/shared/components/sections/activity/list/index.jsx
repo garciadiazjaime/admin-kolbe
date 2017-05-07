@@ -6,7 +6,6 @@ import { Link } from 'react-router';
 import { Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 
 import { ContentAdd, ContentCreate } from 'material-ui/svg-icons';
-import ActivityController from '../../../../../client/controllers/activityController';
 import ActivityListContainer from '../../../../containers/activity/list';
 import { fetchActivitiesAction } from '../../../../actions/activity/list';
 import { selectGroup } from '../../../../actions/group';
@@ -33,7 +32,6 @@ class LocationList extends Component {
 
   constructor(args) {
     super(args);
-    this.controller = new ActivityController();
     this.state = {
       data: [],
     };

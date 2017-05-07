@@ -34,6 +34,7 @@ if(TARGET === 'dev' || !TARGET) {
 
     devServer: {
       contentBase: PATHS.build,
+      compress: true,
 
       // Enable history API fallback so HTML5 History API based
       // routing works. This is a good default that will come

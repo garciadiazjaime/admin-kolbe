@@ -1,73 +1,48 @@
 /* eslint max-len: [2, 500, 4] */
-import React from 'react';
-import DocumentController from '../../../../../client/controllers/documentController';
-import LogUtil from '../../../../utils/logUtil';
-import InputElement from '../../../elements/inputElement';
-import StringUtil from '../../../../utils/stringUtil';
+import React, { Component, PropTypes } from 'react';
+import { browserHistory } from 'react-router';
 
-export default class DocumentAdd extends React.Component {
+import DocumentForm from '../form';
+import DocumentContainer from '../../../../containers/document';
+import { saveDocument } from '../../../../actions/document';
 
-  constructor() {
-    super();
-    this.controller = new DocumentController();
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {
-      data: {},
-    };
+class AcitivityAdd extends Component {
+
+  constructor(args) {
+    super(args);
+    this.actionHandler = this.actionHandler.bind(this);
   }
 
-  handleChange(prop, value) {
-    const { state } = this;
-    state.data[prop] = value;
-    state.status = '';
-    this.setState(state);
+  componentWillReceiveProps(nextProps) {
+    const { groupId, lastUpdated } = nextProps;
+    if (lastUpdated) {
+      browserHistory.push(`/group/${groupId}/document?success`);
+    }
   }
 
-  handleSubmit() {
-    this.setState({
-      status: 'saving',
-    });
-    this.controller.save(this.state.data)
-      .then(() => {
-        this.setState({
-          status: 'saved',
-        });
-      })
-      .catch((error) => {
-        LogUtil.log(`[ERROR::UPDATING] ${error}`);
-        this.setState({
-          status: 'error',
-        });
-      });
+  actionHandler(groupId, data) {
+    const { dispatch } = this.props;
+    dispatch(saveDocument(groupId, data));
   }
 
   render() {
+    const { params } = this.props;
     return (<div className="container-fluid">
-      <div className="row">
-        <div className="col-sm-12">
-          <table className="table table-striped">
-            <tbody>
-              <tr>
-                <th>Nombre</th>
-                <td>
-                  <InputElement name="name" value={this.state.data.name} onChange={this.handleChange} />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="2" className="text-right">
-                  <input type="submit" onClick={this.handleSubmit} value="Guardar" className="btn btn-primary" />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="2" className="text-right">
-                  { StringUtil.getFormStatus(this.state.status) }
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DocumentForm action={this.actionHandler} groupId={params.groupId} />
     </div>);
   }
 }
+
+AcitivityAdd.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  params: PropTypes.shape({}).isRequired,
+  lastUpdated: PropTypes.number,
+  groupId: PropTypes.string,
+};
+
+AcitivityAdd.defaultProps = {
+  lastUpdated: null,
+  groupId: null,
+};
+
+export default DocumentContainer(AcitivityAdd);
