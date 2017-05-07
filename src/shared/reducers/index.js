@@ -8,6 +8,8 @@ import { documentHelper } from './document';
 import { documentsByGroup } from './document/list';
 import { newsletterHelper } from './newsletter';
 import { newslettersByGroup } from './newsletter/list';
+import { parentHelper } from './parent';
+import { parentsByGroup } from './parent/list';
 import { selectedGroup } from './group';
 
 const rootReducer = combineReducers({
@@ -22,6 +24,8 @@ const rootReducer = combineReducers({
   documentsByGroup,
   newsletterHelper,
   newslettersByGroup,
+  parentHelper,
+  parentsByGroup,
 });
 
 export default rootReducer;
