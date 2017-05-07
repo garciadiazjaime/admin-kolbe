@@ -6,7 +6,7 @@ import DocumentForm from '../form';
 import DocumentContainer from '../../../../containers/document';
 import { saveDocument } from '../../../../actions/document';
 
-class AcitivityAdd extends Component {
+class DocumentAdd extends Component {
 
   constructor(args) {
     super(args);
@@ -33,16 +33,16 @@ class AcitivityAdd extends Component {
   }
 }
 
-AcitivityAdd.propTypes = {
+DocumentAdd.propTypes = {
   dispatch: PropTypes.func.isRequired,
   params: PropTypes.shape({}).isRequired,
   lastUpdated: PropTypes.number,
   groupId: PropTypes.string,
 };
 
-AcitivityAdd.defaultProps = {
+DocumentAdd.defaultProps = {
   lastUpdated: null,
   groupId: null,
 };
 
-export default DocumentContainer(AcitivityAdd);
+export default DocumentContainer(DocumentAdd);

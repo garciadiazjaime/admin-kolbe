@@ -1,67 +1,83 @@
 /* eslint max-len: [2, 500, 4] */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import moment from 'moment';
 import { Link } from 'react-router';
-import _ from 'lodash';
-import NewsletterController from '../../../../../client/controllers/newsletterController';
-import LogUtil from '../../../../utils/logUtil';
-// const style = require('./style.scss');
+import { Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 
-export default class NewsletterList extends React.Component {
+import { ContentAdd, ContentCreate } from 'material-ui/svg-icons';
+import NewsletterListContainer from '../../../../containers/newsletter/list';
+import { getNewsletters } from '../../../../actions/newsletter/list';
+import { selectGroup } from '../../../../actions/group';
 
-  constructor() {
-    super();
-    this.controller = new NewsletterController();
-    this.baseUrl = '/newsletter';
+class LocationList extends Component {
+
+  static renderNewsletters(data) {
+    if (data.length) {
+      const style = {
+        paddingLeft: '42px',
+      };
+      return data.map(item => <TableRow key={item._id}>
+        <TableRowColumn>{item.name}</TableRowColumn>
+        <TableRowColumn style={style}>{moment(item.date).format('DD/MM/YYYY')}</TableRowColumn>
+        <TableRowColumn style={style}>
+          <Link to={`/newsletter/${item._id}/edit`}>
+            <ContentCreate />
+          </Link>
+        </TableRowColumn>
+      </TableRow>);
+    }
+    return null;
+  }
+
+  constructor(args) {
+    super(args);
     this.state = {
       data: [],
     };
   }
 
   componentDidMount() {
-    this.controller.list()
-      .then((results) => {
-        if (results.entity.status) {
-          this.setState({
-            data: _.isArray(results.entity.data) ? results.entity.data : [],
-          });
-        }
-      })
-      .catch(error => LogUtil.log(error));
-  }
-
-  renderLocation() {
-    if (this.state.data.length) {
-      return this.state.data.map(item => <tr key={item._id}>
-        <td>{item.name}</td>
-        <td><Link to={`${this.baseUrl}/${item._id}/edit`}><i className="glyphicon glyphicon-pencil" /></Link></td>
-      </tr>);
+    const { params, selectedGroup } = this.props;
+    const { dispatch } = this.props;
+    if (!selectedGroup || selectedGroup !== params.groupId) {
+      dispatch(selectGroup(params.groupId));
     }
-    return null;
+    dispatch(getNewsletters(params.groupId));
   }
 
   render() {
-    return (<div className="container-fluid">
-      <div className="row">
-        <div className="col-sm-12">
-          <Link to={`${this.baseUrl}/add`} className="pull-right"><i className="glyphicon glyphicon-plus" /></Link>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-12">
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Nombre de Boletín</th>
-                <th>Editar</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.renderLocation()}
-            </tbody>
-          </table>
-        </div>
-      </div>
+    const { params, newsletters } = this.props;
+    return (<div>
+      <Link to={`/group/${params.groupId}/newsletter/add`} className="pull-right">
+        <ContentAdd />
+      </Link>
+      <div className="clearfix" />
+      <Table selectable={false} displayRowCheckbox={false}>
+        <TableHeader displaySelectAll={false}>
+          <TableRow>
+            <TableHeaderColumn>Nombre</TableHeaderColumn>
+            <TableHeaderColumn>Fecha</TableHeaderColumn>
+            <TableHeaderColumn>Editar</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody displayRowCheckbox={false} stripedRows>
+          {LocationList.renderNewsletters(newsletters)}
+        </TableBody>
+      </Table>
     </div>);
   }
 }
+
+LocationList.propTypes = {
+  params: PropTypes.shape({}).isRequired,
+  selectedGroup: PropTypes.string,
+  dispatch: PropTypes.func.isRequired,
+  newsletters: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+};
+
+LocationList.defaultProps = {
+  selectedGroup: '',
+};
+
+export default NewsletterListContainer(LocationList);

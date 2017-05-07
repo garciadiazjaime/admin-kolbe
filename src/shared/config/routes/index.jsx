@@ -113,6 +113,11 @@ export default(
           <IndexRoute component={DocumentListSection} />
           <Route path="add" component={DocumentAddSection} />
         </Route>
+
+        <Route path=":groupId/newsletter">
+          <IndexRoute component={NewsletterListSection} />
+          <Route path="add" component={NewsletterAddSection} />
+        </Route>
       </Route>
     </Route>
   </Router>
