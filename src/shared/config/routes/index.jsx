@@ -108,6 +108,11 @@ export default(
           <IndexRoute component={ActivityListSection} />
           <Route path="add" component={ActivityAddSection} />
         </Route>
+
+        <Route path=":groupId/document">
+          <IndexRoute component={DocumentListSection} />
+          <Route path="add" component={DocumentAddSection} />
+        </Route>
       </Route>
     </Route>
   </Router>
