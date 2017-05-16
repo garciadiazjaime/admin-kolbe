@@ -1,4 +1,4 @@
-import { SELECT_GROUP } from '../../actions/group';
+import { SELECT_GROUP, UPLOADING_FILE, FILE_UPLOADED } from '../../actions/group';
 
 
 export function selectedGroup(state = '', action) {
@@ -10,4 +10,34 @@ export function selectedGroup(state = '', action) {
   }
 }
 
-export const TEST = 'TEST';
+function upload(state = {
+  isProcessing: false,
+  didInvalidate: false,
+  data: {},
+}, action) {
+  switch (action.type) {
+    case UPLOADING_FILE:
+      return Object.assign({}, state, {
+        isProcessing: true,
+        didInvalidate: false,
+      });
+    case FILE_UPLOADED:
+      return Object.assign({}, state, {
+        isProcessing: false,
+        didInvalidate: false,
+        lastUpdated: action.receivedAt,
+      });
+    default:
+      return state;
+  }
+}
+
+export function groupUploadHelper(state = { }, action) {
+  switch (action.type) {
+    case UPLOADING_FILE:
+    case FILE_UPLOADED:
+      return upload(state.file, action);
+    default:
+      return state;
+  }
+}

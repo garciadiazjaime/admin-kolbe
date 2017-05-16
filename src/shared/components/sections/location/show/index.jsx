@@ -1,11 +1,11 @@
 /* eslint max-len: [2, 500, 4] */
 
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 import Subheader from 'material-ui/Subheader';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
-
-import { Link } from 'react-router';
+import { FileFileUpload } from 'material-ui/svg-icons';
 
 import LocationContainer from '../../../../containers/location';
 
@@ -30,6 +30,11 @@ class LocationShow extends Component {
         </TableRowColumn>
         <TableRowColumn>
           <Link to={`/group/${item.id}/parent`}>Padres</Link>
+        </TableRowColumn>
+        <TableRowColumn>
+          <Link to={`/group/${item.id}/upload`} className="pull-right">
+            <FileFileUpload />
+          </Link>
         </TableRowColumn>
       </TableRow>)
       : null;

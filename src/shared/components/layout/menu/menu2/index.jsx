@@ -5,7 +5,6 @@ import AppBar from 'material-ui/AppBar';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { white } from 'material-ui/styles/colors';
 
@@ -15,35 +14,6 @@ import { selectLocation } from '../../../../actions/location';
 const style = require('./style.scss');
 
 class Menu2 extends Component {
-
-  static getMainMenu(selectedLocation) {
-    const items = [{
-      title: 'Actividades',
-      href: 'activity',
-      id: 1,
-    }, {
-      title: 'Documentos',
-      href: 'document',
-      id: 2,
-    }, {
-      title: 'Boletines',
-      href: 'newsletter',
-      id: 3,
-    }, {
-      title: 'Padres',
-      href: 'parent',
-      id: 4,
-    }];
-    if (!selectedLocation) {
-      return null;
-    }
-    const itemsEl = items.map(item => (<MenuItem key={item.id}>
-      <Link to={`/location/${selectedLocation}/${item.href}`} title={item.title} className={style.anchor}>{item.title}</Link>
-    </MenuItem>));
-    return (<IconMenu iconButtonElement={<IconButton><MenuIcon color={white} /></IconButton>}>
-      {itemsEl}
-    </IconMenu>);
-  }
 
   constructor(args) {
     super(args);
@@ -68,12 +38,11 @@ class Menu2 extends Component {
   }
 
   render() {
-    const { locations, isFetching, selectedLocation } = this.props;
+    const { locations, isFetching } = this.props;
     console.log('Menu2 isFetching', isFetching);
     return (<AppBar
       title="Koolbe Admin App"
-      iconElementLeft={Menu2.getMainMenu(selectedLocation)}
-      showMenuIconButton={!!selectedLocation}
+      showMenuIconButton={false}
       iconElementRight={this.getLocationsMenu(locations)}
     />);
   }
@@ -83,11 +52,6 @@ Menu2.propTypes = {
   locations: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isFetching: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
-  selectedLocation: PropTypes.string,
-};
-
-Menu2.defaultProps = {
-  selectedLocation: '',
 };
 
 export default SchoolContainer(Menu2);
