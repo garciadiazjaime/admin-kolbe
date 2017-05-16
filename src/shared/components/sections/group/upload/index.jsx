@@ -25,7 +25,6 @@ class GroupUploadForm extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { params, lastUpdated } = nextProps;
-    console.log('lastUpdated', lastUpdated, params);
     if (lastUpdated) {
       browserHistory.push(`/group/${params.groupId}/parent?action=upload&status=true`);
     }

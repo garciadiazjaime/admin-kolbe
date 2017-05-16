@@ -5,16 +5,13 @@ const mapStateToProps = (state) => {
   const {
     isProcessing,
     lastUpdated,
-    data: file,
   } = groupUploadHelper || {
     isProcessing: false,
-    data: {},
   };
 
   return {
     isProcessing,
     lastUpdated,
-    file,
   };
 };
 

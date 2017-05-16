@@ -13,7 +13,6 @@ export function selectedGroup(state = '', action) {
 function upload(state = {
   isProcessing: false,
   didInvalidate: false,
-  data: {},
 }, action) {
   switch (action.type) {
     case UPLOADING_FILE:
@@ -36,7 +35,7 @@ export function groupUploadHelper(state = { }, action) {
   switch (action.type) {
     case UPLOADING_FILE:
     case FILE_UPLOADED:
-      return upload(state.file, action);
+      return upload(state, action);
     default:
       return state;
   }
