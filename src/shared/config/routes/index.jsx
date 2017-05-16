@@ -22,6 +22,7 @@ import GradeEditSection from '../../components/sections/grade/edit';
 import GroupListSection from '../../components/sections/group/list';
 import GroupAddSection from '../../components/sections/group/add';
 import GroupEditSection from '../../components/sections/group/edit';
+import GroupUploadSection from '../../components/sections/group/upload';
 
 import StudentListSection from '../../components/sections/student/list';
 import StudentAddSection from '../../components/sections/student/add';
@@ -122,6 +123,10 @@ export default(
         <Route path=":groupId/parent">
           <IndexRoute component={ParentListSection} />
           <Route path="add" component={ParentAddSection} />
+        </Route>
+
+        <Route path=":groupId">
+          <Route path="upload" component={GroupUploadSection} />
         </Route>
       </Route>
     </Route>

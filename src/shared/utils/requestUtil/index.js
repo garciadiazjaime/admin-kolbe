@@ -6,6 +6,10 @@ const client = rest
   .wrap(mime, { mime: 'application/json' })
   .wrap(errorCode, { code: 300 });
 
+const submitClient = rest
+  .wrap(mime, { mime: 'multipart/form-data' })
+  .wrap(errorCode, { code: 300 });
+
 export default class RequestUtil {
 
   static get(url) {
@@ -20,6 +24,14 @@ export default class RequestUtil {
   */
   static post(url, data) {
     return client({
+      method: 'POST',
+      path: url,
+      entity: data,
+    });
+  }
+
+  static submit(url, data) {
+    return submitClient({
       method: 'POST',
       path: url,
       entity: data,
