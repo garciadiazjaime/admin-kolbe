@@ -1,5 +1,13 @@
-import { SAVING_PARENT, PARENT_SAVED, REQUEST_PARENT, RECEIVE_PARENT } from '../../actions/parent';
+import { SELECT_PARENT, SAVING_PARENT, PARENT_SAVED, REQUEST_PARENT, RECEIVE_PARENT } from '../../actions/parent';
 
+export function selectedParent(state = '', action) {
+  switch (action.type) {
+    case SELECT_PARENT:
+      return action.parentId;
+    default:
+      return state;
+  }
+}
 
 function parent(state = {
   isProcessing: false,

@@ -8,9 +8,10 @@ import { documentHelper } from './document';
 import { documentsByGroup } from './document/list';
 import { newsletterHelper } from './newsletter';
 import { newslettersByGroup } from './newsletter/list';
-import { parentHelper } from './parent';
+import { parentHelper, selectedParent } from './parent';
 import { parentsByGroup } from './parent/list';
 import { selectedGroup, groupUploadHelper } from './group';
+import { studentsByEntity } from './student/list';
 
 const rootReducer = combineReducers({
   schoolById,
@@ -27,6 +28,8 @@ const rootReducer = combineReducers({
   newslettersByGroup,
   parentHelper,
   parentsByGroup,
+  selectedParent,
+  studentsByEntity,
 });
 
 export default rootReducer;

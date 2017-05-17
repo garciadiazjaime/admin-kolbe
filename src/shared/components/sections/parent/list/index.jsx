@@ -1,11 +1,10 @@
 /* eslint max-len: [2, 500, 4] */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import React, { Component, PropTypes } from 'react';
-import moment from 'moment';
 import { Link } from 'react-router';
 import { Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 
-import { ContentAdd, ContentCreate } from 'material-ui/svg-icons';
+import { ContentAdd, ContentCreate, SocialGroup } from 'material-ui/svg-icons';
 import ParentListContainer from '../../../../containers/parent/list';
 import { getParents } from '../../../../actions/parent/list';
 import { selectGroup } from '../../../../actions/group';
@@ -18,11 +17,16 @@ class ParentList extends Component {
         paddingLeft: '42px',
       };
       return data.map(item => <TableRow key={item._id}>
-        <TableRowColumn>{item.name}</TableRowColumn>
-        <TableRowColumn style={style}>{moment(item.date).format('DD/MM/YYYY')}</TableRowColumn>
+        <TableRowColumn>{item.email}</TableRowColumn>
+        <TableRowColumn>{item.code}</TableRowColumn>
         <TableRowColumn style={style}>
           <Link to={`/parent/${item._id}/edit`}>
             <ContentCreate />
+          </Link>
+        </TableRowColumn>
+        <TableRowColumn style={style}>
+          <Link to={`/parent/${item._id}/student`}>
+            <SocialGroup />
           </Link>
         </TableRowColumn>
       </TableRow>);
@@ -56,9 +60,10 @@ class ParentList extends Component {
       <Table selectable={false} displayRowCheckbox={false}>
         <TableHeader displaySelectAll={false}>
           <TableRow>
-            <TableHeaderColumn>Nombre</TableHeaderColumn>
-            <TableHeaderColumn>Fecha</TableHeaderColumn>
+            <TableHeaderColumn>Email</TableHeaderColumn>
+            <TableHeaderColumn>Código</TableHeaderColumn>
             <TableHeaderColumn>Editar</TableHeaderColumn>
+            <TableHeaderColumn>Estudiantes</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false} stripedRows>

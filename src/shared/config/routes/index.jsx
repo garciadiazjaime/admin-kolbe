@@ -101,7 +101,10 @@ export default(
       <Route path="parent">
         <IndexRoute component={ParentListSection} />
         <Route path="add" component={ParentAddSection} />
-        <Route path=":parentId/edit" component={ParentEditSection} />
+        <Route path=":parentId">
+          <Route path="edit" component={ParentEditSection} />
+          <Route path="student" component={StudentListSection} />
+        </Route>
       </Route>
 
       <Route path="group">
