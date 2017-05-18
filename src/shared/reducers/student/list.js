@@ -1,4 +1,7 @@
-import { REQUEST_STUDENTS, RECEIVE_STUDENTS } from '../../actions/student/list';
+import { REQUEST_STUDENTS_BY_PARENT,
+  RECEIVE_STUDENTS_BY_PARENT,
+  REQUEST_STUDENTS_BY_GROUP,
+  RECEIVE_STUDENTS_BY_GROUP } from '../../actions/student/list';
 
 function student(state = {
   isFetching: false,
@@ -6,12 +9,14 @@ function student(state = {
   data: [],
 }, action) {
   switch (action.type) {
-    case REQUEST_STUDENTS:
+    case REQUEST_STUDENTS_BY_PARENT:
+    case REQUEST_STUDENTS_BY_GROUP:
       return Object.assign({}, state, {
         isFetching: true,
         didInvalidate: false,
       });
-    case RECEIVE_STUDENTS:
+    case RECEIVE_STUDENTS_BY_PARENT:
+    case RECEIVE_STUDENTS_BY_GROUP:
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
@@ -23,14 +28,24 @@ function student(state = {
   }
 }
 
-export const TEST = 'TEST';
-
-export function studentsByEntity(state = { }, action) {
+export function studentsByParent(state = { }, action) {
   switch (action.type) {
-    case REQUEST_STUDENTS:
-    case RECEIVE_STUDENTS:
+    case REQUEST_STUDENTS_BY_PARENT:
+    case RECEIVE_STUDENTS_BY_PARENT:
       return Object.assign({}, state, {
-        [action.entityId]: student(state[action.entityId], action),
+        [action.parentId]: student(state[action.parentId], action),
+      });
+    default:
+      return state;
+  }
+}
+
+export function studentsByGroup(state = { }, action) {
+  switch (action.type) {
+    case REQUEST_STUDENTS_BY_GROUP:
+    case RECEIVE_STUDENTS_BY_GROUP:
+      return Object.assign({}, state, {
+        [action.groupId]: student(state[action.groupId], action),
       });
     default:
       return state;

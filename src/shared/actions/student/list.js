@@ -1,45 +1,85 @@
 import RequestUtil from '../../utils/requestUtil';
 import constants from '../../../constants';
 
-export const REQUEST_STUDENTS = 'REQUEST_STUDENTS';
-export const RECEIVE_STUDENTS = 'RECEIVE_STUDENTS';
+export const REQUEST_STUDENTS_BY_PARENT = 'REQUEST_STUDENTS_BY_PARENT';
+export const RECEIVE_STUDENTS_BY_PARENT = 'RECEIVE_STUDENTS_BY_PARENT';
+export const REQUEST_STUDENTS_BY_GROUP = 'REQUEST_STUDENTS_BY_GROUP';
+export const RECEIVE_STUDENTS_BY_GROUP = 'RECEIVE_STUDENTS_BY_GROUP';
 
 
-function requestStudents(entityId) {
+function requestStudentsByParent(parentId) {
   return {
-    type: REQUEST_STUDENTS,
-    entityId,
+    type: REQUEST_STUDENTS_BY_PARENT,
+    parentId,
   };
 }
 
-function receiveStudents(entityId, data) {
+function receiveStudentsByParent(parentId, data) {
   return {
-    type: RECEIVE_STUDENTS,
-    entityId,
+    type: RECEIVE_STUDENTS_BY_PARENT,
+    parentId,
     students: data.entity.data,
     receivedAt: Date.now(),
   };
 }
 
-function getStudentsHelper(entityId, route) {
+function getStudentsByParentHelper(parentId) {
   return (dispatch) => {
-    dispatch(requestStudents(entityId));
-    return RequestUtil.get(`${constants.apiUrl}/${route}/${entityId}/student`)
-      .then(response => dispatch(receiveStudents(entityId, response)));
+    dispatch(requestStudentsByParent(parentId));
+    return RequestUtil.get(`${constants.apiUrl}/parent/${parentId}/student`)
+      .then(response => dispatch(receiveStudentsByParent(parentId, response)));
   };
 }
 
-function shouldFetchStudents(state, entityId) {
-  const students = state.studentsByEntity[entityId] || {};
+function shouldFetchStudentsByParent(state, parentId) {
+  const students = state.studentsByParent[parentId] || {};
   return students.isFetching !== true;
 }
 
-export function getStudents(params) {
+export function getStudentsFromParent(parentId) {
   return (dispatch, getState) => {
-    const { parentId, groupId } = params;
-    if (shouldFetchStudents(getState(), parentId)) {
-      return parentId ? dispatch(getStudentsHelper(parentId, 'parent')) :
-        dispatch(getStudentsHelper(groupId, 'group'));
+    if (shouldFetchStudentsByParent(getState(), parentId)) {
+      return dispatch(getStudentsByParentHelper(parentId));
+    }
+    return null;
+  };
+}
+
+
+function requestStudentsByGroup(groupId) {
+  return {
+    type: REQUEST_STUDENTS_BY_GROUP,
+    groupId,
+  };
+}
+
+function receiveStudentsByGroup(groupId, data) {
+  return {
+    type: RECEIVE_STUDENTS_BY_GROUP,
+    groupId,
+    students: data.entity.data,
+    receivedAt: Date.now(),
+  };
+}
+
+
+function getStudentsByGroupHelper(groupId) {
+  return (dispatch) => {
+    dispatch(requestStudentsByGroup(groupId));
+    return RequestUtil.get(`${constants.apiUrl}/group/${groupId}/student`)
+      .then(response => dispatch(receiveStudentsByGroup(groupId, response)));
+  };
+}
+
+function shouldFetchStudentsByGroup(state, groupId) {
+  const students = state.studentsByGroup[groupId] || {};
+  return students.isFetching !== true;
+}
+
+export function getStudentsFromGroup(groupId) {
+  return (dispatch, getState) => {
+    if (shouldFetchStudentsByGroup(getState(), groupId)) {
+      return dispatch(getStudentsByGroupHelper(groupId));
     }
     return null;
   };

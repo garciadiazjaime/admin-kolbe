@@ -24,7 +24,8 @@ import GroupAddSection from '../../components/sections/group/add';
 import GroupEditSection from '../../components/sections/group/edit';
 import GroupUploadSection from '../../components/sections/group/upload';
 
-import StudentListSection from '../../components/sections/student/list';
+import StudentParentListSection from '../../components/sections/student/list/parent';
+import StudentGroupListSection from '../../components/sections/student/list/group';
 import StudentAddSection from '../../components/sections/student/add';
 import StudentEditSection from '../../components/sections/student/edit';
 
@@ -71,7 +72,7 @@ export default(
               <Route path=":groupId/edit" component={GroupEditSection} />
 
               <Route path=":groupId/student">
-                <IndexRoute component={StudentListSection} />
+                <IndexRoute component={StudentGroupListSection} />
                 <Route path="add" component={StudentAddSection} />
                 <Route path=":studentId/edit" component={StudentEditSection} />
               </Route>
@@ -103,7 +104,7 @@ export default(
         <Route path="add" component={ParentAddSection} />
         <Route path=":parentId">
           <Route path="edit" component={ParentEditSection} />
-          <Route path="student" component={StudentListSection} />
+          <Route path="student" component={StudentParentListSection} />
         </Route>
       </Route>
 
@@ -130,6 +131,7 @@ export default(
 
         <Route path=":groupId">
           <Route path="upload" component={GroupUploadSection} />
+          <Route path="student" component={StudentGroupListSection} />
         </Route>
       </Route>
     </Route>

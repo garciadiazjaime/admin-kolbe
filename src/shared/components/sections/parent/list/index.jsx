@@ -12,7 +12,7 @@ import { selectGroup } from '../../../../actions/group';
 class ParentList extends Component {
 
   static renderParents(data) {
-    if (data.length) {
+    if (data && data.length) {
       const style = {
         paddingLeft: '42px',
       };
@@ -44,7 +44,7 @@ class ParentList extends Component {
   componentDidMount() {
     const { params, selectedGroup } = this.props;
     const { dispatch } = this.props;
-    if (!selectedGroup || selectedGroup !== params.groupId) {
+    if (params.groupId && selectedGroup !== params.groupId) {
       dispatch(selectGroup(params.groupId));
     }
     dispatch(getParents(params.groupId));
@@ -78,11 +78,12 @@ ParentList.propTypes = {
   params: PropTypes.shape({}).isRequired,
   selectedGroup: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
-  parents: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  parents: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 ParentList.defaultProps = {
   selectedGroup: '',
+  parents: [],
 };
 
 export default ParentListContainer(ParentList);

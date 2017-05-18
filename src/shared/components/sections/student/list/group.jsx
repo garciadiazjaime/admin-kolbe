@@ -5,9 +5,9 @@ import { Link } from 'react-router';
 import { Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 
 import { ContentCreate } from 'material-ui/svg-icons';
-import StudentListContainer from '../../../../containers/student/list';
-import { getStudents } from '../../../../actions/student/list';
-import { selectParent } from '../../../../actions/parent';
+import StudentGroupListContainer from '../../../../containers/student/group';
+import { getStudentsFromGroup } from '../../../../actions/student/list';
+import { selectGroup } from '../../../../actions/group';
 
 class StudentList extends Component {
 
@@ -38,16 +38,15 @@ class StudentList extends Component {
   }
 
   componentDidMount() {
-    const { params, dispatch, selectedParent } = this.props;
-    if (!selectedParent || selectedParent !== params.parentId) {
-      dispatch(selectParent(params.parentId));
+    const { params, dispatch, selectedGroup } = this.props;
+    if (params.groupId && params.groupId !== selectedGroup) {
+      dispatch(selectGroup(params.groupId));
     }
-    dispatch(getStudents(params));
+    dispatch(getStudentsFromGroup(params.groupId));
   }
 
   render() {
-    const { params, students } = this.props;
-    console.log('params', params);
+    const { students } = this.props;
     return (<div>
       <div className="clearfix" />
       <Table selectable={false} displayRowCheckbox={false}>
@@ -71,11 +70,12 @@ StudentList.propTypes = {
   params: PropTypes.shape({}).isRequired,
   dispatch: PropTypes.func.isRequired,
   students: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  selectedParent: PropTypes.string,
+  selectedGroup: PropTypes.string.isRequired,
 };
 
-StudentList.defaultProps = {
-  selectedParent: null,
-};
+// StudentList.defaultProps = {
+//   selectedParent: null,
+//   selectedGroup: null,
+// };
 
-export default StudentListContainer(StudentList);
+export default StudentGroupListContainer(StudentList);
