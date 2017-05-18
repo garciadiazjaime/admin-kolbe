@@ -3,9 +3,9 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import Subheader from 'material-ui/Subheader';
-import { Tabs, Tab } from 'material-ui/Tabs';
 import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 import { FileFileUpload } from 'material-ui/svg-icons';
+import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 
 import LocationContainer from '../../../../containers/location';
 
@@ -53,15 +53,20 @@ class LocationShow extends Component {
   }
 
   static renderLevels(data) {
-    return data && data.level ? data.level.map(item => <Tab key={item.id} label={item.name}>
+    return data && data.level ? data.level.map(item => <div>
+      <Toolbar>
+        <ToolbarGroup>
+          <ToolbarTitle text={item.name} />
+        </ToolbarGroup>
+      </Toolbar>
       {LocationShow.renderGrade(item)}
-    </Tab>) : null;
+    </div>) : null;
   }
 
   render() {
     const { location } = this.props;
     return (<div>
-      <Tabs>{LocationShow.renderLevels(location)}</Tabs>
+      {LocationShow.renderLevels(location)}
     </div>);
   }
 }
