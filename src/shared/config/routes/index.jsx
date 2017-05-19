@@ -108,6 +108,8 @@ export default(
         </Route>
       </Route>
 
+      <Route path="student/:studentId/edit" component={StudentEditSection} />
+
       <Route path="group">
         <Route path=":groupId/activity">
           <IndexRoute component={ActivityListSection} />

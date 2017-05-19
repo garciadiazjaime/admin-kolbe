@@ -26,7 +26,7 @@ class LocationShow extends Component {
           <Link to={`/group/${item.id}/document`}>Documentos</Link>
         </TableRowColumn>
         <TableRowColumn>
-          <Link to={`/group/${item.id}/newsletter`}>Boletines</Link>
+          <Link to={`/group/${item.id}/newsletter`}>Anuncios</Link>
         </TableRowColumn>
         <TableRowColumn>
           <Link to={`/group/${item.id}/parent`}>Padres</Link>
@@ -53,7 +53,7 @@ class LocationShow extends Component {
   }
 
   static renderLevels(data) {
-    return data && data.level ? data.level.map(item => <div>
+    return data && data.level ? data.level.map(item => <div key={item.id}>
       <Toolbar>
         <ToolbarGroup>
           <ToolbarTitle text={item.name} />

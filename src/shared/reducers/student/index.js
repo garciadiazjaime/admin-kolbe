@@ -1,37 +1,37 @@
-import { SELECT_PARENT, SAVING_PARENT, PARENT_SAVED, REQUEST_PARENT, RECEIVE_PARENT } from '../../actions/parent';
+import { SELECT_STUDENT, SAVING_STUDENT, STUDENT_SAVED, REQUEST_STUDENT, RECEIVE_STUDENT } from '../../actions/student';
 
-export function selectedParent(state = '', action) {
+export function selectedStudent(state = '', action) {
   switch (action.type) {
-    case SELECT_PARENT:
-      return action.parentId;
+    case SELECT_STUDENT:
+      return action.studentId;
     default:
       return state;
   }
 }
 
-function parent(state = {
+function student(state = {
   isProcessing: false,
   didInvalidate: false,
   data: {},
 }, action) {
   switch (action.type) {
-    case REQUEST_PARENT:
+    case REQUEST_STUDENT:
       return Object.assign({}, state, {
         isProcessing: true,
         didInvalidate: false,
       });
-    case RECEIVE_PARENT:
+    case RECEIVE_STUDENT:
       return Object.assign({}, state, {
         isProcessing: false,
         didInvalidate: false,
-        data: action.parent,
+        data: action.student,
       });
-    case SAVING_PARENT:
+    case SAVING_STUDENT:
       return Object.assign({}, state, {
         isProcessing: true,
         didInvalidate: false,
       });
-    case PARENT_SAVED:
+    case STUDENT_SAVED:
       return Object.assign({}, state, {
         isProcessing: false,
         didInvalidate: false,
@@ -45,13 +45,13 @@ function parent(state = {
 
 export const TEST = 'TEST';
 
-export function parentHelper(state = { }, action) {
+export function studentHelper(state = { }, action) {
   switch (action.type) {
-    case REQUEST_PARENT:
-    case RECEIVE_PARENT:
-    case SAVING_PARENT:
-    case PARENT_SAVED:
-      return parent(state.parent, action);
+    case REQUEST_STUDENT:
+    case RECEIVE_STUDENT:
+    case SAVING_STUDENT:
+    case STUDENT_SAVED:
+      return student(state.student, action);
     default:
       return state;
   }

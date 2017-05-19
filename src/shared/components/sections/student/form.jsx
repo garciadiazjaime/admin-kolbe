@@ -8,15 +8,15 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { ContentClear } from 'material-ui/svg-icons';
 import LinearProgress from 'material-ui/LinearProgress';
 
-export default class ActivityForm extends Component {
+export default class StudentForm extends Component {
 
   constructor(args) {
     super(args);
-    const { groupId, parent } = this.props;
-    const initData = _.isEmpty(parent) ? {
+    const { groupId, student } = this.props;
+    const initData = _.isEmpty(student) ? {
       date: new Date(),
       groupId,
-    } : parent;
+    } : student;
     this.state = {
       data: initData,
       valid: {},
@@ -25,7 +25,7 @@ export default class ActivityForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.invalidText = 'Obligatorio';
-    this.entityId = _.isEmpty(parent) ? groupId : parent._id;
+    this.entityId = _.isEmpty(student) ? groupId : student._id;
   }
 
   handleInputChange(event, newDate) {
@@ -47,7 +47,7 @@ export default class ActivityForm extends Component {
   handleSubmit() {
     const { data } = this.state;
     const newState = _.assign({}, this.state);
-    const requiredFields = ['name', 'email', 'code'];
+    const requiredFields = ['name', 'lastname', 'lastname2', 'code'];
     let isReady = true;
     requiredFields.map((key) => {
       if (isReady && !data[key]) {
@@ -60,6 +60,7 @@ export default class ActivityForm extends Component {
       newState.valid[key] = !!data[key];
       return null;
     });
+
     if (!isReady) {
       this.setState(newState);
     } else {
@@ -71,14 +72,16 @@ export default class ActivityForm extends Component {
     const { isProcessing, groupId } = this.props;
     const { data, valid, touch } = this.state;
     return (<div>
-      <Link to={`/group/${groupId}/parent`} className="pull-right">
+      <Link to={`/group/${groupId}/student`} className="pull-right">
         <ContentClear />
       </Link>
       <TextField name="name" floatingLabelText="Nombre" floatingLabelFixed fullWidth onChange={this.handleInputChange} errorText={!valid.name && touch.name ? this.invalidText : null} defaultValue={data.name} />
       <br />
       <span>{data.file}</span>
       <br />
-      <TextField name="email" floatingLabelText="Email" floatingLabelFixed fullWidth onChange={this.handleInputChange} errorText={!valid.email && touch.email ? this.invalidText : null} defaultValue={data.email} />
+      <TextField name="lastname" floatingLabelText="Apellido Paterno" floatingLabelFixed fullWidth onChange={this.handleInputChange} errorText={!valid.lastname && touch.lastname ? this.invalidText : null} defaultValue={data.lastname} />
+      <br />
+      <TextField name="lastname2" floatingLabelText="Apellido Materno" floatingLabelFixed fullWidth onChange={this.handleInputChange} errorText={!valid.lastname2 && touch.lastname2 ? this.invalidText : null} defaultValue={data.lastname2} />
       <br />
       <TextField name="code" floatingLabelText="Código" floatingLabelFixed fullWidth onChange={this.handleInputChange} errorText={!valid.code && touch.code ? this.invalidText : null} defaultValue={data.code} />
       <br />
@@ -89,15 +92,15 @@ export default class ActivityForm extends Component {
   }
 }
 
-ActivityForm.propTypes = {
+StudentForm.propTypes = {
   isProcessing: PropTypes.bool,
-  parent: PropTypes.shape({}),
+  student: PropTypes.shape({}),
   action: PropTypes.func.isRequired,
   groupId: PropTypes.string,
 };
 
-ActivityForm.defaultProps = {
+StudentForm.defaultProps = {
   isProcessing: null,
-  parent: {},
+  student: {},
   groupId: null,
 };
