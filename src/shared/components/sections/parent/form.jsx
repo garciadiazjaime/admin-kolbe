@@ -12,36 +12,28 @@ export default class ActivityForm extends Component {
 
   constructor(args) {
     super(args);
-    const { groupId, parent } = this.props;
-    const initData = _.isEmpty(parent) ? {
-      date: new Date(),
-      groupId,
-    } : parent;
+    const { parent } = this.props;
     this.state = {
-      data: initData,
+      data: parent || {},
       valid: {},
       touch: {},
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.invalidText = 'Obligatorio';
-    this.entityId = _.isEmpty(parent) ? groupId : parent._id;
   }
 
-  handleInputChange(event, newDate) {
-    const newState = _.assign({}, this.state);
+  handleInputChange(event) {
     if (event) {
+      const newState = _.assign({}, this.state);
       const { name, value } = event.target;
       newState.data[name] = value;
       newState.valid[name] = !!value;
       if (!newState.touch[name]) {
         newState.touch[name] = true;
       }
-    } else if (newDate) {
-      newState.data.date = newDate;
+      this.setState(newState);
     }
-
-    this.setState(newState);
   }
 
   handleSubmit() {
@@ -63,7 +55,7 @@ export default class ActivityForm extends Component {
     if (!isReady) {
       this.setState(newState);
     } else {
-      this.props.action(this.entityId, data);
+      this.props.action(data);
     }
   }
 

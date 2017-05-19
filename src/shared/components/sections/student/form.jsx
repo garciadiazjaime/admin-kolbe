@@ -12,36 +12,28 @@ export default class StudentForm extends Component {
 
   constructor(args) {
     super(args);
-    const { groupId, student } = this.props;
-    const initData = _.isEmpty(student) ? {
-      date: new Date(),
-      groupId,
-    } : student;
+    const { student } = this.props;
     this.state = {
-      data: initData,
+      data: student || {},
       valid: {},
       touch: {},
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.invalidText = 'Obligatorio';
-    this.entityId = _.isEmpty(student) ? groupId : student._id;
   }
 
-  handleInputChange(event, newDate) {
-    const newState = _.assign({}, this.state);
+  handleInputChange(event) {
     if (event) {
+      const newState = _.assign({}, this.state);
       const { name, value } = event.target;
       newState.data[name] = value;
       newState.valid[name] = !!value;
       if (!newState.touch[name]) {
         newState.touch[name] = true;
       }
-    } else if (newDate) {
-      newState.data.date = newDate;
+      this.setState(newState);
     }
-
-    this.setState(newState);
   }
 
   handleSubmit() {
@@ -64,7 +56,7 @@ export default class StudentForm extends Component {
     if (!isReady) {
       this.setState(newState);
     } else {
-      this.props.action(this.entityId, data);
+      this.props.action(data);
     }
   }
 

@@ -20,9 +20,9 @@ class ParentAdd extends Component {
     }
   }
 
-  actionHandler(groupId, data) {
-    const { dispatch } = this.props;
-    dispatch(saveParent(groupId, data));
+  actionHandler(data) {
+    const { params, dispatch } = this.props;
+    dispatch(saveParent(params.groupId, data));
   }
 
   render() {

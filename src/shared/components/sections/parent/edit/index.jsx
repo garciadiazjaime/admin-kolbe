@@ -30,9 +30,9 @@ class ParentEdit extends Component {
     }
   }
 
-  actionHandler(parentId, data) {
-    const { dispatch } = this.props;
-    dispatch(updateParent(parentId, data));
+  actionHandler(data) {
+    const { params, dispatch } = this.props;
+    dispatch(updateParent(params.parentId, data));
   }
 
   render() {

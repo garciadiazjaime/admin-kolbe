@@ -30,9 +30,9 @@ class StudentEdit extends Component {
     }
   }
 
-  actionHandler(studentId, data) {
-    const { dispatch } = this.props;
-    dispatch(updateStudent(studentId, data));
+  actionHandler(data) {
+    const { params, dispatch } = this.props;
+    dispatch(updateStudent(params.studentId, data));
   }
 
   render() {
