@@ -7,6 +7,7 @@ import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 import { FileFileUpload } from 'material-ui/svg-icons';
 import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 
+import { selectLocation } from '../../../../actions/location';
 import LocationContainer from '../../../../containers/location';
 
 class LocationShow extends Component {
@@ -63,6 +64,11 @@ class LocationShow extends Component {
     </div>) : null;
   }
 
+  componentDidMount() {
+    const { dispatch, params } = this.props;
+    dispatch(selectLocation(params.locationId));
+  }
+
   render() {
     const { location } = this.props;
     return (<div>
@@ -73,6 +79,8 @@ class LocationShow extends Component {
 
 LocationShow.propTypes = {
   location: PropTypes.shape({}).isRequired,
+  params: PropTypes.shape({}).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default LocationContainer(LocationShow);

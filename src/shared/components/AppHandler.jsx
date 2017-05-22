@@ -4,10 +4,9 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import GaUtil from '../utils/gaUtil';
 import Menu from './layout/menu/menu2';
 import { selectSchool, fetchSchoolIfNeeded } from '../actions/school';
-import { selectLocation } from '../actions/location';
 import SchoolContainer from '../containers/school';
+import constants from '../../constants';
 
-const schoolId = '58fbde6f393b1b1bd8536b5a';
 injectTapEventPlugin();
 
 class AppHandler extends Component {
@@ -21,13 +20,10 @@ class AppHandler extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, params } = this.props;
+    const { dispatch } = this.props;
     GaUtil.init();
-    dispatch(selectSchool(schoolId));
-    dispatch(fetchSchoolIfNeeded(schoolId));
-    if (params && params.locationId) {
-      dispatch(selectLocation(params.locationId));
-    }
+    dispatch(selectSchool(constants.schoolId));
+    dispatch(fetchSchoolIfNeeded(constants.schoolId));
   }
 
   getChildren() {
@@ -47,7 +43,6 @@ class AppHandler extends Component {
 AppHandler.propTypes = {
   children: PropTypes.shape({}),
   dispatch: PropTypes.func.isRequired,
-  params: PropTypes.shape({}),
 };
 
 AppHandler.contextTypes = {
@@ -56,8 +51,6 @@ AppHandler.contextTypes = {
 
 AppHandler.defaultProps = {
   children: {},
-  dispatch: {},
-  params: {},
 };
 
 export default SchoolContainer(AppHandler);
