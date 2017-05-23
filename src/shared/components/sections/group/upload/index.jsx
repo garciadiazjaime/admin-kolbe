@@ -51,10 +51,9 @@ class GroupUploadForm extends Component {
 
   render() {
     const { isProcessing, selectedLocation } = this.props;
-    const backUrl = selectedLocation ? `/location/${selectedLocation}` : '/';
     return (<div>
       { isProcessing ? <LinearProgress mode="indeterminate" /> : null }
-      <Link to={backUrl} className="pull-right">
+      <Link to={`/location/${selectedLocation}`} className="pull-right">
         <ContentClear />
       </Link>
       <br />
