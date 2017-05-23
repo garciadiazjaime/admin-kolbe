@@ -33,8 +33,9 @@ class AppHandler extends Component {
   }
 
   render() {
+    const { params } = this.props;
     return (<div>
-      <Menu />
+      <Menu locationId={params.locationId} />
       {this.getChildren()}
     </div>);
   }
@@ -43,6 +44,11 @@ class AppHandler extends Component {
 AppHandler.propTypes = {
   children: PropTypes.shape({}),
   dispatch: PropTypes.func.isRequired,
+  params: PropTypes.shape({}),
+};
+
+AppHandler.defaultProps = {
+  params: {},
 };
 
 AppHandler.contextTypes = {

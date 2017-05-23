@@ -5,6 +5,7 @@ const mapStateToProps = (state) => {
   const location = locationById[selectedLocation] || {};
 
   return {
+    selectedLocation,
     location,
   };
 };

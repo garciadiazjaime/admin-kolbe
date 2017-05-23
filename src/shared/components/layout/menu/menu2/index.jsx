@@ -1,17 +1,39 @@
-/* eslint max-len: [2, 500, 4] */
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 
-function menuClickHandler() {
-  browserHistory.push('/');
+import constants from '../../../../../constants';
+import LocationContainer from '../../../../containers/location';
+
+class Menu extends Component {
+
+  constructor(args) {
+    super(args);
+    this.menuClickHandler = this.menuClickHandler.bind(this);
+  }
+
+  menuClickHandler() {
+    const { selectedLocation, locationId } = this.props;
+    const url = selectedLocation && !locationId ? `/location/${selectedLocation}` : '/';
+    browserHistory.push(url);
+  }
+
+  render() {
+    return (<AppBar
+      title={constants.appTitle}
+      onLeftIconButtonTouchTap={this.menuClickHandler}
+    />);
+  }
 }
 
-function Menu() {
-  return (<AppBar
-    title="Koolbe Admin App"
-    onLeftIconButtonTouchTap={menuClickHandler}
-  />);
-}
+Menu.propTypes = {
+  selectedLocation: PropTypes.string,
+  locationId: PropTypes.string,
+};
 
-export default Menu;
+Menu.defaultProps = {
+  selectedLocation: null,
+  locationId: null,
+};
+
+export default LocationContainer(Menu);

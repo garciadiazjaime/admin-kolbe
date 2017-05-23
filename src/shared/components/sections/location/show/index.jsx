@@ -33,10 +33,7 @@ class LocationShow extends Component {
           <Link to={`/group/${item.id}/parent`}>Padres</Link>
         </TableRowColumn>
         <TableRowColumn>
-          <Link to={`/group/${item.id}/student`}>Estudiantes</Link>
-        </TableRowColumn>
-        <TableRowColumn>
-          <Link to={`/group/${item.id}/upload`} className="pull-right">
+          <Link to={`/group/${item.id}/upload`}>
             <FileFileUpload />
           </Link>
         </TableRowColumn>
