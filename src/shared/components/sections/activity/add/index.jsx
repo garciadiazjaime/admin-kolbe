@@ -1,6 +1,7 @@
 /* eslint max-len: [2, 500, 4] */
 import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
+import Subheader from 'material-ui/Subheader';
 
 import ActivityForm from '../form';
 import ActivityContainer from '../../../../containers/activity';
@@ -28,6 +29,7 @@ class AcitivityAdd extends Component {
   render() {
     const { params } = this.props;
     return (<div className="container-fluid">
+      <Subheader>Crear Actividad</Subheader>
       <ActivityForm action={this.actionHandler} groupId={params.groupId} />
     </div>);
   }

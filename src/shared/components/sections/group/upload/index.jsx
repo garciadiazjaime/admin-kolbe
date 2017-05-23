@@ -57,7 +57,14 @@ class GroupUploadForm extends Component {
         <ContentClear />
       </Link>
       <br />
-      <Subheader>Archivo</Subheader>
+      <Subheader>
+        Subir Archivo
+        <p>
+          Subir lista de grupo con la información de estudiantes y padres.
+          <br />
+          Esta es la forma en la que se captura información al sistema.
+        </p>
+      </Subheader>
       <RaisedButton containerElement="label" label="Buscar">
         <input type="file" id="file" name="file" onChange={this.handleFileUpload} className={style.input} />
       </RaisedButton>

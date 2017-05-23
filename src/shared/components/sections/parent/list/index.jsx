@@ -2,9 +2,11 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import React, { Component, PropTypes } from 'react';
 import { Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
+import Subheader from 'material-ui/Subheader';
 
 import ParentListContainer from '../../../../containers/parent/list';
 import { getParents } from '../../../../actions/parent/list';
+import { selectGroup } from '../../../../actions/group';
 
 class ParentList extends Component {
 
@@ -26,15 +28,19 @@ class ParentList extends Component {
   }
 
   componentDidMount() {
-    const { params } = this.props;
+    const { params, selectedGroup } = this.props;
     const { dispatch } = this.props;
+
+    if (!selectedGroup || selectedGroup !== params.groupId) {
+      dispatch(selectGroup(params.groupId));
+    }
     dispatch(getParents(params.groupId));
   }
 
   render() {
     const { parents } = this.props;
     return (<div>
-      <div className="clearfix" />
+      <Subheader>Padres</Subheader>
       <Table selectable={false} displayRowCheckbox={false}>
         <TableHeader displaySelectAll={false}>
           <TableRow>
@@ -52,12 +58,14 @@ class ParentList extends Component {
 
 ParentList.propTypes = {
   params: PropTypes.shape({}).isRequired,
+  selectedGroup: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
   parents: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 ParentList.defaultProps = {
   parents: [],
+  selectedGroup: null,
 };
 
 export default ParentListContainer(ParentList);

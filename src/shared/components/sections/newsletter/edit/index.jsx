@@ -1,8 +1,9 @@
 /* eslint max-len: [2, 500, 4] */
 import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
 import { browserHistory } from 'react-router';
 import LinearProgress from 'material-ui/LinearProgress';
-import _ from 'lodash';
+import Subheader from 'material-ui/Subheader';
 
 import NewsletterForm from '../form';
 import NewsletterContainer from '../../../../containers/newsletter';
@@ -35,6 +36,7 @@ class NewsletterEdit extends Component {
   render() {
     const { newsletter, lastUpdated } = this.props;
     return _.isEmpty(newsletter) ? <LinearProgress mode="indeterminate" /> : (<div className="container-fluid">
+      <Subheader>Editar Noticia</Subheader>
       <NewsletterForm action={this.actionHandler} groupId={newsletter.groupId} newsletter={newsletter} lastUpdated={lastUpdated} />
     </div>);
   }

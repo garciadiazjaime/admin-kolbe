@@ -1,6 +1,7 @@
 /* eslint max-len: [2, 500, 4] */
 import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
+import Subheader from 'material-ui/Subheader';
 
 import DocumentForm from '../form';
 import DocumentContainer from '../../../../containers/document';
@@ -28,6 +29,7 @@ class DocumentAdd extends Component {
   render() {
     const { params } = this.props;
     return (<div className="container-fluid">
+      <Subheader>Crear Documento</Subheader>
       <DocumentForm action={this.actionHandler} groupId={params.groupId} />
     </div>);
   }

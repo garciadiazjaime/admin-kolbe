@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router';
 import { Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
+import Subheader from 'material-ui/Subheader';
 
 import { ContentAdd, ContentCreate } from 'material-ui/svg-icons';
 import ActivityListContainer from '../../../../containers/activity/list';
@@ -53,6 +54,7 @@ class LocationList extends Component {
         <ContentAdd />
       </Link>
       <div className="clearfix" />
+      <Subheader>Actividades</Subheader>
       <Table selectable={false} displayRowCheckbox={false}>
         <TableHeader displaySelectAll={false}>
           <TableRow>

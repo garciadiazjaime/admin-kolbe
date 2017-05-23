@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router';
 import { Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
+import Subheader from 'material-ui/Subheader';
 
 import { ContentAdd, ContentCreate } from 'material-ui/svg-icons';
 import DocumentListContainer from '../../../../containers/document/list';
@@ -53,6 +54,7 @@ class DocumentList extends Component {
         <ContentAdd />
       </Link>
       <div className="clearfix" />
+      <Subheader>Documentos</Subheader>
       <Table selectable={false} displayRowCheckbox={false}>
         <TableHeader displaySelectAll={false}>
           <TableRow>
