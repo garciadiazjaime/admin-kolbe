@@ -62,8 +62,10 @@ class LocationShow extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, params } = this.props;
-    dispatch(selectLocation(params.locationId));
+    const { dispatch, params, selectedLocation } = this.props;
+    if (!selectedLocation || selectedLocation !== params.locationId) {
+      dispatch(selectLocation(params.locationId));
+    }
   }
 
   render() {
@@ -78,6 +80,11 @@ LocationShow.propTypes = {
   location: PropTypes.shape({}).isRequired,
   params: PropTypes.shape({}).isRequired,
   dispatch: PropTypes.func.isRequired,
+  selectedLocation: PropTypes.string,
+};
+
+LocationShow.defaultProps = {
+  selectedLocation: null,
 };
 
 export default LocationContainer(LocationShow);
