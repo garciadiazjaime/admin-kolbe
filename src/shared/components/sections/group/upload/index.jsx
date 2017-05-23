@@ -50,10 +50,11 @@ class GroupUploadForm extends Component {
   }
 
   render() {
-    const { params, isProcessing } = this.props;
+    const { isProcessing, selectedLocation } = this.props;
+    const backUrl = selectedLocation ? `/location/${selectedLocation}` : '/';
     return (<div>
       { isProcessing ? <LinearProgress mode="indeterminate" /> : null }
-      <Link to={`/location/${params.locationId}`} className="pull-right">
+      <Link to={backUrl} className="pull-right">
         <ContentClear />
       </Link>
       <br />
@@ -68,13 +69,16 @@ class GroupUploadForm extends Component {
 }
 
 GroupUploadForm.propTypes = {
-  params: PropTypes.shape({}).isRequired,
+  params: PropTypes.shape({}),
+  selectedLocation: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
   isProcessing: PropTypes.bool,
   lastUpdated: PropTypes.number,
 };
 
 GroupUploadForm.defaultProps = {
+  params: {},
+  selectedLocation: null,
   isProcessing: false,
   lastUpdated: null,
 };
