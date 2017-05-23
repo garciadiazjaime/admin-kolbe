@@ -14,8 +14,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { locations, isFetching } = this.props;
-    console.log('Dashboard', isFetching);
+    const { locations } = this.props;
     return (<div className="text-center">
       {Dashboard.renderLocations(locations)}
     </div>);
@@ -24,7 +23,6 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   locations: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  isFetching: PropTypes.bool.isRequired,
 };
 
 export default SchoolContainer(Dashboard);
