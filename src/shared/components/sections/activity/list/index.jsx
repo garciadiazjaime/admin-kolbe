@@ -17,13 +17,10 @@ import ActivityListContainer from '../../../../containers/activity/list';
 import { getActivities, deleteActivity } from '../../../../actions/activity/list';
 import { selectGroup } from '../../../../actions/group';
 
-class LocationList extends Component {
+class ActivityList extends Component {
 
   constructor(args) {
     super(args);
-    this.state = {
-      data: [],
-    };
     this.deleteHandler = this.deleteHandler.bind(this);
   }
 
@@ -90,15 +87,15 @@ class LocationList extends Component {
   }
 }
 
-LocationList.propTypes = {
+ActivityList.propTypes = {
   params: PropTypes.shape({}).isRequired,
   selectedGroup: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
   activities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
-LocationList.defaultProps = {
+ActivityList.defaultProps = {
   selectedGroup: '',
 };
 
-export default ActivityListContainer(LocationList);
+export default ActivityListContainer(ActivityList);

@@ -6,7 +6,6 @@ const mapStateToProps = (state) => {
     isProcessing,
     lastUpdated,
     data: activities,
-    isDeleted,
   } = activitiesByGroup[selectedGroup] || {
     isProcessing: true,
     data: [],
@@ -17,7 +16,6 @@ const mapStateToProps = (state) => {
     isProcessing,
     lastUpdated,
     activities,
-    isDeleted,
   };
 };
 

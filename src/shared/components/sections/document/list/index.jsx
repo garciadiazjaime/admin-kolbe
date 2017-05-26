@@ -6,14 +6,34 @@ import { Link } from 'react-router';
 import { Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 import Subheader from 'material-ui/Subheader';
 
-import { ContentAdd, ContentCreate } from 'material-ui/svg-icons';
+import { ContentAdd, ContentCreate, ContentClear } from 'material-ui/svg-icons';
 import DocumentListContainer from '../../../../containers/document/list';
-import { getDocuments } from '../../../../actions/document/list';
+import { getDocuments, deleteDocument } from '../../../../actions/document/list';
 import { selectGroup } from '../../../../actions/group';
 
 class DocumentList extends Component {
 
-  static renderDocuments(data) {
+  constructor(args) {
+    super(args);
+    this.deleteHandler = this.deleteHandler.bind(this);
+  }
+
+  componentDidMount() {
+    const { params, selectedGroup } = this.props;
+    const { dispatch } = this.props;
+    if (!selectedGroup || selectedGroup !== params.groupId) {
+      dispatch(selectGroup(params.groupId));
+    }
+    dispatch(getDocuments(params.groupId));
+  }
+
+  deleteHandler(e) {
+    const documentId = e.currentTarget.dataset.id;
+    const { dispatch, selectedGroup } = this.props;
+    dispatch(deleteDocument(selectedGroup, documentId));
+  }
+
+  renderDocuments(data) {
     if (data.length) {
       const style = {
         paddingLeft: '42px',
@@ -26,25 +46,14 @@ class DocumentList extends Component {
             <ContentCreate />
           </Link>
         </TableRowColumn>
+        <TableRowColumn style={style}>
+          <a onClick={this.deleteHandler} role="button" tabIndex="0" data-id={item._id}>
+            <ContentClear />
+          </a>
+        </TableRowColumn>
       </TableRow>);
     }
     return null;
-  }
-
-  constructor(args) {
-    super(args);
-    this.state = {
-      data: [],
-    };
-  }
-
-  componentDidMount() {
-    const { params, selectedGroup } = this.props;
-    const { dispatch } = this.props;
-    if (!selectedGroup || selectedGroup !== params.groupId) {
-      dispatch(selectGroup(params.groupId));
-    }
-    dispatch(getDocuments(params.groupId));
   }
 
   render() {
@@ -61,10 +70,11 @@ class DocumentList extends Component {
             <TableHeaderColumn>Nombre</TableHeaderColumn>
             <TableHeaderColumn>Fecha</TableHeaderColumn>
             <TableHeaderColumn>Editar</TableHeaderColumn>
+            <TableHeaderColumn>Eliminar</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false} stripedRows>
-          {DocumentList.renderDocuments(documents)}
+          {this.renderDocuments(documents)}
         </TableBody>
       </Table>
     </div>);
