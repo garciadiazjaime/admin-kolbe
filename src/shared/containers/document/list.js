@@ -3,17 +3,17 @@ import { connect } from 'react-redux';
 const mapStateToProps = (state) => {
   const { selectedGroup, documentsByGroup } = state;
   const {
-    isProcessing,
+    isFetching,
     lastUpdated,
     data: documents,
   } = documentsByGroup[selectedGroup] || {
-    isProcessing: true,
+    isFetching: true,
     data: [],
   };
 
   return {
     selectedGroup,
-    isProcessing,
+    isFetching,
     lastUpdated,
     documents,
   };
