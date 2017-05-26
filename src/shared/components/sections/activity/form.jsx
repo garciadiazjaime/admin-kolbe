@@ -8,6 +8,7 @@ import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import { ContentClear } from 'material-ui/svg-icons';
 import LinearProgress from 'material-ui/LinearProgress';
+import Subheader from 'material-ui/Subheader';
 
 export default class ActivityForm extends Component {
 
@@ -69,12 +70,14 @@ export default class ActivityForm extends Component {
   }
 
   render() {
-    const { isProcessing, groupId } = this.props;
+    const { isProcessing, groupId, title } = this.props;
     const { data, valid, touch } = this.state;
     return (<div>
       <Link to={`/group/${groupId}/activity`} className="pull-right">
         <ContentClear />
       </Link>
+      <div className="clearfix" />
+      <Subheader>{title}</Subheader>
       <TextField name="name" floatingLabelText="Actividad" floatingLabelFixed fullWidth onChange={this.handleInputChange} errorText={!valid.name && touch.name ? this.invalidText : null} defaultValue={data.name} />
       <br />
       <TextField name="description" floatingLabelText="Descripción" floatingLabelFixed multiLine rows={4} fullWidth onChange={this.handleInputChange} errorText={!valid.description && touch.description ? this.invalidText : null} defaultValue={data.description} />
@@ -93,6 +96,7 @@ ActivityForm.propTypes = {
   activity: PropTypes.shape({}),
   action: PropTypes.func.isRequired,
   groupId: PropTypes.string,
+  title: PropTypes.string.isRequired,
 };
 
 ActivityForm.defaultProps = {

@@ -1,19 +1,48 @@
-/* eslint max-len: [2, 500, 4] */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router';
-import { Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
+import {
+  Table,
+  TableHeader,
+  TableHeaderColumn,
+  TableBody,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 import Subheader from 'material-ui/Subheader';
 
-import { ContentAdd, ContentCreate } from 'material-ui/svg-icons';
+import { ContentAdd, ContentCreate, ContentClear } from 'material-ui/svg-icons';
 import ActivityListContainer from '../../../../containers/activity/list';
-import { fetchActivitiesAction } from '../../../../actions/activity/list';
+import { getActivities, deleteActivity } from '../../../../actions/activity/list';
 import { selectGroup } from '../../../../actions/group';
 
 class LocationList extends Component {
 
-  static renderActivities(data) {
+  constructor(args) {
+    super(args);
+    this.state = {
+      data: [],
+    };
+    this.deleteHandler = this.deleteHandler.bind(this);
+  }
+
+  componentDidMount() {
+    const { params, selectedGroup } = this.props;
+    const { dispatch } = this.props;
+    if (!selectedGroup || selectedGroup !== params.groupId) {
+      dispatch(selectGroup(params.groupId));
+    }
+    dispatch(getActivities(params.groupId));
+  }
+
+  deleteHandler(e) {
+    const activityId = e.currentTarget.dataset.id;
+    const { dispatch, selectedGroup } = this.props;
+    dispatch(deleteActivity(selectedGroup, activityId));
+  }
+
+  renderActivities(data) {
     if (data.length) {
       const style = {
         paddingLeft: '42px',
@@ -26,25 +55,14 @@ class LocationList extends Component {
             <ContentCreate />
           </Link>
         </TableRowColumn>
+        <TableRowColumn style={style}>
+          <a onClick={this.deleteHandler} role="button" tabIndex="0" data-id={item._id}>
+            <ContentClear />
+          </a>
+        </TableRowColumn>
       </TableRow>);
     }
     return null;
-  }
-
-  constructor(args) {
-    super(args);
-    this.state = {
-      data: [],
-    };
-  }
-
-  componentDidMount() {
-    const { params, selectedGroup } = this.props;
-    const { dispatch } = this.props;
-    if (!selectedGroup || selectedGroup !== params.groupId) {
-      dispatch(selectGroup(params.groupId));
-    }
-    dispatch(fetchActivitiesAction(params.groupId));
   }
 
   render() {
@@ -61,10 +79,11 @@ class LocationList extends Component {
             <TableHeaderColumn>Nombre</TableHeaderColumn>
             <TableHeaderColumn>Fecha</TableHeaderColumn>
             <TableHeaderColumn>Editar</TableHeaderColumn>
+            <TableHeaderColumn>Eliminar</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false} stripedRows>
-          {LocationList.renderActivities(activities)}
+          {this.renderActivities(activities)}
         </TableBody>
       </Table>
     </div>);

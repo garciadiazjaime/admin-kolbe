@@ -1,21 +1,40 @@
-import { REQUEST_ACTIVITIES, RECEIVE_ACTIVITIES } from '../../actions/activity/list';
+/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+
+import {
+  REQUEST_ACTIVITIES,
+  RECEIVE_ACTIVITIES,
+  DELETING_ACTIVITY,
+  ACTIVITY_DELETED,
+} from '../../actions/activity/list';
+
+function removeActivity(activities, activityId) {
+  return activities ? activities.filter(item => item._id !== activityId) : activities;
+}
 
 function activity(state = {
-  isFetching: false,
+  isProcessing: false,
   didInvalidate: false,
   data: [],
 }, action) {
   switch (action.type) {
     case REQUEST_ACTIVITIES:
+    case DELETING_ACTIVITY:
       return Object.assign({}, state, {
-        isFetching: true,
+        isProcessing: true,
         didInvalidate: false,
       });
     case RECEIVE_ACTIVITIES:
       return Object.assign({}, state, {
-        isFetching: false,
+        isProcessing: false,
         didInvalidate: false,
         data: action.activities,
+        lastUpdated: action.receivedAt,
+      });
+    case ACTIVITY_DELETED:
+      return Object.assign({}, state, {
+        isProcessing: false,
+        didInvalidate: false,
+        data: removeActivity(state.data, action.activityId),
         lastUpdated: action.receivedAt,
       });
     default:
@@ -29,6 +48,8 @@ export function activitiesByGroup(state = { }, action) {
   switch (action.type) {
     case REQUEST_ACTIVITIES:
     case RECEIVE_ACTIVITIES:
+    case DELETING_ACTIVITY:
+    case ACTIVITY_DELETED:
       return Object.assign({}, state, {
         [action.groupId]: activity(state[action.groupId], action),
       });

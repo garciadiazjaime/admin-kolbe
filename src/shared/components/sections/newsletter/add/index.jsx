@@ -1,7 +1,6 @@
 /* eslint max-len: [2, 500, 4] */
 import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
-import Subheader from 'material-ui/Subheader';
 
 import NewsletterForm from '../form';
 import NewsletterContainer from '../../../../containers/newsletter';
@@ -28,9 +27,12 @@ class NewsletterAdd extends Component {
 
   render() {
     const { params } = this.props;
-    return (<div className="container-fluid">
-      <Subheader>Crear Noticia</Subheader>
-      <NewsletterForm action={this.actionHandler} groupId={params.groupId} />
+    return (<div>
+      <NewsletterForm
+        action={this.actionHandler}
+        groupId={params.groupId}
+        title="Agregar Noticia"
+      />
     </div>);
   }
 }

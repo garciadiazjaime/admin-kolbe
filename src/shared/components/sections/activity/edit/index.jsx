@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import LinearProgress from 'material-ui/LinearProgress';
-import Subheader from 'material-ui/Subheader';
 import _ from 'lodash';
 
 import ActivityForm from '../form';
@@ -35,9 +34,14 @@ class ActivityEdit extends Component {
 
   render() {
     const { activity, lastUpdated } = this.props;
-    return _.isEmpty(activity) ? <LinearProgress mode="indeterminate" /> : (<div className="container-fluid">
-      <Subheader>Editar Actividad</Subheader>
-      <ActivityForm action={this.actionHandler} groupId={activity.groupId} activity={activity} lastUpdated={lastUpdated} />
+    return _.isEmpty(activity) ? <LinearProgress mode="indeterminate" /> : (<div>
+      <ActivityForm
+        action={this.actionHandler}
+        groupId={activity.groupId}
+        activity={activity}
+        lastUpdated={lastUpdated}
+        title="Editar Actividad"
+      />
     </div>);
   }
 }
