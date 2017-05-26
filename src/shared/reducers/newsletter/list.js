@@ -12,7 +12,7 @@ function removeEntity(data, entityId) {
 }
 
 function newsletter(state = {
-  isFetching: false,
+  isProcessing: false,
   didInvalidate: false,
   data: [],
 }, action) {
@@ -20,12 +20,12 @@ function newsletter(state = {
     case REQUEST_NEWSLETTERS:
     case DELETING_NEWSLETTER:
       return Object.assign({}, state, {
-        isFetching: true,
+        isProcessing: true,
         didInvalidate: false,
       });
     case RECEIVE_NEWSLETTERS:
       return Object.assign({}, state, {
-        isFetching: false,
+        isProcessing: false,
         didInvalidate: false,
         data: action.newsletters,
         lastUpdated: action.receivedAt,

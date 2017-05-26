@@ -2,29 +2,18 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import React, { Component, PropTypes } from 'react';
 import { Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
+import { ContentClear } from 'material-ui/svg-icons';
 import Subheader from 'material-ui/Subheader';
 
 import ParentListContainer from '../../../../containers/parent/list';
-import { getParents } from '../../../../actions/parent/list';
+import { getParents, deleteParent } from '../../../../actions/parent/list';
 import { selectGroup } from '../../../../actions/group';
 
 class ParentList extends Component {
 
-  static renderParents(data) {
-    if (data && data.length) {
-      return data.map(item => <TableRow key={item._id}>
-        <TableRowColumn>{item.email}</TableRowColumn>
-        <TableRowColumn>{item.code}</TableRowColumn>
-      </TableRow>);
-    }
-    return null;
-  }
-
   constructor(args) {
     super(args);
-    this.state = {
-      data: [],
-    };
+    this.deleteHandler = this.deleteHandler.bind(this);
   }
 
   componentDidMount() {
@@ -37,6 +26,27 @@ class ParentList extends Component {
     dispatch(getParents(params.groupId));
   }
 
+  deleteHandler(e) {
+    const entityId = e.currentTarget.dataset.id;
+    const { dispatch, selectedGroup } = this.props;
+    dispatch(deleteParent(selectedGroup, entityId));
+  }
+
+  renderParents(data) {
+    if (data && data.length) {
+      return data.map(item => <TableRow key={item._id}>
+        <TableRowColumn>{item.email}</TableRowColumn>
+        <TableRowColumn>{item.code}</TableRowColumn>
+        <TableRowColumn>
+          <a onClick={this.deleteHandler} role="button" tabIndex="0" data-id={item._id}>
+            <ContentClear />
+          </a>
+        </TableRowColumn>
+      </TableRow>);
+    }
+    return null;
+  }
+
   render() {
     const { parents } = this.props;
     return (<div>
@@ -46,10 +56,11 @@ class ParentList extends Component {
           <TableRow>
             <TableHeaderColumn>Email</TableHeaderColumn>
             <TableHeaderColumn>Código</TableHeaderColumn>
+            <TableHeaderColumn>Eliminar</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false} stripedRows>
-          {ParentList.renderParents(parents)}
+          {this.renderParents(parents)}
         </TableBody>
       </Table>
     </div>);

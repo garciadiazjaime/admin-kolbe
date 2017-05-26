@@ -70,6 +70,7 @@ class NewsletterList extends Component {
             <TableHeaderColumn>Nombre</TableHeaderColumn>
             <TableHeaderColumn>Fecha</TableHeaderColumn>
             <TableHeaderColumn>Editar</TableHeaderColumn>
+            <TableHeaderColumn>Eliminar</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false} stripedRows>

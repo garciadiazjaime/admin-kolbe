@@ -12,7 +12,7 @@ function removeEntity(data, entityId) {
 }
 
 function document(state = {
-  isFetching: false,
+  isProcessing: false,
   didInvalidate: false,
   data: [],
 }, action) {
@@ -20,12 +20,12 @@ function document(state = {
     case REQUEST_DOCUMENTS:
     case DELETING_DOCUMENT:
       return Object.assign({}, state, {
-        isFetching: true,
+        isProcessing: true,
         didInvalidate: false,
       });
     case RECEIVE_DOCUMENTS:
       return Object.assign({}, state, {
-        isFetching: false,
+        isProcessing: false,
         didInvalidate: false,
         data: action.documents,
         lastUpdated: action.receivedAt,
