@@ -1,7 +1,6 @@
 /* eslint max-len: [2, 500, 4] */
 import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
-import FormData from 'form-data';
 
 import DocumentForm from '../form';
 import DocumentContainer from '../../../../containers/document';
@@ -23,12 +22,7 @@ class DocumentAdd extends Component {
 
   actionHandler(data) {
     const { params, dispatch } = this.props;
-    const { files } = document.getElementById('file');
-    const file = files[0];
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('data', JSON.stringify(data));
-    dispatch(saveDocument(params.groupId, formData));
+    dispatch(saveDocument(params.groupId, data));
   }
 
   render() {
