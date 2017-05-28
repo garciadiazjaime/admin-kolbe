@@ -10,14 +10,15 @@ import { ContentClear } from 'material-ui/svg-icons';
 import LinearProgress from 'material-ui/LinearProgress';
 import Subheader from 'material-ui/Subheader';
 
+import style from './style.scss';
+
 export default class ActivityForm extends Component {
 
   constructor(args) {
     super(args);
-    const { groupId, document } = this.props;
+    const { document } = this.props;
     const initData = _.isEmpty(document) ? {
       date: new Date(),
-      groupId,
     } : document;
     this.state = {
       data: initData,
@@ -26,8 +27,9 @@ export default class ActivityForm extends Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleFileUpload = this.handleFileUpload.bind(this);
     this.invalidText = 'Obligatorio';
-    this.entityId = _.isEmpty(document) ? groupId : document._id;
+    this.extensionsAllowed = ['xls', 'xlsx', 'csv', 'jpg', 'jpeg', 'doc', 'docx', 'pdf', 'ppt', 'pttx', 'png', 'gif'];
   }
 
   handleInputChange(event, newDate) {
@@ -46,10 +48,31 @@ export default class ActivityForm extends Component {
     this.setState(newState);
   }
 
+  handleFileUpload() {
+    const { files } = document.getElementById('file');
+    if (files.length) {
+      const file = files[0];
+      const extension = file.name.split('.').pop().toLowerCase();
+      const newState = _.assign({}, this.state);
+
+      if (!newState.touch.file) {
+        newState.touch.file = true;
+      }
+      if (this.extensionsAllowed.indexOf(extension) !== -1) {
+        newState.data.file = file.name;
+        newState.valid.file = true;
+      } else {
+        newState.valid.file = false;
+      }
+
+      this.setState(newState);
+    }
+  }
+
   handleSubmit() {
     const { data } = this.state;
     const newState = _.assign({}, this.state);
-    const requiredFields = ['name', 'description'];
+    const requiredFields = ['name', 'description', 'file'];
     let isReady = true;
     requiredFields.map((key) => {
       if (isReady && !data[key]) {
@@ -65,7 +88,7 @@ export default class ActivityForm extends Component {
     if (!isReady) {
       this.setState(newState);
     } else {
-      this.props.action(this.entityId, data);
+      this.props.action(data);
     }
   }
 
@@ -82,8 +105,10 @@ export default class ActivityForm extends Component {
       <br />
       <Subheader>Archivo</Subheader>
       <RaisedButton containerElement="label" label="Buscar">
-        <input type="file" name="file" onChange={this.handleInputChange} style={{ display: 'none' }} />
+        <input type="file" id="file" name="file" onChange={this.handleFileUpload} className={style.input} />
       </RaisedButton>
+      { this.state.touch.file && !this.state.valid.file ?
+        <div className="text-danger">Seleccionar Archivo</div> : null }
       <br />
       <span>{data.file}</span>
       <br />

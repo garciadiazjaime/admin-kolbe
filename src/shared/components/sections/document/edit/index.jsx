@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
 import { browserHistory } from 'react-router';
 import LinearProgress from 'material-ui/LinearProgress';
+import FormData from 'form-data';
 
 import DocumentForm from '../form';
 import DocumentContainer from '../../../../containers/document';
@@ -27,9 +28,14 @@ class DocumentEdit extends Component {
     }
   }
 
-  actionHandler(documentId, data) {
-    const { dispatch } = this.props;
-    dispatch(updateDocument(documentId, data));
+  actionHandler(data) {
+    const { params, dispatch } = this.props;
+    const { files } = document.getElementById('file');
+    const file = files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('data', JSON.stringify(data));
+    dispatch(updateDocument(params.documentId, formData));
   }
 
   render() {

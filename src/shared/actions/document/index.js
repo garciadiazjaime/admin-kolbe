@@ -45,7 +45,7 @@ function getDocumentHelper(documentId) {
 function saveDocumentHelper(groupId, data) {
   return (dispatch) => {
     dispatch(savingDocument());
-    return RequestUtil.post(`${constants.apiUrl}/group/${groupId}/document`, data)
+    return RequestUtil.submit(`${constants.apiUrl}/group/${groupId}/document`, data)
       .then(() => dispatch(documentSaved(groupId)));
   };
 }
@@ -53,8 +53,8 @@ function saveDocumentHelper(groupId, data) {
 function updateDocumentHelper(documentId, data) {
   return (dispatch) => {
     dispatch(savingDocument());
-    return RequestUtil.put(`${constants.apiUrl}/document/${documentId}`, data)
-      .then(() => dispatch(documentSaved(data.groupId)));
+    return RequestUtil.submit(`${constants.apiUrl}/document/${documentId}`, data, 'PUT')
+      .then(() => dispatch(documentSaved(documentId.groupId)));
   };
 }
 
