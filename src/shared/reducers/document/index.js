@@ -1,5 +1,9 @@
-import { SAVING_DOCUMENT, DOCUMENT_SAVED, REQUEST_DOCUMENT, RECEIVE_DOCUMENT } from '../../actions/document';
-
+import {
+  SAVING_DOCUMENT,
+  DOCUMENT_SAVED,
+  REQUEST_DOCUMENT,
+  RECEIVE_DOCUMENT,
+} from '../../actions/document';
 
 function document(state = {
   isProcessing: false,

@@ -1,6 +1,7 @@
 /* eslint max-len: [2, 500, 4] */
 import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
+import FormData from 'form-data';
 
 import DocumentForm from '../form';
 import DocumentContainer from '../../../../containers/document';
@@ -14,15 +15,20 @@ class DocumentAdd extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { groupId, lastUpdated } = nextProps;
+    const { params, lastUpdated } = nextProps;
     if (lastUpdated) {
-      browserHistory.push(`/group/${groupId}/document?success`);
+      browserHistory.push(`/group/${params.groupId}/document?success`);
     }
   }
 
-  actionHandler(groupId, data) {
-    const { dispatch } = this.props;
-    dispatch(saveDocument(groupId, data));
+  actionHandler(data) {
+    const { params, dispatch } = this.props;
+    const { files } = document.getElementById('file');
+    const file = files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('data', JSON.stringify(data));
+    dispatch(saveDocument(params.groupId, formData));
   }
 
   render() {
@@ -41,12 +47,10 @@ DocumentAdd.propTypes = {
   dispatch: PropTypes.func.isRequired,
   params: PropTypes.shape({}).isRequired,
   lastUpdated: PropTypes.number,
-  groupId: PropTypes.string,
 };
 
 DocumentAdd.defaultProps = {
   lastUpdated: null,
-  groupId: null,
 };
 
 export default DocumentContainer(DocumentAdd);

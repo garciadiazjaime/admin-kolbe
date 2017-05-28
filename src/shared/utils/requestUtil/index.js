@@ -30,9 +30,9 @@ export default class RequestUtil {
     });
   }
 
-  static submit(url, data) {
+  static submit(url, data, method) {
     return submitClient({
-      method: 'POST',
+      method: method || 'POST',
       path: url,
       entity: data,
     });
