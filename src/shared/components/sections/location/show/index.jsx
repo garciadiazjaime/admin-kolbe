@@ -5,7 +5,6 @@ import { Link } from 'react-router';
 import Subheader from 'material-ui/Subheader';
 import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 import { FileFileUpload } from 'material-ui/svg-icons';
-import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 
 import { selectLocation } from '../../../../actions/location';
 import LocationContainer from '../../../../containers/location';
@@ -52,11 +51,7 @@ class LocationShow extends Component {
 
   static renderLevels(data) {
     return data && data.level ? data.level.map(item => <div key={item.id}>
-      <Toolbar>
-        <ToolbarGroup>
-          <ToolbarTitle text={item.name} />
-        </ToolbarGroup>
-      </Toolbar>
+      <Subheader>{item.name}</Subheader>
       {LocationShow.renderGrade(item)}
     </div>) : null;
   }

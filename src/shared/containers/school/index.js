@@ -14,6 +14,7 @@ const mapStateToProps = (state) => {
 
   let locations = [];
   const locationByGroup = {};
+  const groupById = {};
   if (school.location && school.location.length) {
     locations = school.location.map(item => ({ id: item.id, name: item.name }));
 
@@ -22,6 +23,7 @@ const mapStateToProps = (state) => {
         level.grade.map((grade) => {
           grade.group.map((group) => {
             locationByGroup[group.id] = location.id;
+            groupById[group.id] = `${level.name} | ${grade.name} ${group.name}`;
             return null;
           });
           return null;
@@ -35,6 +37,7 @@ const mapStateToProps = (state) => {
   return {
     locations,
     locationByGroup,
+    groupById,
     selectedSchool,
     selectedLocation,
     school,
