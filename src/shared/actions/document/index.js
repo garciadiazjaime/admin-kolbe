@@ -50,11 +50,11 @@ function saveDocumentHelper(groupId, data) {
   };
 }
 
-function updateDocumentHelper(documentId, data) {
+function updateDocumentHelper(documentId, data, groupId) {
   return (dispatch) => {
     dispatch(savingDocument());
     return RequestUtil.submit(`${constants.apiUrl}/document/${documentId}`, data, 'PUT')
-      .then(() => dispatch(documentSaved(documentId.groupId)));
+      .then(() => dispatch(documentSaved(groupId)));
   };
 }
 
@@ -81,10 +81,10 @@ export function saveDocument(groupId, data) {
   };
 }
 
-export function updateDocument(documentId, data) {
+export function updateDocument(documentId, data, groupId) {
   return (dispatch, getState) => {
     if (shouldProccessDocument(getState())) {
-      return dispatch(updateDocumentHelper(documentId, data));
+      return dispatch(updateDocumentHelper(documentId, data, groupId));
     }
     return null;
   };

@@ -9,6 +9,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { ContentClear } from 'material-ui/svg-icons';
 import LinearProgress from 'material-ui/LinearProgress';
 import Subheader from 'material-ui/Subheader';
+import FormData from 'form-data';
 
 import style from './style.scss';
 
@@ -88,7 +89,12 @@ export default class ActivityForm extends Component {
     if (!isReady) {
       this.setState(newState);
     } else {
-      this.props.action(data);
+      const { files } = document.getElementById('file');
+      const file = files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('data', JSON.stringify(data));
+      this.props.action(formData);
     }
   }
 
