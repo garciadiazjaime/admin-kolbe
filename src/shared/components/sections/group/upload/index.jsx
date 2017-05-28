@@ -50,14 +50,21 @@ class GroupUploadForm extends Component {
   }
 
   render() {
-    const { params, isProcessing } = this.props;
+    const { isProcessing, selectedLocation } = this.props;
     return (<div>
       { isProcessing ? <LinearProgress mode="indeterminate" /> : null }
-      <Link to={`/location/${params.locationId}`} className="pull-right">
+      <Link to={`/location/${selectedLocation}`} className="pull-right">
         <ContentClear />
       </Link>
       <br />
-      <Subheader>Archivo</Subheader>
+      <Subheader>
+        Subir Archivo
+        <p>
+          Subir lista de grupo con la información de estudiantes y padres.
+          <br />
+          Esta es la forma en la que se captura información al sistema.
+        </p>
+      </Subheader>
       <RaisedButton containerElement="label" label="Buscar">
         <input type="file" id="file" name="file" onChange={this.handleFileUpload} className={style.input} />
       </RaisedButton>
@@ -68,13 +75,16 @@ class GroupUploadForm extends Component {
 }
 
 GroupUploadForm.propTypes = {
-  params: PropTypes.shape({}).isRequired,
+  params: PropTypes.shape({}),
+  selectedLocation: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
   isProcessing: PropTypes.bool,
   lastUpdated: PropTypes.number,
 };
 
 GroupUploadForm.defaultProps = {
+  params: {},
+  selectedLocation: null,
   isProcessing: false,
   lastUpdated: null,
 };

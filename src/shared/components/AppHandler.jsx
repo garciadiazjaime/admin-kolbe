@@ -6,8 +6,8 @@ import Menu from './layout/menu/menu2';
 import { selectSchool, fetchSchoolIfNeeded } from '../actions/school';
 import { selectLocation } from '../actions/location';
 import SchoolContainer from '../containers/school';
+import constants from '../../constants';
 
-const schoolId = '58fbde6f393b1b1bd8536b5a';
 injectTapEventPlugin();
 
 class AppHandler extends Component {
@@ -21,12 +21,18 @@ class AppHandler extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, params } = this.props;
+    const { dispatch } = this.props;
     GaUtil.init();
-    dispatch(selectSchool(schoolId));
-    dispatch(fetchSchoolIfNeeded(schoolId));
-    if (params && params.locationId) {
-      dispatch(selectLocation(params.locationId));
+    dispatch(selectSchool(constants.schoolId));
+    dispatch(fetchSchoolIfNeeded(constants.schoolId));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { selectedLocation, locationByGroup, params, dispatch } = nextProps;
+    const newLocation = locationByGroup[params.groupId];
+
+    if (!selectedLocation && params.groupId && newLocation) {
+      dispatch(selectLocation(locationByGroup[params.groupId]));
     }
   }
 
@@ -37,8 +43,10 @@ class AppHandler extends Component {
   }
 
   render() {
+    const { params } = this.props;
+
     return (<div>
-      <Menu />
+      <Menu locationId={params.locationId} groupId={params.groupId} />
       {this.getChildren()}
     </div>);
   }
@@ -48,6 +56,14 @@ AppHandler.propTypes = {
   children: PropTypes.shape({}),
   dispatch: PropTypes.func.isRequired,
   params: PropTypes.shape({}),
+  locationByGroup: PropTypes.shape({}),
+  selectedLocation: PropTypes.string,
+};
+
+AppHandler.defaultProps = {
+  params: {},
+  locationByGroup: {},
+  selectedLocation: null,
 };
 
 AppHandler.contextTypes = {
@@ -56,8 +72,6 @@ AppHandler.contextTypes = {
 
 AppHandler.defaultProps = {
   children: {},
-  dispatch: {},
-  params: {},
 };
 
 export default SchoolContainer(AppHandler);

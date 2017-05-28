@@ -1,126 +1,61 @@
 /* eslint max-len: [2, 500, 4] */
-import React from 'react';
-import StudentController from '../../../../../client/controllers/studentController';
-import LogUtil from '../../../../utils/logUtil';
-import InputElement from '../../../elements/inputElement';
-import StringUtil from '../../../../utils/stringUtil';
+import React, { Component, PropTypes } from 'react';
+import { browserHistory } from 'react-router';
+import LinearProgress from 'material-ui/LinearProgress';
+import _ from 'lodash';
 
-export default class StudentEdit extends React.Component {
+import StudentForm from '../form';
+import StudentContainer from '../../../../containers/student';
+import { getStudent, updateStudent } from '../../../../actions/student';
+
+class StudentEdit extends Component {
 
   constructor(args) {
     super(args);
-    this.locationId = this.props.params.locationId;
-    this.levelId = this.props.params.levelId;
-    this.gradeId = this.props.params.gradeId;
-    this.groupId = this.props.params.groupId;
-    this.entityId = this.props.params.studentId;
-    this.controller = new StudentController(this.locationId, this.levelId, this.gradeId, this.groupId);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.state = {
-      data: {},
-    };
+    this.actionHandler = this.actionHandler.bind(this);
   }
 
   componentDidMount() {
-    if (this.entityId) {
-      this.controller.get(this.entityId)
-        .then((results) => {
-          if (results.entity.status) {
-            this.setState({
-              data: results.entity.data,
-            });
-          }
-        })
-        .catch(error => LogUtil.log(error));
-    } else {
-      LogUtil.log(`[ERROR::LOADING] ${this.props.location.pathname}`);
+    const { dispatch, params, selectedGroup } = this.props;
+    if (!selectedGroup) {
+      browserHistory.push('/');
+    }
+    dispatch(getStudent(params.studentId));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { selectedGroup, lastUpdated } = nextProps;
+    if (lastUpdated) {
+      browserHistory.push(`/group/${selectedGroup}/student?success`);
     }
   }
 
-  handleChange(prop, value) {
-    const { state } = this;
-    state.data[prop] = value;
-    state.status = '';
-    this.setState(state);
-  }
-
-  handleDelete() {
-    this.setState({
-      status: 'deleting',
-    });
-    this.controller.delete(this.entityId)
-      .then(() => {
-        this.setState({
-          status: 'deleted',
-        });
-      })
-      .catch(error => LogUtil.log(error));
-  }
-
-  handleSubmit() {
-    this.setState({
-      status: 'saving',
-    });
-    this.controller.update(this.entityId, this.state.data)
-      .then(() => {
-        this.setState({
-          status: 'saved',
-        });
-      })
-      .catch((error) => {
-        LogUtil.log(`[ERROR::UPDATING] ${error}`);
-        this.setState({
-          status: 'error',
-        });
-      });
+  actionHandler(data) {
+    const { params, dispatch } = this.props;
+    dispatch(updateStudent(params.studentId, data));
   }
 
   render() {
-    return (<div className="container-fluid">
-      <div className="row">
-        <div className="col-sm-12">
-          <table className="table table-striped">
-            <tbody>
-              <tr>
-                <th>Nombre</th>
-                <td>
-                  <InputElement name="name" value={this.state.data.name} onChange={this.handleChange} />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="2" className="text-right">
-                  <input type="submit" onClick={this.handleSubmit} value="Guardar" className="btn btn-primary" />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="2" className="text-right">
-                  { StringUtil.getFormStatus(this.state.status) }
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-12">
-          <button to={`/location/${this.locationId}/level/${this.levelId}`} className="pull-right btn btn-danger" onClick={this.handleDelete}>Eliminar</button>
-        </div>
-      </div>
+    const { student, lastUpdated, selectedGroup } = this.props;
+    return _.isEmpty(student) ? <LinearProgress mode="indeterminate" /> : (<div className="container-fluid">
+      <StudentForm action={this.actionHandler} groupId={selectedGroup} student={student} lastUpdated={lastUpdated} />
     </div>);
   }
 }
 
 StudentEdit.propTypes = {
-  params: React.PropTypes.shape({
-    locationId: React.PropTypes.string.isRequired,
-    levelId: React.PropTypes.string.isRequired,
-    gradeId: React.PropTypes.string.isRequired,
-    groupId: React.PropTypes.string.isRequired,
-    studentId: React.PropTypes.string.isRequired,
-  }).isRequired,
-  location: React.PropTypes.shape({
-    pathname: React.PropTypes.string.isRequired,
-  }).isRequired,
+  params: PropTypes.shape({}).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  student: PropTypes.shape({}),
+  lastUpdated: PropTypes.number,
+  selectedGroup: PropTypes.string,
 };
+
+StudentEdit.defaultProps = {
+  student: {},
+  lastUpdated: null,
+  selectedGroup: null,
+};
+
+
+export default StudentContainer(StudentEdit);

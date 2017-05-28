@@ -27,8 +27,12 @@ class NewsletterAdd extends Component {
 
   render() {
     const { params } = this.props;
-    return (<div className="container-fluid">
-      <NewsletterForm action={this.actionHandler} groupId={params.groupId} />
+    return (<div>
+      <NewsletterForm
+        action={this.actionHandler}
+        groupId={params.groupId}
+        title="Agregar Noticia"
+      />
     </div>);
   }
 }

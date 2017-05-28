@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
-  const { groupUploadHelper } = state;
+  const { groupUploadHelper, selectedLocation } = state;
   const {
     isProcessing,
     lastUpdated,
@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
   };
 
   return {
+    selectedLocation,
     isProcessing,
     lastUpdated,
   };

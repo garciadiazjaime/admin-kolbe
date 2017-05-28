@@ -3,10 +3,11 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import Subheader from 'material-ui/Subheader';
-import { Tabs, Tab } from 'material-ui/Tabs';
 import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 import { FileFileUpload } from 'material-ui/svg-icons';
+import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 
+import { selectLocation } from '../../../../actions/location';
 import LocationContainer from '../../../../containers/location';
 
 class LocationShow extends Component {
@@ -26,13 +27,13 @@ class LocationShow extends Component {
           <Link to={`/group/${item.id}/document`}>Documentos</Link>
         </TableRowColumn>
         <TableRowColumn>
-          <Link to={`/group/${item.id}/newsletter`}>Boletines</Link>
+          <Link to={`/group/${item.id}/newsletter`}>Noticias</Link>
         </TableRowColumn>
         <TableRowColumn>
           <Link to={`/group/${item.id}/parent`}>Padres</Link>
         </TableRowColumn>
         <TableRowColumn>
-          <Link to={`/group/${item.id}/upload`} className="pull-right">
+          <Link to={`/group/${item.id}/upload`}>
             <FileFileUpload />
           </Link>
         </TableRowColumn>
@@ -50,21 +51,40 @@ class LocationShow extends Component {
   }
 
   static renderLevels(data) {
-    return data && data.level ? data.level.map(item => <Tab key={item.id} label={item.name}>
+    return data && data.level ? data.level.map(item => <div key={item.id}>
+      <Toolbar>
+        <ToolbarGroup>
+          <ToolbarTitle text={item.name} />
+        </ToolbarGroup>
+      </Toolbar>
       {LocationShow.renderGrade(item)}
-    </Tab>) : null;
+    </div>) : null;
+  }
+
+  componentDidMount() {
+    const { dispatch, params, selectedLocation } = this.props;
+    if (!selectedLocation || selectedLocation !== params.locationId) {
+      dispatch(selectLocation(params.locationId));
+    }
   }
 
   render() {
     const { location } = this.props;
     return (<div>
-      <Tabs>{LocationShow.renderLevels(location)}</Tabs>
+      {LocationShow.renderLevels(location)}
     </div>);
   }
 }
 
 LocationShow.propTypes = {
   location: PropTypes.shape({}).isRequired,
+  params: PropTypes.shape({}).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  selectedLocation: PropTypes.string,
+};
+
+LocationShow.defaultProps = {
+  selectedLocation: null,
 };
 
 export default LocationContainer(LocationShow);

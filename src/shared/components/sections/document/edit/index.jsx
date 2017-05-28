@@ -1,8 +1,8 @@
 /* eslint max-len: [2, 500, 4] */
 import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
 import { browserHistory } from 'react-router';
 import LinearProgress from 'material-ui/LinearProgress';
-import _ from 'lodash';
 
 import DocumentForm from '../form';
 import DocumentContainer from '../../../../containers/document';
@@ -34,8 +34,14 @@ class DocumentEdit extends Component {
 
   render() {
     const { document, lastUpdated } = this.props;
-    return _.isEmpty(document) ? <LinearProgress mode="indeterminate" /> : (<div className="container-fluid">
-      <DocumentForm action={this.actionHandler} groupId={document.groupId} document={document} lastUpdated={lastUpdated} />
+    return _.isEmpty(document) ? <LinearProgress mode="indeterminate" /> : (<div>
+      <DocumentForm
+        action={this.actionHandler}
+        groupId={document.groupId}
+        document={document}
+        lastUpdated={lastUpdated}
+        title="Editar Documento"
+      />
     </div>);
   }
 }

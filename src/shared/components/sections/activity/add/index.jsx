@@ -27,8 +27,12 @@ class AcitivityAdd extends Component {
 
   render() {
     const { params } = this.props;
-    return (<div className="container-fluid">
-      <ActivityForm action={this.actionHandler} groupId={params.groupId} />
+    return (<div>
+      <ActivityForm
+        action={this.actionHandler}
+        groupId={params.groupId}
+        title="Agregar Actividad"
+      />
     </div>);
   }
 }

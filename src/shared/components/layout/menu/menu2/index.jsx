@@ -1,57 +1,52 @@
-/* eslint max-len: [2, 500, 4] */
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import _ from 'lodash';
+import { browserHistory } from 'react-router';
 import AppBar from 'material-ui/AppBar';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import { white } from 'material-ui/styles/colors';
 
-import SchoolContainer from '../../../../containers/school';
-import { selectLocation } from '../../../../actions/location';
+import constants from '../../../../../constants';
+import LocationContainer from '../../../../containers/location';
 
-const style = require('./style.scss');
-
-class Menu2 extends Component {
+class Menu extends Component {
 
   constructor(args) {
     super(args);
-    this.locationClickHandler = this.locationClickHandler.bind(this);
+    this.menuClickHandler = this.menuClickHandler.bind(this);
   }
 
-  getLocationsMenu(data) {
-    const locationsEl = data.map(item => (<MenuItem key={item.id}>
-      <Link to={`/location/${item.id}`} title={item.name} className={style.anchor} onClick={this.locationClickHandler} data-location-id={item.id}>
-        {item.name}
-      </Link>
-    </MenuItem>));
-    return (<IconMenu iconButtonElement={<IconButton><MoreVertIcon color={white} /></IconButton>}>
-      {locationsEl}
-    </IconMenu>);
+  getTitle() {
+    const { location } = this.props;
+    const title = [constants.appTitle];
+    if (!_.isEmpty(location)) {
+      title.push(location.name);
+    }
+    const separator = title.length > 1 ? ' | ' : '';
+    return title.join(separator);
   }
 
-  locationClickHandler(e) {
-    const { dispatch } = this.props;
-    const locationId = $(e.target).data('location-id');
-    dispatch(selectLocation(locationId));
+  menuClickHandler() {
+    const { selectedLocation, locationId } = this.props;
+    const url = locationId ? '/' : `/location/${selectedLocation}`;
+    browserHistory.push(url);
   }
 
   render() {
-    const { locations, isFetching } = this.props;
-    console.log('Menu2 isFetching', isFetching);
     return (<AppBar
-      title="Koolbe Admin App"
-      showMenuIconButton={false}
-      iconElementRight={this.getLocationsMenu(locations)}
+      title={this.getTitle()}
+      onLeftIconButtonTouchTap={this.menuClickHandler}
     />);
   }
 }
 
-Menu2.propTypes = {
-  locations: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  dispatch: PropTypes.func.isRequired,
+Menu.propTypes = {
+  location: PropTypes.shape({}),
+  selectedLocation: PropTypes.string,
+  locationId: PropTypes.string,
 };
 
-export default SchoolContainer(Menu2);
+Menu.defaultProps = {
+  location: {},
+  selectedLocation: null,
+  locationId: null,
+};
+
+export default LocationContainer(Menu);

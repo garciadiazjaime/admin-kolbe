@@ -4,15 +4,36 @@ import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router';
 import { Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
+import Subheader from 'material-ui/Subheader';
 
-import { ContentAdd, ContentCreate } from 'material-ui/svg-icons';
+import { ContentAdd, ContentCreate, ContentClear } from 'material-ui/svg-icons';
 import NewsletterListContainer from '../../../../containers/newsletter/list';
-import { getNewsletters } from '../../../../actions/newsletter/list';
+import { getNewsletters, deleteNewsletter } from '../../../../actions/newsletter/list';
 import { selectGroup } from '../../../../actions/group';
 
-class LocationList extends Component {
+class NewsletterList extends Component {
 
-  static renderNewsletters(data) {
+  constructor(args) {
+    super(args);
+    this.deleteHandler = this.deleteHandler.bind(this);
+  }
+
+  componentDidMount() {
+    const { params, selectedGroup } = this.props;
+    const { dispatch } = this.props;
+    if (!selectedGroup || selectedGroup !== params.groupId) {
+      dispatch(selectGroup(params.groupId));
+    }
+    dispatch(getNewsletters(params.groupId));
+  }
+
+  deleteHandler(e) {
+    const documentId = e.currentTarget.dataset.id;
+    const { dispatch, selectedGroup } = this.props;
+    dispatch(deleteNewsletter(selectedGroup, documentId));
+  }
+
+  renderNewsletters(data) {
     if (data.length) {
       const style = {
         paddingLeft: '42px',
@@ -25,25 +46,14 @@ class LocationList extends Component {
             <ContentCreate />
           </Link>
         </TableRowColumn>
+        <TableRowColumn style={style}>
+          <a onClick={this.deleteHandler} role="button" tabIndex="0" data-id={item._id}>
+            <ContentClear />
+          </a>
+        </TableRowColumn>
       </TableRow>);
     }
     return null;
-  }
-
-  constructor(args) {
-    super(args);
-    this.state = {
-      data: [],
-    };
-  }
-
-  componentDidMount() {
-    const { params, selectedGroup } = this.props;
-    const { dispatch } = this.props;
-    if (!selectedGroup || selectedGroup !== params.groupId) {
-      dispatch(selectGroup(params.groupId));
-    }
-    dispatch(getNewsletters(params.groupId));
   }
 
   render() {
@@ -53,31 +63,33 @@ class LocationList extends Component {
         <ContentAdd />
       </Link>
       <div className="clearfix" />
+      <Subheader>Noticias</Subheader>
       <Table selectable={false} displayRowCheckbox={false}>
         <TableHeader displaySelectAll={false}>
           <TableRow>
             <TableHeaderColumn>Nombre</TableHeaderColumn>
             <TableHeaderColumn>Fecha</TableHeaderColumn>
             <TableHeaderColumn>Editar</TableHeaderColumn>
+            <TableHeaderColumn>Eliminar</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false} stripedRows>
-          {LocationList.renderNewsletters(newsletters)}
+          {this.renderNewsletters(newsletters)}
         </TableBody>
       </Table>
     </div>);
   }
 }
 
-LocationList.propTypes = {
+NewsletterList.propTypes = {
   params: PropTypes.shape({}).isRequired,
   selectedGroup: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
   newsletters: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
-LocationList.defaultProps = {
+NewsletterList.defaultProps = {
   selectedGroup: '',
 };
 
-export default NewsletterListContainer(LocationList);
+export default NewsletterListContainer(NewsletterList);

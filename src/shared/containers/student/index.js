@@ -1,21 +1,21 @@
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
-  const { selectedGroup, parentsByGroup } = state;
+  const { selectedGroup, studentHelper } = state;
   const {
     isProcessing,
     lastUpdated,
-    data: parents,
-  } = parentsByGroup[selectedGroup] || {
+    data: student,
+  } = studentHelper || {
     isProcessing: true,
-    data: [],
+    data: {},
   };
 
   return {
-    selectedGroup,
     isProcessing,
     lastUpdated,
-    parents,
+    student,
+    selectedGroup,
   };
 };
 

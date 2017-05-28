@@ -2,7 +2,7 @@ import RequestUtil from '../../utils/requestUtil';
 import constants from '../../../constants';
 
 export const REQUEST_ACTIVITY = 'REQUEST_ACTIVITY';
-export const RECEIVE_ACTIVITY = 'RECEIVE_ACTIVITY';
+export const ACTIVITY_RECEIVED = 'ACTIVITY_RECEIVED';
 export const SAVING_ACTIVITY = 'SAVING_ACTIVITY';
 export const ACTIVITY_SAVED = 'ACTIVITY_SAVED';
 
@@ -12,9 +12,9 @@ function requestActivity() {
   };
 }
 
-function receiveActivity(data) {
+function activityReceived(data) {
   return {
-    type: RECEIVE_ACTIVITY,
+    type: ACTIVITY_RECEIVED,
     activity: data.entity.data,
     receivedAt: Date.now(),
   };
@@ -38,7 +38,7 @@ function getActivityHelper(activityId) {
   return (dispatch) => {
     dispatch(requestActivity());
     return RequestUtil.get(`${constants.apiUrl}/activity/${activityId}`)
-      .then(response => dispatch(receiveActivity(response)));
+      .then(response => dispatch(activityReceived(response)));
   };
 }
 

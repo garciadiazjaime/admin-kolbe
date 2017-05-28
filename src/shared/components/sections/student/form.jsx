@@ -4,52 +4,42 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import _ from 'lodash';
 import TextField from 'material-ui/TextField';
-import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import { ContentClear } from 'material-ui/svg-icons';
 import LinearProgress from 'material-ui/LinearProgress';
-import Subheader from 'material-ui/Subheader';
 
-export default class ActivityForm extends Component {
+export default class StudentForm extends Component {
 
   constructor(args) {
     super(args);
-    const { groupId, activity } = this.props;
-    const initData = _.isEmpty(activity) ? {
-      date: new Date(),
-      groupId,
-    } : activity;
+    const { student } = this.props;
     this.state = {
-      data: initData,
+      data: student || {},
       valid: {},
       touch: {},
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.invalidText = 'Obligatorio';
-    this.entityId = _.isEmpty(activity) ? groupId : activity._id;
   }
 
-  handleInputChange(event, newDate) {
-    const newState = _.assign({}, this.state);
+  handleInputChange(event) {
     if (event) {
+      const newState = _.assign({}, this.state);
       const { name, value } = event.target;
       newState.data[name] = value;
       newState.valid[name] = !!value;
       if (!newState.touch[name]) {
         newState.touch[name] = true;
       }
-    } else if (newDate) {
-      newState.data.date = newDate;
+      this.setState(newState);
     }
-
-    this.setState(newState);
   }
 
   handleSubmit() {
     const { data } = this.state;
     const newState = _.assign({}, this.state);
-    const requiredFields = ['name', 'description'];
+    const requiredFields = ['name', 'lastname', 'lastname2', 'code'];
     let isReady = true;
     requiredFields.map((key) => {
       if (isReady && !data[key]) {
@@ -62,27 +52,30 @@ export default class ActivityForm extends Component {
       newState.valid[key] = !!data[key];
       return null;
     });
+
     if (!isReady) {
       this.setState(newState);
     } else {
-      this.props.action(this.entityId, data);
+      this.props.action(data);
     }
   }
 
   render() {
-    const { isProcessing, groupId, title } = this.props;
+    const { isProcessing, groupId } = this.props;
     const { data, valid, touch } = this.state;
     return (<div>
-      <Link to={`/group/${groupId}/activity`} className="pull-right">
+      <Link to={`/group/${groupId}/student`} className="pull-right">
         <ContentClear />
       </Link>
-      <div className="clearfix" />
-      <Subheader>{title}</Subheader>
-      <TextField name="name" floatingLabelText="Actividad" floatingLabelFixed fullWidth onChange={this.handleInputChange} errorText={!valid.name && touch.name ? this.invalidText : null} defaultValue={data.name} />
+      <TextField name="name" floatingLabelText="Nombre" floatingLabelFixed fullWidth onChange={this.handleInputChange} errorText={!valid.name && touch.name ? this.invalidText : null} defaultValue={data.name} />
       <br />
-      <TextField name="description" floatingLabelText="Descripción" floatingLabelFixed multiLine rows={4} fullWidth onChange={this.handleInputChange} errorText={!valid.description && touch.description ? this.invalidText : null} defaultValue={data.description} />
+      <span>{data.file}</span>
       <br />
-      <DatePicker name="date" floatingLabelText="Fecha" fullWidth onChange={this.handleInputChange} autoOk defaultDate={new Date(data.date)} />
+      <TextField name="lastname" floatingLabelText="Apellido Paterno" floatingLabelFixed fullWidth onChange={this.handleInputChange} errorText={!valid.lastname && touch.lastname ? this.invalidText : null} defaultValue={data.lastname} />
+      <br />
+      <TextField name="lastname2" floatingLabelText="Apellido Materno" floatingLabelFixed fullWidth onChange={this.handleInputChange} errorText={!valid.lastname2 && touch.lastname2 ? this.invalidText : null} defaultValue={data.lastname2} />
+      <br />
+      <TextField name="code" floatingLabelText="Código" floatingLabelFixed fullWidth onChange={this.handleInputChange} errorText={!valid.code && touch.code ? this.invalidText : null} defaultValue={data.code} />
       <br />
       <RaisedButton label="Guardar" primary fullWidth onTouchTap={this.handleSubmit} />
       <br />
@@ -91,16 +84,15 @@ export default class ActivityForm extends Component {
   }
 }
 
-ActivityForm.propTypes = {
+StudentForm.propTypes = {
   isProcessing: PropTypes.bool,
-  activity: PropTypes.shape({}),
+  student: PropTypes.shape({}),
   action: PropTypes.func.isRequired,
   groupId: PropTypes.string,
-  title: PropTypes.string.isRequired,
 };
 
-ActivityForm.defaultProps = {
+StudentForm.defaultProps = {
   isProcessing: null,
-  activity: {},
+  student: {},
   groupId: null,
 };

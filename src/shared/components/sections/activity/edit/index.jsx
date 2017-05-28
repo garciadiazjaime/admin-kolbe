@@ -34,8 +34,14 @@ class ActivityEdit extends Component {
 
   render() {
     const { activity, lastUpdated } = this.props;
-    return _.isEmpty(activity) ? <LinearProgress mode="indeterminate" /> : (<div className="container-fluid">
-      <ActivityForm action={this.actionHandler} groupId={activity.groupId} activity={activity} lastUpdated={lastUpdated} />
+    return _.isEmpty(activity) ? <LinearProgress mode="indeterminate" /> : (<div>
+      <ActivityForm
+        action={this.actionHandler}
+        groupId={activity.groupId}
+        activity={activity}
+        lastUpdated={lastUpdated}
+        title="Editar Actividad"
+      />
     </div>);
   }
 }

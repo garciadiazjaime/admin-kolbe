@@ -1,10 +1,18 @@
 import RequestUtil from '../../utils/requestUtil';
 import constants from '../../../constants';
 
+export const SELECT_PARENT = 'SELECT_PARENT';
 export const REQUEST_PARENT = 'REQUEST_PARENT';
 export const RECEIVE_PARENT = 'RECEIVE_PARENT';
 export const SAVING_PARENT = 'SAVING_PARENT';
 export const PARENT_SAVED = 'PARENT_SAVED';
+
+export function selectParent(parentId) {
+  return {
+    type: SELECT_PARENT,
+    parentId,
+  };
+}
 
 function requestParent() {
   return {

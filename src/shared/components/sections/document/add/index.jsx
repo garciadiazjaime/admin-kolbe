@@ -27,8 +27,12 @@ class DocumentAdd extends Component {
 
   render() {
     const { params } = this.props;
-    return (<div className="container-fluid">
-      <DocumentForm action={this.actionHandler} groupId={params.groupId} />
+    return (<div>
+      <DocumentForm
+        action={this.actionHandler}
+        groupId={params.groupId}
+        title="Agregar Documento"
+      />
     </div>);
   }
 }

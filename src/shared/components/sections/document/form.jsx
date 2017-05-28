@@ -70,12 +70,14 @@ export default class ActivityForm extends Component {
   }
 
   render() {
-    const { isProcessing, groupId } = this.props;
+    const { isProcessing, groupId, title } = this.props;
     const { data, valid, touch } = this.state;
     return (<div>
       <Link to={`/group/${groupId}/document`} className="pull-right">
         <ContentClear />
       </Link>
+      <div className="clearfix" />
+      <Subheader>{title}</Subheader>
       <TextField name="name" floatingLabelText="Nombre" floatingLabelFixed fullWidth onChange={this.handleInputChange} errorText={!valid.name && touch.name ? this.invalidText : null} defaultValue={data.name} />
       <br />
       <Subheader>Archivo</Subheader>
@@ -101,6 +103,7 @@ ActivityForm.propTypes = {
   document: PropTypes.shape({}),
   action: PropTypes.func.isRequired,
   groupId: PropTypes.string,
+  title: PropTypes.string.isRequired,
 };
 
 ActivityForm.defaultProps = {
