@@ -43,10 +43,10 @@ class AppHandler extends Component {
   }
 
   render() {
-    const { params } = this.props;
+    const { params, groupById } = this.props;
 
     return (<div>
-      <Menu locationId={params.locationId} groupId={params.groupId} />
+      <Menu locationId={params.locationId} groupId={params.groupId} groupById={groupById} />
       {this.getChildren()}
     </div>);
   }
@@ -58,12 +58,14 @@ AppHandler.propTypes = {
   params: PropTypes.shape({}),
   locationByGroup: PropTypes.shape({}),
   selectedLocation: PropTypes.string,
+  groupById: PropTypes.shape({}),
 };
 
 AppHandler.defaultProps = {
   params: {},
   locationByGroup: {},
   selectedLocation: null,
+  groupById: {},
 };
 
 AppHandler.contextTypes = {

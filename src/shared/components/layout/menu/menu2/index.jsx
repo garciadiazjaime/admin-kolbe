@@ -15,9 +15,14 @@ class Menu extends Component {
 
   getTitle() {
     const { location } = this.props;
+    const { groupById, groupId } = this.props;
     const title = [constants.appTitle];
+
     if (!_.isEmpty(location)) {
       title.push(location.name);
+    }
+    if (groupId && groupById[groupId]) {
+      title.push(groupById[groupId]);
     }
     const separator = title.length > 1 ? ' | ' : '';
     return title.join(separator);
@@ -41,12 +46,16 @@ Menu.propTypes = {
   location: PropTypes.shape({}),
   selectedLocation: PropTypes.string,
   locationId: PropTypes.string,
+  groupById: PropTypes.shape({}),
+  groupId: PropTypes.string,
 };
 
 Menu.defaultProps = {
   location: {},
   selectedLocation: null,
   locationId: null,
+  groupById: {},
+  groupId: null,
 };
 
 export default LocationContainer(Menu);
