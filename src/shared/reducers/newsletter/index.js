@@ -22,6 +22,7 @@ function newsletter(state = {
       return Object.assign({}, state, {
         isProcessing: true,
         didInvalidate: false,
+        lastUpdated: null,
       });
     case NEWSLETTER_SAVED:
       return Object.assign({}, state, {

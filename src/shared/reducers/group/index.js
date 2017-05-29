@@ -19,6 +19,7 @@ function upload(state = {
       return Object.assign({}, state, {
         isProcessing: true,
         didInvalidate: false,
+        lastUpdated: null,
       });
     case FILE_UPLOADED:
       return Object.assign({}, state, {

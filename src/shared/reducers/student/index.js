@@ -30,6 +30,7 @@ function student(state = {
       return Object.assign({}, state, {
         isProcessing: true,
         didInvalidate: false,
+        lastUpdated: null,
       });
     case STUDENT_SAVED:
       return Object.assign({}, state, {
