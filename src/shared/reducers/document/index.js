@@ -26,6 +26,7 @@ function document(state = {
       return Object.assign({}, state, {
         isProcessing: true,
         didInvalidate: false,
+        lastUpdated: null,
       });
     case DOCUMENT_SAVED:
       return Object.assign({}, state, {

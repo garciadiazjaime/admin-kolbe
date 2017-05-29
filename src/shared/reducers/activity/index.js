@@ -17,6 +17,7 @@ function activity(state = {
       return Object.assign({}, state, {
         isProcessing: true,
         didInvalidate: false,
+        lastUpdated: null,
       });
     case ACTIVITY_RECEIVED:
       return Object.assign({}, state, {

@@ -30,6 +30,7 @@ function parent(state = {
       return Object.assign({}, state, {
         isProcessing: true,
         didInvalidate: false,
+        lastUpdated: null,
       });
     case PARENT_SAVED:
       return Object.assign({}, state, {
