@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
 import { browserHistory } from 'react-router';
 import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
 
 import constants from '../../../../../constants';
 import LocationContainer from '../../../../containers/location';
@@ -38,6 +39,7 @@ class Menu extends Component {
     return (<AppBar
       title={this.getTitle()}
       onLeftIconButtonTouchTap={this.menuClickHandler}
+      iconElementRight={<FlatButton label="Salir" href="/logout" />}
     />);
   }
 }

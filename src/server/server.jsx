@@ -52,9 +52,7 @@ passport.use(new LocalStrategy({
       }
       return done(null, false, req.flash('loginMessage', 'Datos incorrrectos'));
     })
-    .catch((error) => {
-      return done(error);
-    });
+    .catch(error => done(error));
 }));
 
 passport.serializeUser((user, done) => {
@@ -81,6 +79,11 @@ app.post('/login', passport.authenticate('local', {
   failureRedirect: '/login',
   failureFlash: 'true',
 }));
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/login');
+});
 
 app.get('/*', isLoggedIn, (req, res) => {
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
