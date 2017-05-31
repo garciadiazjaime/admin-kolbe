@@ -20,6 +20,7 @@ import GradeAddSection from '../../components/sections/grade/add';
 import GradeEditSection from '../../components/sections/grade/edit';
 
 import GroupListSection from '../../components/sections/group/list';
+import GroupShowSection from '../../components/sections/group/show';
 import GroupAddSection from '../../components/sections/group/add';
 import GroupEditSection from '../../components/sections/group/edit';
 import GroupUploadSection from '../../components/sections/group/upload';
@@ -110,30 +111,29 @@ export default(
 
       <Route path="student/:studentId/edit" component={StudentEditSection} />
 
-      <Route path="group">
-        <Route path=":groupId/activity">
+      <Route path="group/:groupId">
+        <IndexRoute component={GroupShowSection} />
+        <Route path="upload" component={GroupUploadSection} />
+        <Route path="student" component={StudentGroupListSection} />
+
+        <Route path="activity">
           <IndexRoute component={ActivityListSection} />
           <Route path="add" component={ActivityAddSection} />
         </Route>
 
-        <Route path=":groupId/document">
+        <Route path="document">
           <IndexRoute component={DocumentListSection} />
           <Route path="add" component={DocumentAddSection} />
         </Route>
 
-        <Route path=":groupId/newsletter">
+        <Route path="newsletter">
           <IndexRoute component={NewsletterListSection} />
           <Route path="add" component={NewsletterAddSection} />
         </Route>
 
-        <Route path=":groupId/parent">
+        <Route path="parent">
           <IndexRoute component={ParentListSection} />
           <Route path="add" component={ParentAddSection} />
-        </Route>
-
-        <Route path=":groupId">
-          <Route path="upload" component={GroupUploadSection} />
-          <Route path="student" component={StudentGroupListSection} />
         </Route>
       </Route>
     </Route>
