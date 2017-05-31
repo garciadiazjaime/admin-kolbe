@@ -1,10 +1,6 @@
-/* eslint max-len: [2, 500, 4] */
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import compression from 'compression';
 import express from 'express';
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-import { match, RouterContext } from 'react-router';
+import { match } from 'react-router';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
@@ -13,7 +9,6 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import flash from 'connect-flash';
 
-import DataWrapper from './dataWrapper';
 import config from '../config';
 import routes from '../shared/config/routes';
 import LogUtil from '../shared/utils/logUtil';
@@ -49,18 +44,15 @@ passport.use(new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true,
 }, (req, email, password, done) => {
-  console.log('email', email, 'password', password, 'done', done);
   const type = 'parent';
   UserController.login(email, password, type)
     .then((results) => {
-      console.log('results', results.entity);
       if (results && results.entity && results.entity.status) {
         return done(null, results.entity.data);
       }
       return done(null, false, req.flash('loginMessage', 'Datos incorrrectos'));
     })
     .catch((error) => {
-      console.log('error', error);
       return done(error);
     });
 }));
@@ -69,21 +61,14 @@ passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-// used to deserialize the user
 passport.deserializeUser((user, done) => {
   done(null, user);
-  // UserController.get(user._id)
-  //   .then((results) => {
-  //     done(err, user);
-  //   });
 });
 
 function isLoggedIn(req, res, next) {
-  // if user is authenticated in the session, carry on
   if (req.isAuthenticated()) {
     return next();
   }
-  // if they aren't redirect them to the home page
   return res.redirect('/login');
 }
 
@@ -97,25 +82,6 @@ app.post('/login', passport.authenticate('local', {
   failureFlash: 'true',
 }));
 
-  // const user = 'user';
-  // const password = 'password';
-  // const type = 'profesor';
-  // UserController.login(user, password, type)
-  //   .then((results) => {
-  //     console.log('results', results.entity);
-  //     if (results && results.entity && results.entity.status) {
-  //       res.redirect(200, '/');
-  //     } else {
-  //       res.redirect('/login', { message: req.flash('invalid login') });
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.log('error', error);
-  //     res.redirect('/login', { message: req.flash(error) });
-  //   });
-// });
-
-
 app.get('/*', isLoggedIn, (req, res) => {
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
     if (error) {
@@ -123,11 +89,7 @@ app.get('/*', isLoggedIn, (req, res) => {
     } else if (redirectLocation) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
-      const props = {
-        data: [],
-      };
-      const content = renderToString(<DataWrapper data={props}><RouterContext {...renderProps} /></DataWrapper>);
-      res.render('index', { content, props });
+      res.render('index');
     } else {
       res.status(404).send('Not found');
     }
