@@ -17,8 +17,7 @@ class ParentList extends Component {
   }
 
   componentDidMount() {
-    const { params, selectedGroup } = this.props;
-    const { dispatch } = this.props;
+    const { params, selectedGroup, dispatch } = this.props;
 
     if (!selectedGroup || selectedGroup !== params.groupId) {
       dispatch(selectGroup(params.groupId));

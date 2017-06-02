@@ -10,6 +10,7 @@ import { newsletterHelper } from './newsletter';
 import { newslettersByGroup } from './newsletter/list';
 import { parentHelper, selectedParent } from './parent';
 import { parentsByGroup } from './parent/list';
+import { groupsByParent } from './parent/show';
 import { selectedGroup, groupUploadHelper } from './group';
 import { studentHelper } from './student';
 import { studentsByParent, studentsByGroup } from './student/list';
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   newslettersByGroup,
   parentHelper,
   parentsByGroup,
+  groupsByParent,
   selectedParent,
   studentHelper,
   studentsByParent,

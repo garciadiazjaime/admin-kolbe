@@ -43,6 +43,7 @@ import NewsletterAddSection from '../../components/sections/newsletter/add';
 import NewsletterEditSection from '../../components/sections/newsletter/edit';
 
 import ParentListSection from '../../components/sections/parent/list';
+import ParentShowSection from '../../components/sections/parent/show';
 import ParentAddSection from '../../components/sections/parent/add';
 import ParentEditSection from '../../components/sections/parent/edit';
 
@@ -104,6 +105,7 @@ export default(
         <IndexRoute component={ParentListSection} />
         <Route path="add" component={ParentAddSection} />
         <Route path=":parentId">
+          <IndexRoute component={ParentShowSection} />
           <Route path="edit" component={ParentEditSection} />
           <Route path="student" component={StudentParentListSection} />
         </Route>
