@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
 import { browserHistory } from 'react-router';
 import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
 
 import constants from '../../../../../constants';
 import LocationContainer from '../../../../containers/location';
@@ -29,8 +30,14 @@ class Menu extends Component {
   }
 
   menuClickHandler() {
-    const { selectedLocation, locationId } = this.props;
-    const url = locationId ? '/' : `/location/${selectedLocation}`;
+    const { selectedLocation, selectedParent, locationId } = this.props;
+    let url = '/';
+
+    if (selectedParent) {
+      url = `/parent/${selectedParent}`;
+    } else if (!locationId && selectedLocation) {
+      url = `/location/${selectedLocation}`;
+    }
     browserHistory.push(url);
   }
 
@@ -38,6 +45,7 @@ class Menu extends Component {
     return (<AppBar
       title={this.getTitle()}
       onLeftIconButtonTouchTap={this.menuClickHandler}
+      iconElementRight={<FlatButton label="Salir" href="/logout" />}
     />);
   }
 }
@@ -45,17 +53,19 @@ class Menu extends Component {
 Menu.propTypes = {
   location: PropTypes.shape({}),
   selectedLocation: PropTypes.string,
-  locationId: PropTypes.string,
   groupById: PropTypes.shape({}),
   groupId: PropTypes.string,
+  selectedParent: PropTypes.string,
+  locationId: PropTypes.string,
 };
 
 Menu.defaultProps = {
   location: {},
   selectedLocation: null,
-  locationId: null,
   groupById: {},
   groupId: null,
+  selectedParent: null,
+  locationId: null,
 };
 
 export default LocationContainer(Menu);

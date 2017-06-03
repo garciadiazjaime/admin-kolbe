@@ -18,13 +18,13 @@ const config = convict({
       doc: 'API URL',
       format: String,
       default: 'http://127.0.0.1:3000/',
-      env: 'PLACES_API_URL',
+      env: 'KOLBE_API_URL',
     },
   },
-  cacheExpiresMins: {
-    doc: 'Number of minutes before query API',
-    format: 'int',
-    default: 1,
+  secret: {
+    doc: 'session secret',
+    format: String,
+    default: 'kolbe',
   },
 });
 

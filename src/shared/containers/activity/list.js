@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
-  const { selectedGroup, activitiesByGroup } = state;
+  const { selectedGroup, activitiesByGroup, selectedParent } = state;
   const {
     isProcessing,
     lastUpdated,
@@ -16,6 +16,7 @@ const mapStateToProps = (state) => {
     isProcessing,
     lastUpdated,
     activities,
+    selectedParent,
   };
 };
 

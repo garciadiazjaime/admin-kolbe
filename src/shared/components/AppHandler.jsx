@@ -12,14 +12,6 @@ injectTapEventPlugin();
 
 class AppHandler extends Component {
 
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      data: context.data ? context.data : window.data,
-    };
-    this.getChildren = this.getChildren.bind(this);
-  }
-
   componentDidMount() {
     const { dispatch } = this.props;
     GaUtil.init();
@@ -36,18 +28,12 @@ class AppHandler extends Component {
     }
   }
 
-  getChildren() {
-    return React.Children.map(this.props.children, child =>
-      React.cloneElement(child, { data: this.state.data }),
-    );
-  }
-
   render() {
     const { params, groupById } = this.props;
 
     return (<div>
       <Menu locationId={params.locationId} groupId={params.groupId} groupById={groupById} />
-      {this.getChildren()}
+      {this.props.children}
     </div>);
   }
 }

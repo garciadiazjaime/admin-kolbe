@@ -1,25 +1,20 @@
-/* eslint max-len: [2, 500, 4] */
 import compression from 'compression';
 import express from 'express';
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-import { match, RouterContext } from 'react-router';
+import { match } from 'react-router';
 import bodyParser from 'body-parser';
-import DataWrapper from './dataWrapper';
+import morgan from 'morgan';
+
 import config from '../config';
 import routes from '../shared/config/routes';
 import LogUtil from '../shared/utils/logUtil';
-import PlaceController from './controllers/placeController';
 
-const placeController = new PlaceController({
-  apiUrl: config.get('api.url'),
-  minutesToWait: config.get('cacheExpiresMins'),
-});
 const app = express();
 
+app.use(morgan('dev'));
 app.use(compression());
+
 app.set('views', './views');
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -39,22 +34,7 @@ app.get('/*', (req, res) => {
     } else if (redirectLocation) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
-      placeController.getPlaces()
-        .then((results) => {
-          const props = {
-            data: results,
-          };
-          const content = renderToString(<DataWrapper data={props}><RouterContext {...renderProps} /></DataWrapper>);
-          res.render('index', { content, props });
-        })
-        .catch((err) => {
-          LogUtil.log(`RequestUtil.get error: ${err}`);
-          const props = {
-            data: [],
-          };
-          const content = renderToString(<DataWrapper data={props}><RouterContext {...renderProps} /></DataWrapper>);
-          res.render('index', { content, props });
-        });
+      res.render('index');
     } else {
       res.status(404).send('Not found');
     }
