@@ -3,6 +3,7 @@ import React from 'react';
 import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
 import AppHandler from '../../components/AppHandler';
+import LoginSection from '../../components/sections/user/login';
 
 import DashboardSection from '../../components/sections/dashboard';
 
@@ -49,6 +50,9 @@ import ParentEditSection from '../../components/sections/parent/edit';
 
 export default(
   <Router history={browserHistory}>
+    <Route path="/login" component={LoginSection} />
+    <Route path="/logout" component={LoginSection} />
+
     <Route path="/" component={AppHandler}>
       <IndexRoute component={DashboardSection} />
 

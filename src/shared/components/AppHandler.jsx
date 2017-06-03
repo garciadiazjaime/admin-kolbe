@@ -10,14 +10,6 @@ import constants from '../../constants';
 
 injectTapEventPlugin();
 
-// constructor(props, context) {
-//   super(props, context);
-//   this.state = {
-//     data: context.data ? context.data : window.data,
-//   };
-//   this.getChildren = this.getChildren.bind(this);
-// }
-
 class AppHandler extends Component {
 
   componentDidMount() {
@@ -35,13 +27,6 @@ class AppHandler extends Component {
       dispatch(selectLocation(locationByGroup[params.groupId]));
     }
   }
-
-  // getChildren() {
-  //   return React.Children.map(this.props.children, child =>
-  //     React.cloneElement(child, { data: this.state.data }),
-  //   );
-  // }
-  // {this.getChildren()}
 
   render() {
     const { params, groupById } = this.props;

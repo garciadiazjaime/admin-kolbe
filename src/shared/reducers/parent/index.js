@@ -37,7 +37,6 @@ function parent(state = {
         isProcessing: false,
         didInvalidate: false,
         lastUpdated: action.receivedAt,
-
       });
     default:
       return state;
