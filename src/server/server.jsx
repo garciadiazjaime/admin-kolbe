@@ -3,7 +3,6 @@ import express from 'express';
 import { match } from 'react-router';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
-import cookieParser from 'cookie-parser';
 
 import config from '../config';
 import routes from '../shared/config/routes';
@@ -12,7 +11,6 @@ import LogUtil from '../shared/utils/logUtil';
 const app = express();
 
 app.use(morgan('dev'));
-app.use(cookieParser());
 app.use(compression());
 
 app.set('views', './views');
