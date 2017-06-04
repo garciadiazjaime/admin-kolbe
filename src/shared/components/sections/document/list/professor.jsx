@@ -13,10 +13,10 @@ import {
 import Subheader from 'material-ui/Subheader';
 
 import { ContentAdd, ContentCreate, ContentClear } from 'material-ui/svg-icons';
-import ActivityListContainer from '../../../../containers/activity/list';
-import { deleteActivity } from '../../../../actions/activity/list';
+import DocumentListContainer from '../../../../containers/document/list';
+import { deleteDocument } from '../../../../actions/document/list';
 
-class ActivityProfessorList extends Component {
+class DocumentDocumentList extends Component {
 
   constructor(args) {
     super(args);
@@ -24,12 +24,12 @@ class ActivityProfessorList extends Component {
   }
 
   deleteHandler(e) {
-    const activityId = e.currentTarget.dataset.id;
+    const documentId = e.currentTarget.dataset.id;
     const { dispatch, selectedGroup } = this.props;
-    dispatch(deleteActivity(selectedGroup, activityId));
+    dispatch(deleteDocument(selectedGroup, documentId));
   }
 
-  renderActivities(data) {
+  renderDocuments(data) {
     if (data.length) {
       const style = {
         paddingLeft: '42px',
@@ -38,7 +38,7 @@ class ActivityProfessorList extends Component {
         <TableRowColumn>{item.name}</TableRowColumn>
         <TableRowColumn style={style}>{moment(item.date).format('DD/MM/YYYY')}</TableRowColumn>
         <TableRowColumn style={style}>
-          <Link to={`/activity/${item._id}/edit`}>
+          <Link to={`/document/${item._id}/edit`}>
             <ContentCreate />
           </Link>
         </TableRowColumn>
@@ -53,13 +53,13 @@ class ActivityProfessorList extends Component {
   }
 
   render() {
-    const { activities, params } = this.props;
+    const { params, documents } = this.props;
     return (<div>
-      <Link to={`/group/${params.groupId}/activity/add`} className="pull-right">
+      <Link to={`/group/${params.groupId}/document/add`} className="pull-right">
         <ContentAdd />
       </Link>
       <div className="clearfix" />
-      <Subheader>Actividades</Subheader>
+      <Subheader>Documentos</Subheader>
       <Table selectable={false} displayRowCheckbox={false}>
         <TableHeader displaySelectAll={false}>
           <TableRow>
@@ -70,22 +70,22 @@ class ActivityProfessorList extends Component {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false} stripedRows>
-          {this.renderActivities(activities)}
+          {this.renderDocuments(documents)}
         </TableBody>
       </Table>
     </div>);
   }
 }
 
-ActivityProfessorList.propTypes = {
+DocumentDocumentList.propTypes = {
   params: PropTypes.shape({}).isRequired,
   selectedGroup: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
-  activities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  documents: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
-ActivityProfessorList.defaultProps = {
+DocumentDocumentList.defaultProps = {
   selectedGroup: '',
 };
 
-export default ActivityListContainer(ActivityProfessorList);
+export default DocumentListContainer(DocumentDocumentList);

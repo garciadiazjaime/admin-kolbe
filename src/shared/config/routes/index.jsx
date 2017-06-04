@@ -37,6 +37,7 @@ import ActivityAddSection from '../../components/sections/activity/add';
 import ActivityEditSection from '../../components/sections/activity/edit';
 
 import DocumentListSection from '../../components/sections/document/list';
+import DocumentShowSection from '../../components/sections/document/show';
 import DocumentAddSection from '../../components/sections/document/add';
 import DocumentEditSection from '../../components/sections/document/edit';
 
@@ -117,6 +118,9 @@ export default(
           <Route path="group/:groupId">
             <Route path="activity" component={ActivityListSection} />
             <Route path="activity/:activityId/show" component={ActivityShowSection} />
+
+            <Route path="document" component={DocumentListSection} />
+            <Route path="document/:documentId/show" component={DocumentShowSection} />
           </Route>
         </Route>
       </Route>
