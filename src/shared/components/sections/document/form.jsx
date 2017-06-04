@@ -10,6 +10,7 @@ import { ContentClear } from 'material-ui/svg-icons';
 import LinearProgress from 'material-ui/LinearProgress';
 import Subheader from 'material-ui/Subheader';
 import FormData from 'form-data';
+import constants from '../../../../constants';
 
 import style from './style.scss';
 
@@ -116,7 +117,16 @@ export default class ActivityForm extends Component {
       { this.state.touch.file && !this.state.valid.file ?
         <div className="text-danger">Seleccionar Archivo</div> : null }
       <br />
-      <span>{data.file}</span>
+      {
+        data.realFile ?
+          <a
+            href={`${constants.docsUrl}/${data.realFile}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {data.file}
+          </a> : <span>{data.file}</span>
+      }
       <br />
       <TextField name="description" floatingLabelText="Descripción" floatingLabelFixed multiLine rows={4} fullWidth onChange={this.handleInputChange} errorText={!valid.description && touch.description ? this.invalidText : null} defaultValue={data.description} />
       <br />
