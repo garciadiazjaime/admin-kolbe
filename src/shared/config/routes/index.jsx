@@ -42,6 +42,7 @@ import DocumentAddSection from '../../components/sections/document/add';
 import DocumentEditSection from '../../components/sections/document/edit';
 
 import NewsletterListSection from '../../components/sections/newsletter/list';
+import NewsletterShowSection from '../../components/sections/newsletter/show';
 import NewsletterAddSection from '../../components/sections/newsletter/add';
 import NewsletterEditSection from '../../components/sections/newsletter/edit';
 
@@ -110,6 +111,7 @@ export default(
       <Route path="parent">
         <IndexRoute component={ParentListSection} />
         <Route path="add" component={ParentAddSection} />
+
         <Route path=":parentId">
           <IndexRoute component={ParentShowSection} />
           <Route path="edit" component={ParentEditSection} />
@@ -121,6 +123,9 @@ export default(
 
             <Route path="document" component={DocumentListSection} />
             <Route path="document/:documentId/show" component={DocumentShowSection} />
+
+            <Route path="newsletter" component={NewsletterListSection} />
+            <Route path="newsletter/:newsletterId/show" component={NewsletterShowSection} />
           </Route>
         </Route>
       </Route>
