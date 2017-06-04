@@ -10,8 +10,9 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import Subheader from 'material-ui/Subheader';
 
-import { ContentCreate, ContentClear } from 'material-ui/svg-icons';
+import { ContentAdd, ContentCreate, ContentClear } from 'material-ui/svg-icons';
 import ActivityListContainer from '../../../../containers/activity/list';
 import { deleteActivity } from '../../../../actions/activity/list';
 
@@ -52,24 +53,32 @@ class ActivityProfList extends Component {
   }
 
   render() {
-    const { activities } = this.props;
-    return (<Table selectable={false} displayRowCheckbox={false}>
-      <TableHeader displaySelectAll={false}>
-        <TableRow>
-          <TableHeaderColumn>Nombre</TableHeaderColumn>
-          <TableHeaderColumn>Fecha</TableHeaderColumn>
-          <TableHeaderColumn>Editar</TableHeaderColumn>
-          <TableHeaderColumn>Eliminar</TableHeaderColumn>
-        </TableRow>
-      </TableHeader>
-      <TableBody displayRowCheckbox={false} stripedRows>
-        {this.renderActivities(activities)}
-      </TableBody>
-    </Table>);
+    const { activities, params } = this.props;
+    return (<div>
+      <Link to={`/group/${params.groupId}/activity/add`} className="pull-right">
+        <ContentAdd />
+      </Link>
+      <div className="clearfix" />
+      <Subheader>Actividades</Subheader>
+      <Table selectable={false} displayRowCheckbox={false}>
+        <TableHeader displaySelectAll={false}>
+          <TableRow>
+            <TableHeaderColumn>Nombre</TableHeaderColumn>
+            <TableHeaderColumn>Fecha</TableHeaderColumn>
+            <TableHeaderColumn>Editar</TableHeaderColumn>
+            <TableHeaderColumn>Eliminar</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody displayRowCheckbox={false} stripedRows>
+          {this.renderActivities(activities)}
+        </TableBody>
+      </Table>
+    </div>);
   }
 }
 
 ActivityProfList.propTypes = {
+  params: PropTypes.shape({}).isRequired,
   selectedGroup: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
   activities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,

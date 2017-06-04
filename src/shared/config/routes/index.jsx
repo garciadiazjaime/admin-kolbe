@@ -32,6 +32,7 @@ import StudentAddSection from '../../components/sections/student/add';
 import StudentEditSection from '../../components/sections/student/edit';
 
 import ActivityListSection from '../../components/sections/activity/list';
+import ActivityShowSection from '../../components/sections/activity/show';
 import ActivityAddSection from '../../components/sections/activity/add';
 import ActivityEditSection from '../../components/sections/activity/edit';
 
@@ -112,6 +113,11 @@ export default(
           <IndexRoute component={ParentShowSection} />
           <Route path="edit" component={ParentEditSection} />
           <Route path="student" component={StudentParentListSection} />
+
+          <Route path="group/:groupId">
+            <Route path="activity" component={ActivityListSection} />
+            <Route path="activity/:activityId/show" component={ActivityShowSection} />
+          </Route>
         </Route>
       </Route>
 

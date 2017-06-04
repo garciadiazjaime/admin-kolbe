@@ -12,20 +12,20 @@ import ParentShowContainer from '../../../../containers/parent/show';
 
 class ParentShow extends Component {
 
-  static renderGroups(data, groupById) {
+  static renderGroups(data, groupById, parentId) {
     return _.isArray(data) && data.length && !_.isEmpty(groupById) ? data.map(item => <div key={item._id}>
       <Subheader>{groupById[item.groupId]}</Subheader>
       <Table selectable={false}>
         <TableBody displayRowCheckbox={false} stripedRows>
           <TableRow displayBorder={false}>
             <TableRowColumn>
-              <Link to={`/group/${item.groupId}/activity`}>Actividades</Link>
+              <Link to={`/parent/${parentId}/group/${item.groupId}/activity`}>Actividades</Link>
             </TableRowColumn>
             <TableRowColumn>
-              <Link to={`/group/${item.groupId}/document`}>Documentos</Link>
+              <Link to={`/parent/${parentId}/group/${item.groupId}/document`}>Documentos</Link>
             </TableRowColumn>
             <TableRowColumn>
-              <Link to={`/group/${item.groupId}/newsletter`}>Noticias</Link>
+              <Link to={`/parent/${parentId}/group/${item.groupId}/newsletter`}>Noticias</Link>
             </TableRowColumn>
           </TableRow>
         </TableBody>
@@ -43,9 +43,9 @@ class ParentShow extends Component {
   }
 
   render() {
-    const { groups, groupById } = this.props;
+    const { groups, groupById, params } = this.props;
     return (<div>
-      {ParentShow.renderGroups(groups, groupById)}
+      {ParentShow.renderGroups(groups, groupById, params.parentId)}
     </div>);
   }
 }
