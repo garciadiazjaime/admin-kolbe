@@ -1,8 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import Subheader from 'material-ui/Subheader';
 
-import { ContentAdd } from 'material-ui/svg-icons';
 import ActivityListContainer from '../../../../containers/activity/list';
 import { getActivities } from '../../../../actions/activity/list';
 import { selectGroup } from '../../../../actions/group';
@@ -21,16 +18,14 @@ class ActivityList extends Component {
   }
 
   render() {
-    const { params, selectedParent, activities } = this.props;
-    return (<div>
-      <Link to={`/group/${params.groupId}/activity/add`} className="pull-right">
-        <ContentAdd />
-      </Link>
-      <div className="clearfix" />
-      <Subheader>Actividades</Subheader>
-      { selectedParent ?
-        <ParentList activities={activities} /> : <ProfessorList {...this.props} /> }
-    </div>);
+    const { params, activities } = this.props;
+    return params.parentId ?
+      (<ParentList
+        activities={activities}
+        parentId={params.parentId}
+        groupId={params.groupId}
+      />) :
+      (<ProfessorList {...this.props} />);
   }
 }
 
@@ -39,12 +34,10 @@ ActivityList.propTypes = {
   selectedGroup: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
   activities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  selectedParent: PropTypes.string,
 };
 
 ActivityList.defaultProps = {
   selectedGroup: '',
-  selectedParent: null,
 };
 
 export default ActivityListContainer(ActivityList);
