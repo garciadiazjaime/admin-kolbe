@@ -7,4 +7,8 @@ export default class StoreUtil {
   static get(key) {
     return localStorage.getItem(key);
   }
+
+  static remove(key) {
+    localStorage.removeItem(key);
+  }
 }

@@ -4,6 +4,7 @@ import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
 import AppHandler from '../../components/AppHandler';
 import LoginSection from '../../components/sections/user/login';
+import LogoutSection from '../../components/sections/user/logout';
 
 import DashboardSection from '../../components/sections/dashboard';
 
@@ -67,7 +68,7 @@ function requireAuth(nextState, replaceState) {
 export default(
   <Router history={browserHistory}>
     <Route path="/login" component={LoginSection} />
-    <Route path="/logout" component={LoginSection} />
+    <Route path="/logout" component={LogoutSection} />
 
     <Route path="/" component={AppHandler} onEnter={requireAuth} >
       <IndexRoute component={DashboardSection} />
