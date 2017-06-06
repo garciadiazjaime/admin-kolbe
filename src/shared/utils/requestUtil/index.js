@@ -1,6 +1,9 @@
 import rest from 'rest';
 import mime from 'rest/interceptor/mime';
 import errorCode from 'rest/interceptor/errorCode';
+import _ from 'lodash';
+
+import StoreUtil from '../storeUtil';
 
 const client = rest
   .wrap(mime, { mime: 'application/json' })
@@ -10,10 +13,23 @@ const submitClient = rest
   .wrap(mime, { mime: 'multipart/form-data' })
   .wrap(errorCode, { code: 300 });
 
+function getConfig(config) {
+  const token = StoreUtil.get('token');
+  if (token) {
+    return _.assign({}, config, {
+      headers: {
+        'x-access-token': token,
+      },
+    });
+  }
+  return config;
+}
+
 export default class RequestUtil {
 
   static get(url) {
-    return client({ path: url });
+    const config = { path: url };
+    return client(getConfig(config));
   }
 
   /*
@@ -23,33 +39,37 @@ export default class RequestUtil {
     @returns {object}
   */
   static post(url, data) {
-    return client({
+    const config = {
       method: 'POST',
       path: url,
       entity: data,
-    });
+    };
+    return client(getConfig(config));
   }
 
   static submit(url, data, method) {
-    return submitClient({
+    const config = {
       method: method || 'POST',
       path: url,
       entity: data,
-    });
+    };
+    return submitClient(getConfig(config));
   }
 
   static put(url, data) {
-    return client({
+    const config = {
       method: 'PUT',
       path: url,
       entity: data,
-    });
+    };
+    return client(getConfig(config));
   }
 
   static delete(url) {
-    return client({
+    const config = {
       method: 'DELETE',
       path: url,
-    });
+    };
+    return client(getConfig(config));
   }
 }

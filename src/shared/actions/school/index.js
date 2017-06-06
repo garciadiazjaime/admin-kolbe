@@ -1,4 +1,5 @@
-import fetch from 'isomorphic-fetch';
+import RequestUtil from '../../utils/requestUtil';
+import constants from '../../../constants';
 
 export const REQUEST_SCHOOL = 'REQUEST_SCHOOL';
 export const RECEIVE_SCHOOL = 'RECEIVE_SCHOOL';
@@ -26,11 +27,11 @@ function requestSchool(schoolId) {
   };
 }
 
-function receiveSchool(schoolId, json) {
+function receiveSchool(schoolId, data) {
   return {
     type: RECEIVE_SCHOOL,
     schoolId,
-    school: json.data,
+    school: data.entity.data,
     receivedAt: Date.now(),
   };
 }
@@ -38,9 +39,8 @@ function receiveSchool(schoolId, json) {
 function fetchSchool(schoolId) {
   return (dispatch) => {
     dispatch(requestSchool(schoolId));
-    return fetch(`http://127.0.0.1:3000/api/school/${schoolId}`)
-      .then(response => response.json())
-      .then(json => dispatch(receiveSchool(schoolId, json)));
+    return RequestUtil.get(`${constants.apiUrl}/school/${schoolId}`)
+      .then(response => dispatch(receiveSchool(schoolId, response)));
   };
 }
 
