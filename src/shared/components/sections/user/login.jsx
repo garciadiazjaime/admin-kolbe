@@ -28,9 +28,15 @@ class LoginSection extends Component {
   componentWillReceiveProps(nextProps) {
     const { user } = nextProps;
     if (!_.isEmpty(user) && user.id) {
-      if (user.role === 3) {
-        StoreUtil.set('token', user.token);
-        browserHistory.push(`/parent/${user.id}`);
+      StoreUtil.set('token', user.token);
+      StoreUtil.set('role', user.role);
+      StoreUtil.set('id', user.id);
+      const routes = ['', '', 'group', 'parent'];
+      const route = routes[user.role];
+      if (route) {
+        browserHistory.push(`/${route}/${user.id}`);
+      } else {
+        browserHistory.push('/login?message=invalid_role');
       }
     }
   }
