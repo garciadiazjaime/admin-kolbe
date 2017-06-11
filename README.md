@@ -48,3 +48,4 @@ rhc env list -a app
 
 https://scotch.io/tutorials/easy-node-authentication-setup-and-local
 https://scotch.io/tutorials/build-a-react-flux-app-with-user-authentication
+https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens

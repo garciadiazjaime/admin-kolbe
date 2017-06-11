@@ -8,7 +8,8 @@ import LinearProgress from 'material-ui/LinearProgress';
 
 import UserLoginContainer from '../../../containers/user/login';
 import constants from '../../../../constants';
-import { login, selectUser } from '../../../actions/user';
+import { login } from '../../../actions/user';
+import StoreUtil from '../../../utils/storeUtil';
 
 class LoginSection extends Component {
 
@@ -26,11 +27,17 @@ class LoginSection extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { user } = nextProps;
-    console.log('user', user);
     if (!_.isEmpty(user) && user.id) {
-      const { dispatch } = this.props;
-      dispatch(selectUser(user));
-      browserHistory.push(`/parent/${user.id}`);
+      StoreUtil.set('token', user.token);
+      StoreUtil.set('role', user.role);
+      StoreUtil.set('id', user.id);
+      const routes = ['', '', 'group', 'parent'];
+      const route = routes[user.role];
+      if (route) {
+        browserHistory.push(`/${route}/${user.id}`);
+      } else {
+        browserHistory.push('/login?message=invalid_role');
+      }
     }
   }
 

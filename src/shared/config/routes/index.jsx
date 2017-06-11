@@ -4,6 +4,7 @@ import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
 import AppHandler from '../../components/AppHandler';
 import LoginSection from '../../components/sections/user/login';
+import LogoutSection from '../../components/sections/user/logout';
 
 import DashboardSection from '../../components/sections/dashboard';
 
@@ -51,12 +52,25 @@ import ParentShowSection from '../../components/sections/parent/show';
 import ParentAddSection from '../../components/sections/parent/add';
 import ParentEditSection from '../../components/sections/parent/edit';
 
+import AuthUtil from '../../utils/authUtil';
+
+function requireAuth(nextState, replaceState) {
+  if (!AuthUtil.isLoggedIn()) {
+    replaceState({
+      state: {
+        nextPathname: nextState.location.pathname,
+      },
+      pathname: '/login',
+    });
+  }
+}
+
 export default(
   <Router history={browserHistory}>
     <Route path="/login" component={LoginSection} />
-    <Route path="/logout" component={LoginSection} />
+    <Route path="/logout" component={LogoutSection} />
 
-    <Route path="/" component={AppHandler}>
+    <Route path="/" component={AppHandler} onEnter={requireAuth} >
       <IndexRoute component={DashboardSection} />
 
       <Route path="location">

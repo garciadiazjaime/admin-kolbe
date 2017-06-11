@@ -30,11 +30,13 @@ class Menu extends Component {
   }
 
   menuClickHandler() {
-    const { selectedLocation, selectedParent, locationId } = this.props;
+    const { selectedLocation, selectedParent, selectedGroup, locationId } = this.props;
     let url = '/';
 
     if (selectedParent) {
       url = `/parent/${selectedParent}`;
+    } else if (selectedGroup) {
+      url = `/group/${selectedGroup}`;
     } else if (!locationId && selectedLocation) {
       url = `/location/${selectedLocation}`;
     }
@@ -56,6 +58,7 @@ Menu.propTypes = {
   groupById: PropTypes.shape({}),
   groupId: PropTypes.string,
   selectedParent: PropTypes.string,
+  selectedGroup: PropTypes.string,
   locationId: PropTypes.string,
 };
 
@@ -65,6 +68,7 @@ Menu.defaultProps = {
   groupById: {},
   groupId: null,
   selectedParent: null,
+  selectedGroup: null,
   locationId: null,
 };
 

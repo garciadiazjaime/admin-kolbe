@@ -1,11 +1,9 @@
 import compression from 'compression';
 import express from 'express';
-import { match } from 'react-router';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 
 import config from '../config';
-import routes from '../shared/config/routes';
 import LogUtil from '../shared/utils/logUtil';
 
 const app = express();
@@ -28,17 +26,7 @@ app.get('/health', (req, res) => {
 });
 
 app.get('/*', (req, res) => {
-  match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
-    if (error) {
-      res.status(500).send(error.message);
-    } else if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-    } else if (renderProps) {
-      res.render('index');
-    } else {
-      res.status(404).send('Not found');
-    }
-  });
+  res.render('index');
 });
 
 app.set('ipaddress', config.get('ipaddress'));
