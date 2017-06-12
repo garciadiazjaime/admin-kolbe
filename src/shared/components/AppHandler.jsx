@@ -1,27 +1,49 @@
 import React, { Component, PropTypes } from 'react';
+import { browserHistory } from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import GaUtil from '../utils/gaUtil';
 import MainMenu from './layout/menu/mainMenu';
-import { selectSchool, fetchSchoolIfNeeded } from '../actions/school';
+import { selectSchool, getSchool } from '../actions/school';
 import { selectLocation } from '../actions/location';
 import { selectParent } from '../actions/parent';
+import { loggedUser } from '../actions/user';
 import SchoolContainer from '../containers/school';
 import constants from '../../constants';
+import AuthUtil from '../utils/authUtil';
 
 injectTapEventPlugin();
 
 class AppHandler extends Component {
 
   componentDidMount() {
-    const { dispatch } = this.props;
     GaUtil.init();
-    dispatch(selectSchool(constants.schoolId));
-    dispatch(fetchSchoolIfNeeded(constants.schoolId));
+    AuthUtil.isTokenValid().then((user) => {
+      const { dispatch } = this.props;
+      const routes = ['location', 'level', 'group', 'parent'];
+      const route = routes[user.role];
+      if (route) {
+        dispatch(loggedUser(true));
+        dispatch(selectSchool(constants.schoolId));
+        dispatch(getSchool(constants.schoolId));
+        browserHistory.push(`/${route}/${user.id}`);
+      } else {
+        browserHistory.push('/login?message=invalid_role');
+      }
+    })
+    .catch(() => {
+      browserHistory.push('/login');
+    });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { selectedLocation, selectedParent, locationByGroup, params, dispatch } = nextProps;
+    const {
+      selectedLocation,
+      selectedParent,
+      locationByGroup,
+      params,
+      dispatch,
+    } = nextProps;
     const newLocation = locationByGroup[params.groupId];
 
     if (!selectedLocation && params.groupId && newLocation) {
@@ -33,12 +55,14 @@ class AppHandler extends Component {
   }
 
   render() {
-    const { params, groupById } = this.props;
+    const { params, groupById, userLoggedIn } = this.props;
 
-    return (<div>
+    return userLoggedIn ? (<div>
       <MainMenu locationId={params.locationId} groupId={params.groupId} groupById={groupById} />
       {this.props.children}
-    </div>);
+    </div>) : <div>
+      loading
+    </div>;
   }
 }
 
@@ -50,6 +74,7 @@ AppHandler.propTypes = {
   selectedLocation: PropTypes.string,
   selectedParent: PropTypes.string,
   groupById: PropTypes.shape({}),
+  userLoggedIn: PropTypes.bool,
 };
 
 AppHandler.defaultProps = {
@@ -58,6 +83,7 @@ AppHandler.defaultProps = {
   selectedLocation: null,
   selectedParent: null,
   groupById: {},
+  userLoggedIn: false,
 };
 
 AppHandler.contextTypes = {

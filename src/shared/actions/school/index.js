@@ -36,7 +36,7 @@ function receiveSchool(schoolId, data) {
   };
 }
 
-function fetchSchool(schoolId) {
+function getSchoolHelper(schoolId) {
   return (dispatch) => {
     dispatch(requestSchool(schoolId));
     return RequestUtil.get(`${constants.apiUrl}/school/${schoolId}`)
@@ -54,10 +54,10 @@ function shouldFetchSchool(state, schoolId) {
   return school.didInvalidate;
 }
 
-export function fetchSchoolIfNeeded(schoolId) {
+export function getSchool(schoolId) {
   return (dispatch, getState) => {
     if (shouldFetchSchool(getState(), schoolId)) {
-      return dispatch(fetchSchool(schoolId));
+      return dispatch(getSchoolHelper(schoolId));
     }
     return null;
   };

@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
-  const { selectedSchool, selectedLocation, selectedParent, schoolById } = state;
+  const { selectedSchool, selectedLocation, selectedParent, schoolById, userLoggedIn } = state;
   const {
     isFetching,
     lastUpdated,
@@ -44,6 +44,7 @@ const mapStateToProps = (state) => {
     school,
     isFetching,
     lastUpdated,
+    userLoggedIn,
   };
 };
 

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { schoolById, selectedSchool } from './school';
+import { schoolById, selectedSchool, userLoggedIn } from './school';
 import { locationById, selectedLocation } from './location';
 import { activityHelper } from './activity';
 import { activitiesByGroup } from './activity/list';
@@ -37,6 +37,7 @@ const rootReducer = combineReducers({
   studentsByParent,
   studentsByGroup,
   userHelper,
+  userLoggedIn,
 });
 
 export default rootReducer;

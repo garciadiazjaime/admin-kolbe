@@ -29,9 +29,7 @@ class LoginSection extends Component {
     const { user } = nextProps;
     if (!_.isEmpty(user) && user.id) {
       StoreUtil.set('token', user.token);
-      StoreUtil.set('role', user.role);
-      StoreUtil.set('id', user.id);
-      const routes = ['', '', 'group', 'parent'];
+      const routes = ['location', 'level', 'group', 'parent'];
       const route = routes[user.role];
       if (route) {
         browserHistory.push(`/${route}/${user.id}`);
