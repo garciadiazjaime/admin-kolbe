@@ -16,6 +16,7 @@ import LocationEditSection from '../../components/sections/location/edit';
 import LevelListSection from '../../components/sections/level/list';
 import LevelAddSection from '../../components/sections/level/add';
 import LevelEditSection from '../../components/sections/level/edit';
+import LevelShowSection from '../../components/sections/level/show';
 
 import GradeListSection from '../../components/sections/grade/list';
 import GradeAddSection from '../../components/sections/grade/add';
@@ -70,7 +71,7 @@ export default(
     <Route path="/login" component={LoginSection} />
     <Route path="/logout" component={LogoutSection} />
 
-    <Route path="/" component={AppHandler} onEnter={requireAuth} >
+    <Route path="/" component={AppHandler} onEnter={requireAuth}>
       <IndexRoute component={DashboardSection} />
 
       <Route path="location">
@@ -171,6 +172,11 @@ export default(
           <Route path="add" component={ParentAddSection} />
         </Route>
       </Route>
+
+      <Route path="level/:levelId">
+        <IndexRoute component={LevelShowSection} />
+      </Route>
+
     </Route>
   </Router>
 );

@@ -1,10 +1,25 @@
-import { REQUEST_SCHOOL, RECEIVE_SCHOOL, SELECT_SCHOOL, INVALIDATE_SCHOOL } from '../../actions/school';
+import {
+  REQUEST_SCHOOL,
+  RECEIVE_SCHOOL,
+  SELECT_SCHOOL,
+  INVALIDATE_SCHOOL,
+} from '../../actions/school';
+import { USER_LOGGED_IN } from '../../actions/user';
 
 
 export function selectedSchool(state = '', action) {
   switch (action.type) {
     case SELECT_SCHOOL:
       return action.schoolId;
+    default:
+      return state;
+  }
+}
+
+export function userLoggedIn(state = false, action) {
+  switch (action.type) {
+    case USER_LOGGED_IN:
+      return action.value;
     default:
       return state;
   }
