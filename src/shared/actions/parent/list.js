@@ -63,7 +63,7 @@ export function getParents(groupId) {
 function deleteParentHelper(groupId, entityId) {
   return (dispatch) => {
     dispatch(deletingParent(groupId));
-    return RequestUtil.delete(`${constants.apiUrl}/parent/${entityId}`)
+    return RequestUtil.delete(`${constants.apiUrl}/group/${groupId}/parent/${entityId}`)
       .then(() => dispatch(parentDeleted(groupId, entityId)));
   };
 }
