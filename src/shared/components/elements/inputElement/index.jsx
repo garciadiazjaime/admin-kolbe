@@ -1,5 +1,6 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class InputElement extends React.Component {
 
@@ -18,10 +19,10 @@ export default class InputElement extends React.Component {
 }
 
 InputElement.propTypes = {
-  value: React.PropTypes.string,
-  onChange: React.PropTypes.func.isRequired,
-  name: React.PropTypes.string.isRequired,
-  type: React.PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string,
 };
 
 InputElement.defaultProps = {
