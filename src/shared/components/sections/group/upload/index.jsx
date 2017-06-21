@@ -1,5 +1,6 @@
 /* eslint max-len: [2, 500, 4] */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link, browserHistory } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 import { ContentClear } from 'material-ui/svg-icons';

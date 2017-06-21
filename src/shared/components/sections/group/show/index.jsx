@@ -1,6 +1,6 @@
 /* eslint max-len: [2, 500, 4] */
-
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import Subheader from 'material-ui/Subheader';
 import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';

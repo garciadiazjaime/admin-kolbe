@@ -1,5 +1,6 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
+import PropTypes from 'prop-types';
 import GradeController from '../../../../../client/controllers/gradeController';
 import LogUtil from '../../../../utils/logUtil';
 import InputElement from '../../../elements/inputElement';
@@ -111,12 +112,12 @@ export default class GradeEdit extends React.Component {
 }
 
 GradeEdit.propTypes = {
-  params: React.PropTypes.shape({
-    locationId: React.PropTypes.string.isRequired,
-    levelId: React.PropTypes.string.isRequired,
-    gradeId: React.PropTypes.string.isRequired,
+  params: PropTypes.shape({
+    locationId: PropTypes.string.isRequired,
+    levelId: PropTypes.string.isRequired,
+    gradeId: PropTypes.string.isRequired,
   }).isRequired,
-  location: React.PropTypes.shape({
-    pathname: React.PropTypes.string.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
   }).isRequired,
 };

@@ -1,6 +1,7 @@
 /* eslint max-len: [2, 500, 4] */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 function renderLocation(data) {

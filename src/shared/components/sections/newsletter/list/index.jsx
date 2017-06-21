@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import NewsletterListContainer from '../../../../containers/newsletter/list';
 import { getNewsletters } from '../../../../actions/newsletter/list';

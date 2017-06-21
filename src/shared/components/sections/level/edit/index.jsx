@@ -1,5 +1,6 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
+import PropTypes from 'prop-types';
 import LevelController from '../../../../../client/controllers/levelController';
 import LogUtil from '../../../../utils/logUtil';
 import Form from '../form';
@@ -47,11 +48,11 @@ export default class LevelEdit extends React.Component {
 }
 
 LevelEdit.propTypes = {
-  params: React.PropTypes.shape({
-    locationId: React.PropTypes.string.isRequired,
-    levelId: React.PropTypes.string.isRequired,
+  params: PropTypes.shape({
+    locationId: PropTypes.string.isRequired,
+    levelId: PropTypes.string.isRequired,
   }).isRequired,
-  location: React.PropTypes.shape({
-    pathname: React.PropTypes.string.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
   }).isRequired,
 };

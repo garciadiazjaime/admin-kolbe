@@ -1,5 +1,6 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import LogUtil from '../../../utils/logUtil';
 import InputElement from '../../elements/inputElement';
@@ -117,9 +118,9 @@ export default class LocationForm extends React.Component {
 }
 
 LocationForm.propTypes = {
-  submitAction: React.PropTypes.func.isRequired,
-  deleteAction: React.PropTypes.func,
-  data: React.PropTypes.shape({}),
+  submitAction: PropTypes.func.isRequired,
+  deleteAction: PropTypes.func,
+  data: PropTypes.shape({}),
 };
 
 LocationForm.defaultProps = {

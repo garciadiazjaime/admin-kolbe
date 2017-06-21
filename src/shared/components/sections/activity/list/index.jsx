@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import ActivityListContainer from '../../../../containers/activity/list';
 import { getActivities } from '../../../../actions/activity/list';

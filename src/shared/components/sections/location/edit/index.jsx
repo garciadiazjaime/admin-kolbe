@@ -1,5 +1,6 @@
 /* eslint max-len: [2, 500, 4] */
 import React from 'react';
+import PropTypes from 'prop-types';
 import LocationController from '../../../../../client/controllers/locationController';
 import LogUtil from '../../../../utils/logUtil';
 import Form from '../form';
@@ -47,10 +48,10 @@ export default class LocationEdit extends React.Component {
 }
 
 LocationEdit.propTypes = {
-  params: React.PropTypes.shape({
-    locationId: React.PropTypes.string.isRequired,
+  params: PropTypes.shape({
+    locationId: PropTypes.string.isRequired,
   }).isRequired,
-  location: React.PropTypes.shape({
-    pathname: React.PropTypes.string.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
   }).isRequired,
 };

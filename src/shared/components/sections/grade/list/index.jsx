@@ -1,6 +1,7 @@
 /* eslint max-len: [2, 500, 4] */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import _ from 'lodash';
 import GradeController from '../../../../../client/controllers/gradeController';
@@ -76,11 +77,11 @@ export default class GradeList extends React.Component {
 }
 
 GradeList.propTypes = {
-  params: React.PropTypes.shape({
-    locationId: React.PropTypes.string.isRequired,
-    levelId: React.PropTypes.string.isRequired,
+  params: PropTypes.shape({
+    locationId: PropTypes.string.isRequired,
+    levelId: PropTypes.string.isRequired,
   }).isRequired,
-  location: React.PropTypes.shape({
-    pathname: React.PropTypes.string.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
   }).isRequired,
 };
