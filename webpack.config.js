@@ -12,6 +12,7 @@ const PATHS = {
   build: path.join(__dirname, 'build'),
   dist: path.join(__dirname, 'dist'),
   static: path.join(__dirname, 'static'),
+  calendar: path.join(__dirname, 'node_modules/react-big-calendar/lib/less'),
 };
 
 const common = {
@@ -84,7 +85,12 @@ if(TARGET === 'dev' || !TARGET) {
           test: /\.scss$/,
           loaders: ['style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass'],
           include: PATHS.app
-        }
+        },
+        {
+          test: /\.less$/,
+          loaders: ['style', 'css?modules&importLoaders=1&localIdentName=[local]!less'],
+          include: PATHS.calendar
+        },
      ]
    },
 

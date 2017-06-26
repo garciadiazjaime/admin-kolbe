@@ -13,7 +13,7 @@ import {
 } from 'material-ui/Table';
 import Subheader from 'material-ui/Subheader';
 
-import { ContentAdd, ContentCreate, ContentClear } from 'material-ui/svg-icons';
+import { ContentAdd, ContentCreate, ContentClear, ActionPermContactCalendar } from 'material-ui/svg-icons';
 import ActivityListContainer from '../../../../containers/activity/list';
 import { deleteActivity } from '../../../../actions/activity/list';
 
@@ -59,8 +59,13 @@ class ActivityProfessorList extends Component {
       <Link to={`/group/${params.groupId}/activity/add`} className="pull-right">
         <ContentAdd />
       </Link>
+      <Link to={`/group/${params.groupId}/activity/calendar`} className="pull-right">
+        <ActionPermContactCalendar />
+      </Link>
       <div className="clearfix" />
-      <Subheader>Actividades</Subheader>
+      <Subheader>
+        Actividades
+      </Subheader>
       <Table selectable={false} displayRowCheckbox={false}>
         <TableHeader displaySelectAll={false}>
           <TableRow>

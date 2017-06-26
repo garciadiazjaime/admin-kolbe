@@ -20,7 +20,7 @@ class ActivityShow extends Component {
   render() {
     const { activity, params } = this.props;
     return _.isEmpty(activity) ? <LinearProgress mode="indeterminate" /> : (<Card>
-      <Link to={`/parent/${params.parentId}/group/${params.groupId}/activity`} className="pull-right">
+      <Link to={`/parent/${params.parentId}/group/${params.groupId}/activity/calendar`} className="pull-right">
         <ContentClear />
       </Link>
       <div className="clearfix" />
