@@ -68,9 +68,7 @@ class ActivityProfessorList extends Component {
         </FloatingActionButton>
       </Link>
       <div className="clearfix" />
-      <Subheader>
-        Actividades
-      </Subheader>
+      <Subheader>Actividades</Subheader>
       <Table selectable={false} displayRowCheckbox={false}>
         <TableHeader displaySelectAll={false}>
           <TableRow>
