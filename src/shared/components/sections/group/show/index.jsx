@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import Subheader from 'material-ui/Subheader';
 import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
-import { FileFileUpload } from 'material-ui/svg-icons';
 
 import { selectGroup } from '../../../../actions/group';
 import GroupContainer from '../../../../containers/group';
@@ -22,9 +21,7 @@ class Groupshow extends Component {
     const { params } = this.props;
     const { groupId } = params;
     return (<div>
-      <Subheader>
-        Información del Grupo
-      </Subheader>
+      <Subheader>Información del Grupo</Subheader>
       <Table selectable={false} key={groupId}>
         <TableBody displayRowCheckbox={false} stripedRows>
           <TableRow displayBorder={false}>
@@ -39,11 +36,6 @@ class Groupshow extends Component {
             </TableRowColumn>
             <TableRowColumn>
               <Link to={`/group/${groupId}/parent`}>Padres</Link>
-            </TableRowColumn>
-            <TableRowColumn>
-              <Link to={`/group/${groupId}/upload`}>
-                <FileFileUpload />
-              </Link>
             </TableRowColumn>
           </TableRow>
         </TableBody>

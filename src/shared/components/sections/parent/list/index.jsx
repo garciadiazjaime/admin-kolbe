@@ -3,8 +3,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
-import { ContentClear } from 'material-ui/svg-icons';
+import { ContentClear, FileFileUpload } from 'material-ui/svg-icons';
 import Subheader from 'material-ui/Subheader';
+import { Link } from 'react-router';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 import ParentListContainer from '../../../../containers/parent/list';
 import { getParents, deleteParent } from '../../../../actions/parent/list';
@@ -48,8 +50,15 @@ class ParentList extends Component {
   }
 
   render() {
-    const { parents } = this.props;
+    const { parents, params } = this.props;
+    const { groupId } = params;
     return (<div>
+      <Link to={`/group/${groupId}/upload`} className="pull-right">
+        <FloatingActionButton mini>
+          <FileFileUpload />
+        </FloatingActionButton>
+      </Link>
+      <div className="clearfix" />
       <Subheader>Padres</Subheader>
       <Table selectable={false} displayRowCheckbox={false}>
         <TableHeader displaySelectAll={false}>

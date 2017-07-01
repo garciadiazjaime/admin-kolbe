@@ -12,6 +12,7 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import Subheader from 'material-ui/Subheader';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 import { ContentAdd, ContentCreate, ContentClear } from 'material-ui/svg-icons';
 import NewsletterListContainer from '../../../../containers/newsletter/list';
@@ -57,7 +58,9 @@ class NewsletterNewsletterList extends Component {
     const { params, newsletters } = this.props;
     return (<div>
       <Link to={`/group/${params.groupId}/newsletter/add`} className="pull-right">
-        <ContentAdd />
+        <FloatingActionButton mini>
+          <ContentAdd />
+        </FloatingActionButton>
       </Link>
       <div className="clearfix" />
       <Subheader>Noticias</Subheader>
