@@ -12,8 +12,9 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import Subheader from 'material-ui/Subheader';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 
-import { ContentAdd, ContentCreate, ContentClear } from 'material-ui/svg-icons';
+import { ContentAdd, ContentCreate, ContentClear, ActionPermContactCalendar } from 'material-ui/svg-icons';
 import ActivityListContainer from '../../../../containers/activity/list';
 import { deleteActivity } from '../../../../actions/activity/list';
 
@@ -57,7 +58,14 @@ class ActivityProfessorList extends Component {
     const { activities, params } = this.props;
     return (<div>
       <Link to={`/group/${params.groupId}/activity/add`} className="pull-right">
-        <ContentAdd />
+        <FloatingActionButton mini>
+          <ContentAdd />
+        </FloatingActionButton>
+      </Link>
+      <Link to={`/group/${params.groupId}/activity/calendar`} className="pull-right">
+        <FloatingActionButton mini>
+          <ActionPermContactCalendar />
+        </FloatingActionButton>
       </Link>
       <div className="clearfix" />
       <Subheader>Actividades</Subheader>

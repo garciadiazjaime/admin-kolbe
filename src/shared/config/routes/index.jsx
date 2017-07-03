@@ -35,6 +35,7 @@ import StudentEditSection from '../../components/sections/student/edit';
 
 import ActivityListSection from '../../components/sections/activity/list';
 import ActivityShowSection from '../../components/sections/activity/show';
+import ActivityCalendarSection from '../../components/sections/activity/list/calendar';
 import ActivityAddSection from '../../components/sections/activity/add';
 import ActivityEditSection from '../../components/sections/activity/edit';
 
@@ -133,8 +134,11 @@ export default(
           <Route path="student" component={StudentParentListSection} />
 
           <Route path="group/:groupId">
-            <Route path="activity" component={ActivityListSection} />
-            <Route path="activity/:activityId/show" component={ActivityShowSection} />
+            <Route path="activity">
+              <IndexRoute component={ActivityListSection} />
+              <Route path="calendar" component={ActivityCalendarSection} />
+              <Route path=":activityId" component={ActivityShowSection} />
+            </Route>
 
             <Route path="document" component={DocumentListSection} />
             <Route path="document/:documentId/show" component={DocumentShowSection} />
@@ -155,6 +159,8 @@ export default(
         <Route path="activity">
           <IndexRoute component={ActivityListSection} />
           <Route path="add" component={ActivityAddSection} />
+          <Route path="calendar" component={ActivityCalendarSection} />
+          <Route path=":activityId" component={ActivityShowSection} />
         </Route>
 
         <Route path="document">

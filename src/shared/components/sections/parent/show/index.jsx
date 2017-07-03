@@ -20,7 +20,7 @@ class ParentShow extends Component {
         <TableBody displayRowCheckbox={false} stripedRows>
           <TableRow displayBorder={false}>
             <TableRowColumn>
-              <Link to={`/parent/${parentId}/group/${item.groupId}/activity`}>Actividades</Link>
+              <Link to={`/parent/${parentId}/group/${item.groupId}/activity/calendar`}>Actividades</Link>
             </TableRowColumn>
             <TableRowColumn>
               <Link to={`/parent/${parentId}/group/${item.groupId}/document`}>Documentos</Link>

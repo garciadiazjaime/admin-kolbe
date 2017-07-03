@@ -12,6 +12,7 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import Subheader from 'material-ui/Subheader';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 import { ContentAdd, ContentCreate, ContentClear } from 'material-ui/svg-icons';
 import DocumentListContainer from '../../../../containers/document/list';
@@ -57,7 +58,9 @@ class DocumentDocumentList extends Component {
     const { params, documents } = this.props;
     return (<div>
       <Link to={`/group/${params.groupId}/document/add`} className="pull-right">
-        <ContentAdd />
+        <FloatingActionButton mini>
+          <ContentAdd />
+        </FloatingActionButton>
       </Link>
       <div className="clearfix" />
       <Subheader>Documentos</Subheader>
