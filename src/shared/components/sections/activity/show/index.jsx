@@ -1,3 +1,4 @@
+/* eslint max-len: [2, 500, 4] */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
@@ -19,8 +20,9 @@ class ActivityShow extends Component {
 
   render() {
     const { activity, params } = this.props;
+    const backUrl = params.parentId ? `/parent/${params.parentId}/group/${params.groupId}/activity/calendar` : `/group/${params.groupId}/activity/calendar`;
     return _.isEmpty(activity) ? <LinearProgress mode="indeterminate" /> : (<Card>
-      <Link to={`/parent/${params.parentId}/group/${params.groupId}/activity/calendar`} className="pull-right">
+      <Link to={backUrl} className="pull-right">
         <ContentClear />
       </Link>
       <div className="clearfix" />

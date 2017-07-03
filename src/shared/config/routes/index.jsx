@@ -137,7 +137,7 @@ export default(
             <Route path="activity">
               <IndexRoute component={ActivityListSection} />
               <Route path="calendar" component={ActivityCalendarSection} />
-              <Route path=":activityId/show" component={ActivityShowSection} />
+              <Route path=":activityId" component={ActivityShowSection} />
             </Route>
 
             <Route path="document" component={DocumentListSection} />
@@ -160,6 +160,7 @@ export default(
           <IndexRoute component={ActivityListSection} />
           <Route path="add" component={ActivityAddSection} />
           <Route path="calendar" component={ActivityCalendarSection} />
+          <Route path=":activityId" component={ActivityShowSection} />
         </Route>
 
         <Route path="document">
