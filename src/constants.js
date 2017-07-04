@@ -6,6 +6,7 @@ const constants = {
   docsUrl: 'http://127.0.0.1:3000/docs',
   appTitle: 'Koolbe Admin App',
   invalidText: 'Obligatorio',
+  roleRoute: ['', 'level', 'group', 'parent', 'location', 'school'],
 };
 
 export default constants;

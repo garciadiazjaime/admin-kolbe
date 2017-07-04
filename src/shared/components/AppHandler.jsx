@@ -21,7 +21,7 @@ class AppHandler extends Component {
     GaUtil.init();
     AuthUtil.isTokenValid().then((user) => {
       const { dispatch } = this.props;
-      const routes = ['', 'level', 'group', 'parent', 'location'];
+      const routes = constants.roleRoute;
       const route = routes[user.role];
       if (route) {
         dispatch(loggedUser(true));

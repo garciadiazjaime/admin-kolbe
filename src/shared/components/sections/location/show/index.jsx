@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import Subheader from 'material-ui/Subheader';
 import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
-import { FileFileUpload } from 'material-ui/svg-icons';
 
 import { selectLocation } from '../../../../actions/location';
 import LocationContainer from '../../../../containers/location';
@@ -31,11 +30,6 @@ class LocationShow extends Component {
         </TableRowColumn>
         <TableRowColumn>
           <Link to={`/group/${item.id}/parent`}>Padres</Link>
-        </TableRowColumn>
-        <TableRowColumn>
-          <Link to={`/group/${item.id}/upload`}>
-            <FileFileUpload />
-          </Link>
         </TableRowColumn>
       </TableRow>)
       : null;
