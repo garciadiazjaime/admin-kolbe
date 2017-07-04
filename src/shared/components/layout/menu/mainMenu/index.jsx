@@ -31,11 +31,20 @@ class Menu extends Component {
   }
 
   menuClickHandler() {
-    const { selectedLocation, selectedParent, selectedGroup, locationId } = this.props;
+    console.log('menuClickHandler');
+    const {
+      selectedLocation,
+      selectedParent,
+      selectedGroup,
+      locationId,
+      selectedLevel,
+    } = this.props;
     let url = '/';
 
     if (selectedParent) {
       url = `/parent/${selectedParent}`;
+    } else if (selectedLevel) {
+      url = `/level/${selectedLevel}`;
     } else if (selectedGroup) {
       url = `/group/${selectedGroup}`;
     } else if (!locationId && selectedLocation) {
@@ -60,6 +69,7 @@ Menu.propTypes = {
   groupId: PropTypes.string,
   selectedParent: PropTypes.string,
   selectedGroup: PropTypes.string,
+  selectedLevel: PropTypes.string,
   locationId: PropTypes.string,
 };
 
@@ -70,6 +80,7 @@ Menu.defaultProps = {
   groupId: null,
   selectedParent: null,
   selectedGroup: null,
+  selectedLevel: null,
   locationId: null,
 };
 

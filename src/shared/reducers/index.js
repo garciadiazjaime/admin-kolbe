@@ -15,6 +15,7 @@ import { selectedGroup, groupUploadHelper } from './group';
 import { studentHelper } from './student';
 import { studentsByParent, studentsByGroup } from './student/list';
 import { userHelper } from './user';
+import { selectedLevel } from './level';
 
 const rootReducer = combineReducers({
   schoolById,
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   studentsByGroup,
   userHelper,
   userLoggedIn,
+  selectedLevel,
 });
 
 export default rootReducer;
