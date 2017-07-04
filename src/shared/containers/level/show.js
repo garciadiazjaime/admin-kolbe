@@ -19,8 +19,7 @@ function getLevel(locationById, selectedLevel) {
 }
 
 const mapStateToProps = (state) => {
-  const { locationById } = state;
-  const selectedLevel = '58fbde6f393b1b1bd8536ad0';
+  const { locationById, selectedLevel } = state;
   const level = getLevel(locationById, selectedLevel);
   return {
     level,

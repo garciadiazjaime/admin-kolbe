@@ -2,6 +2,7 @@ import RequestUtil from '../../utils/requestUtil';
 import constants from '../../../constants';
 
 export const SELECT_USER = 'SELECT_USER';
+export const SELECT_ROLE = 'SELECT_ROLE';
 export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
 export const USER_LOGIN_RESPONSE = 'USER_LOGIN_RESPONSE';
 export const USER_LOGGED_IN = 'USER_LOGGED_IN';
@@ -10,6 +11,13 @@ export function selectUser(user) {
   return {
     type: SELECT_USER,
     user,
+  };
+}
+
+export function selectRole(role) {
+  return {
+    type: SELECT_ROLE,
+    role,
   };
 }
 
