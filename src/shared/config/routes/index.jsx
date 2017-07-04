@@ -73,7 +73,6 @@ export default(
     <Route path="/logout" component={LogoutSection} />
 
     <Route path="/" component={AppHandler} onEnter={requireAuth}>
-      <IndexRoute component={DashboardSection} />
 
       <Route path="location">
         <IndexRoute component={LocationListSection} />
@@ -105,6 +104,8 @@ export default(
           </Route>
         </Route>
       </Route>
+
+      <Route path="school/:schoolId" component={DashboardSection} />
 
       <Route path="activity">
         <IndexRoute component={ActivityListSection} />

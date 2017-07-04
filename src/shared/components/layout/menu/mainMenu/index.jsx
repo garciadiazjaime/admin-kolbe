@@ -38,8 +38,9 @@ class Menu extends Component {
       selectedGroup,
       selectedParent,
       selectedLocation,
+      selectedSchool,
     } = this.props;
-    const routes = ['', 'level', 'group', 'parent', 'location'];
+    const routes = constants.roleRoute;
     const route = routes[selectedRole];
     let url = '/';
 
@@ -51,6 +52,8 @@ class Menu extends Component {
       url = `/${route}/${selectedParent}`;
     } else if (selectedRole === 4) {
       url = `/${route}/${selectedLocation}`;
+    } else if (selectedRole === 5) {
+      url = `/${route}/${selectedSchool}`;
     }
     browserHistory.push(url);
   }
@@ -73,6 +76,7 @@ Menu.propTypes = {
   selectedGroup: PropTypes.string,
   selectedLevel: PropTypes.string,
   selectedRole: PropTypes.number,
+  selectedSchool: PropTypes.string,
 };
 
 Menu.defaultProps = {
@@ -84,6 +88,7 @@ Menu.defaultProps = {
   selectedGroup: null,
   selectedLevel: null,
   selectedRole: null,
+  selectedSchool: null,
 };
 
 export default LocationContainer(Menu);

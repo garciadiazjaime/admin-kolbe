@@ -8,6 +8,7 @@ const mapStateToProps = (state) => {
     selectedGroup,
     selectedLevel,
     selectedRole,
+    selectedSchool,
   } = state;
   const location = locationById[selectedLocation] || {};
 
@@ -18,6 +19,7 @@ const mapStateToProps = (state) => {
     selectedGroup,
     selectedLevel,
     selectedRole,
+    selectedSchool,
   };
 };
 
