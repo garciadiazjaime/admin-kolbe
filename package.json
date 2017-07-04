@@ -1,6 +1,6 @@
 {
   "name": "admin-kolbe",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Kolbe Admin",
   "main": "start.js",
   "scripts": {
