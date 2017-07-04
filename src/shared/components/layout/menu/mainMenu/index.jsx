@@ -33,22 +33,24 @@ class Menu extends Component {
   menuClickHandler() {
     console.log('menuClickHandler');
     const {
-      selectedLocation,
-      selectedParent,
-      selectedGroup,
-      locationId,
+      selectedRole,
       selectedLevel,
+      selectedGroup,
+      selectedParent,
+      selectedLocation,
     } = this.props;
+    const routes = ['', 'level', 'group', 'parent', 'location'];
+    const route = routes[selectedRole];
     let url = '/';
 
-    if (selectedParent) {
-      url = `/parent/${selectedParent}`;
-    } else if (selectedLevel) {
-      url = `/level/${selectedLevel}`;
-    } else if (selectedGroup) {
-      url = `/group/${selectedGroup}`;
-    } else if (!locationId && selectedLocation) {
-      url = `/location/${selectedLocation}`;
+    if (selectedRole === 1) {
+      url = `/${route}/${selectedLevel}`;
+    } else if (selectedRole === 2) {
+      url = `/${route}/${selectedGroup}`;
+    } else if (selectedRole === 3) {
+      url = `/${route}/${selectedParent}`;
+    } else if (selectedRole === 4) {
+      url = `/${route}/${selectedLocation}`;
     }
     browserHistory.push(url);
   }
@@ -70,7 +72,7 @@ Menu.propTypes = {
   selectedParent: PropTypes.string,
   selectedGroup: PropTypes.string,
   selectedLevel: PropTypes.string,
-  locationId: PropTypes.string,
+  selectedRole: PropTypes.number,
 };
 
 Menu.defaultProps = {
@@ -81,7 +83,7 @@ Menu.defaultProps = {
   selectedParent: null,
   selectedGroup: null,
   selectedLevel: null,
-  locationId: null,
+  selectedRole: null,
 };
 
 export default LocationContainer(Menu);

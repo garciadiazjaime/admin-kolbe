@@ -1,7 +1,14 @@
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
-  const { selectedLocation, locationById, selectedParent, selectedGroup, selectedLevel } = state;
+  const {
+    selectedLocation,
+    locationById,
+    selectedParent,
+    selectedGroup,
+    selectedLevel,
+    selectedRole,
+  } = state;
   const location = locationById[selectedLocation] || {};
 
   return {
@@ -10,6 +17,7 @@ const mapStateToProps = (state) => {
     selectedParent,
     selectedGroup,
     selectedLevel,
+    selectedRole,
   };
 };
 

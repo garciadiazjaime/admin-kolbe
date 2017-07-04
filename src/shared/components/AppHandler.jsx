@@ -8,7 +8,7 @@ import MainMenu from './layout/menu/mainMenu';
 import { selectSchool, getSchool } from '../actions/school';
 import { selectLocation } from '../actions/location';
 import { selectParent } from '../actions/parent';
-import { loggedUser } from '../actions/user';
+import { loggedUser, selectRole } from '../actions/user';
 import SchoolContainer from '../containers/school';
 import constants from '../../constants';
 import AuthUtil from '../utils/authUtil';
@@ -21,10 +21,11 @@ class AppHandler extends Component {
     GaUtil.init();
     AuthUtil.isTokenValid().then((user) => {
       const { dispatch } = this.props;
-      const routes = ['location', 'level', 'group', 'parent'];
+      const routes = ['', 'level', 'group', 'parent', 'location'];
       const route = routes[user.role];
       if (route) {
         dispatch(loggedUser(true));
+        dispatch(selectRole(user.role));
         dispatch(selectSchool(constants.schoolId));
         dispatch(getSchool(constants.schoolId));
         browserHistory.push(`/${route}/${user.id}`);

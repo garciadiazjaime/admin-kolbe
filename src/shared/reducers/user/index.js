@@ -1,7 +1,18 @@
 import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_RESPONSE,
+  SELECT_ROLE,
 } from '../../actions/user';
+
+
+export function selectedRole(state = null, action) {
+  switch (action.type) {
+    case SELECT_ROLE:
+      return action.role;
+    default:
+      return state;
+  }
+}
 
 function user(state = {
   isProcessing: false,
@@ -24,8 +35,6 @@ function user(state = {
       return state;
   }
 }
-
-export const TEST = 'TEST';
 
 export function userHelper(state = { }, action) {
   switch (action.type) {
