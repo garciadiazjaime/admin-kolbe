@@ -26,9 +26,7 @@ app.get('/health', (req, res) => {
 });
 
 app.get('/*', (req, res) => {
-  res.render('index', {
-    apiUrl: config.get('api.url'),
-  });
+  res.render('index');
 });
 
 app.set('ipaddress', config.get('ipaddress'));
