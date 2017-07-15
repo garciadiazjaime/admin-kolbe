@@ -31,7 +31,6 @@ class Menu extends Component {
   }
 
   menuClickHandler() {
-    console.log('menuClickHandler');
     const {
       selectedRole,
       selectedLevel,
