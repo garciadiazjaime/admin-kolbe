@@ -1,10 +1,12 @@
 import RequestUtil from '../../utils/requestUtil';
 import constants from '../../../constants';
+import { apiError } from '../api';
 
 export const SELECT_USER = 'SELECT_USER';
 export const SELECT_ROLE = 'SELECT_ROLE';
 export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
 export const USER_LOGIN_RESPONSE = 'USER_LOGIN_RESPONSE';
+export const USER_LOGIN_FAILED = 'USER_LOGIN_FAILED';
 export const USER_LOGGED_IN = 'USER_LOGGED_IN';
 
 export function selectUser(user) {
@@ -35,9 +37,14 @@ function userLogin() {
 }
 
 function userLoginResponse(response) {
+  if (response.entity.status) {
+    return {
+      type: USER_LOGIN_RESPONSE,
+      user: response.entity.data,
+    };
+  }
   return {
-    type: USER_LOGIN_RESPONSE,
-    user: response.entity.data,
+    type: USER_LOGIN_FAILED,
   };
 }
 
@@ -49,7 +56,8 @@ function loginHelper(username, password) {
       password,
     };
     return RequestUtil.post(`${constants.apiUrl}/login`, data)
-      .then(response => dispatch(userLoginResponse(response)));
+      .then(response => dispatch(userLoginResponse(response)))
+      .catch(() => dispatch(apiError('userLogin')));
   };
 }
 

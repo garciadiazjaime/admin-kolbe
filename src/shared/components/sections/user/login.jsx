@@ -6,11 +6,13 @@ import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
+import Subheader from 'material-ui/Subheader';
 
 import UserLoginContainer from '../../../containers/user/login';
 import constants from '../../../../constants';
 import { login } from '../../../actions/user';
 import StoreUtil from '../../../utils/storeUtil';
+import style from './style.scss';
 
 class LoginSection extends Component {
 
@@ -79,14 +81,15 @@ class LoginSection extends Component {
   }
 
   render() {
-    const { isProcessing } = this.props;
+    const { isProcessing, error, didInvalidate } = this.props;
     const { valid, touch } = this.state;
     return (<div>
-      <AppBar title={constants.appTitle} showMenuIconButton={false} />
+      <AppBar title={constants.appTitle} showMenuIconButton={false} className={style.background} />
+      { isProcessing ? <LinearProgress mode="indeterminate" /> : null }
       <div className="container">
         <TextField
           name="username"
-          floatingLabelText="Email"
+          floatingLabelText="Correo"
           floatingLabelFixed
           fullWidth
           type="email"
@@ -95,15 +98,23 @@ class LoginSection extends Component {
         />
         <TextField
           name="password"
-          floatingLabelText="Password"
+          floatingLabelText="Contraseña"
           floatingLabelFixed
           fullWidth
           type="password"
           onChange={this.handleInputChange}
           errorText={!valid.password && touch.password ? this.invalidText : null}
         />
-        <RaisedButton label="Login" primary className="pull-right" onTouchTap={this.handleSubmit} />
-        { isProcessing ? <LinearProgress mode="indeterminate" /> : null }
+        <RaisedButton
+          label="Ingresar"
+          primary
+          className="pull-right"
+          onTouchTap={this.handleSubmit}
+        />
+        <Subheader>
+          { error }
+          { didInvalidate ? constants.invalidLogin : null }
+        </Subheader>
       </div>
     </div>);
   }
@@ -113,11 +124,15 @@ LoginSection.propTypes = {
   dispatch: PropTypes.func.isRequired,
   isProcessing: PropTypes.bool,
   user: PropTypes.shape({}),
+  error: PropTypes.string,
+  didInvalidate: PropTypes.bool,
 };
 
 LoginSection.defaultProps = {
   isProcessing: null,
   user: {},
+  error: null,
+  didInvalidate: null,
 };
 
 export default UserLoginContainer(LoginSection);

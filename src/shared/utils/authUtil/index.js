@@ -19,7 +19,8 @@ export default class AuthUtil {
             } else {
               reject('invalid token');
             }
-          });
+          })
+          .catch(response => reject(response.error));
       } else {
         reject('invalid token');
       }
