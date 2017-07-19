@@ -7,7 +7,7 @@ import constants from '../../../constants';
 // @param {object} data
 // @return {string}
 export function getErrorText(prop, data) {
-  return data[prop] && data[prop].touch && !data[prop].valid ? constants.invalidText : null;
+  return data && data[prop] && data[prop].touch && data[prop].valid ? null : constants.invalidText;
 }
 
 // Helper function to set fields when onChange
@@ -49,6 +49,6 @@ export function checkFields(fields, data) {
 
   return {
     isValid,
-    newData,
+    data: newData,
   };
 }
