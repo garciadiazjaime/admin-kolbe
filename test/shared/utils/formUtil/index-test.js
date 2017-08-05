@@ -111,7 +111,7 @@ describe('formUtil', () => {
 
   describe('#getErrorText', () => {
 
-    it('valid when fieldName is valid and has been touched', () => {
+    it('returns null when fieldName is valid and has been touched', () => {
       const data = {
         fieldName1: {
           touch: true,
@@ -123,19 +123,19 @@ describe('formUtil', () => {
       expect(response).to.equal(null);
     });
 
-    it('invalid when data not sent', () => {
+    it('returns null when data not sent', () => {
       const response = getErrorText('fieldName1');
 
-      expect(response).to.equal(constants.invalidText);
+      expect(response).to.equal(null);
     });
 
-    it('invalid when invalid data sent', () => {
+    it('returns nulls when invalid data sent', () => {
       const response = getErrorText('fieldName1', 'invalid data');
 
-      expect(response).to.equal(constants.invalidText);
+      expect(response).to.equal(null);
     });
 
-    it('invalid when fieldName is not valid and has been touched', () => {
+    it('returns invalidText when fieldName is not valid and has been touched', () => {
       const data = {
         fieldName1: {
           touch: true,
@@ -147,7 +147,7 @@ describe('formUtil', () => {
       expect(response).to.equal(constants.invalidText);
     });
 
-    it('invalid when fieldName hasnt been touched', () => {
+    it('returns invalidText when fieldName hasnt been touched', () => {
       const data = {
         fieldName1: {
           touch: false,
@@ -155,7 +155,7 @@ describe('formUtil', () => {
       };
       const response = getErrorText('fieldName1', data);
 
-      expect(response).to.equal(constants.invalidText);
+      expect(response).to.equal(null);
     });
   });
 
