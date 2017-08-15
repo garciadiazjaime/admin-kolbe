@@ -26,9 +26,9 @@ class AppHandler extends Component {
       if (route) {
         dispatch(loggedUser(true));
         dispatch(selectRole(user.role));
-        dispatch(selectSchool(constants.schoolId));
-        dispatch(getSchool(constants.schoolId));
-        browserHistory.push(`/${route}/${user.id}`);
+        dispatch(selectSchool(user.schoolId));
+        dispatch(getSchool(user.schoolId));
+        browserHistory.push(`/${route}/${user.entityId}`);
       } else {
         browserHistory.push('/login?message=invalid_role');
       }
