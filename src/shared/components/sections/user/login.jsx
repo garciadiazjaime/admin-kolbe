@@ -51,7 +51,7 @@ class LoginSection extends Component {
 
     if (!response.isValid) {
       this.setState({
-        data: response.newData,
+        data: response.data,
       });
     } else {
       const { dispatch } = this.props;
