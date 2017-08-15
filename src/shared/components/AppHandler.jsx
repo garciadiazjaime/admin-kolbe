@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import { ImageNavigateBefore } from 'material-ui/svg-icons';
 
 import GaUtil from '../utils/gaUtil';
 import MainMenu from './layout/menu/mainMenu';
@@ -61,6 +62,9 @@ class AppHandler extends Component {
 
     return userLoggedIn ? (<div>
       <MainMenu locationId={params.locationId} groupId={params.groupId} groupById={groupById} />
+      <Link onClick={browserHistory.goBack}>
+        <ImageNavigateBefore />
+      </Link>
       {this.props.children}
     </div>) : <div>
       loading
