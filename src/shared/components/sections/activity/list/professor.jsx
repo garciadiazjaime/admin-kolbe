@@ -31,21 +31,22 @@ class ActivityProfessorList extends Component {
     dispatch(deleteActivity(selectedGroup, activityId));
   }
 
-  renderActivities(data) {
-    if (data.length) {
+  renderActivities() {
+    const { activities, selectedGroup } = this.props;
+    if (activities.length) {
       const style = {
         paddingLeft: '42px',
       };
-      return data.map(item => <TableRow key={item._id}>
-        <TableRowColumn>{item.name}</TableRowColumn>
-        <TableRowColumn style={style}>{moment(item.date).format('DD/MM/YYYY')}</TableRowColumn>
+      return activities.map(activity => <TableRow key={activity._id}>
+        <TableRowColumn>{activity.name}</TableRowColumn>
+        <TableRowColumn style={style}>{moment(activity.date).format('DD/MM/YYYY')}</TableRowColumn>
         <TableRowColumn style={style}>
-          <Link to={`/activity/${item._id}/edit`}>
+          <Link to={`/group/${selectedGroup}/activity/${activity._id}/edit`}>
             <ContentCreate />
           </Link>
         </TableRowColumn>
         <TableRowColumn style={style}>
-          <a onClick={this.deleteHandler} role="button" tabIndex="0" data-id={item._id}>
+          <a onClick={this.deleteHandler} role="button" tabIndex="0" data-id={activity._id}>
             <ContentClear />
           </a>
         </TableRowColumn>
@@ -55,7 +56,7 @@ class ActivityProfessorList extends Component {
   }
 
   render() {
-    const { activities, params } = this.props;
+    const { params } = this.props;
     return (<div>
       <Link to={`/group/${params.groupId}/activity/add`} className="pull-right">
         <FloatingActionButton mini>
@@ -79,7 +80,7 @@ class ActivityProfessorList extends Component {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false} stripedRows>
-          {this.renderActivities(activities)}
+          {this.renderActivities()}
         </TableBody>
       </Table>
     </div>);

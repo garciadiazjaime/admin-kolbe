@@ -23,7 +23,7 @@ class LocationShow extends Component {
           <Link to={`/group/${item.id}/activity`}>Actividades</Link>
         </TableRowColumn>
         <TableRowColumn>
-          <Link to={`/group/${item.id}/document`}>Documentos</Link>
+          <Link to={`/group/${item.id}/document`}>Documentos y Tareas</Link>
         </TableRowColumn>
         <TableRowColumn>
           <Link to={`/group/${item.id}/newsletter`}>Noticias</Link>

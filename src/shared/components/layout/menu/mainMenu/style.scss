@@ -1,3 +1,5 @@
-.anchor {
-  display: block;
+@import '../../../../theme/constants';
+
+.background {
+  background-color: $primaryColor!important;
 }

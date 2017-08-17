@@ -8,6 +8,8 @@ import FlatButton from 'material-ui/FlatButton';
 import constants from '../../../../../constants';
 import LocationContainer from '../../../../containers/location';
 
+import style from './style.scss';
+
 class Menu extends Component {
 
   constructor(args) {
@@ -62,6 +64,7 @@ class Menu extends Component {
       title={this.getTitle()}
       onLeftIconButtonTouchTap={this.menuClickHandler}
       iconElementRight={<FlatButton label="Salir" href="/logout" />}
+      className={style.background}
     />);
   }
 }

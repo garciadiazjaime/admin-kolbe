@@ -8,10 +8,7 @@ import LogoutSection from '../../components/sections/user/logout';
 
 import DashboardSection from '../../components/sections/dashboard';
 
-import LocationListSection from '../../components/sections/location/list';
 import LocationShowSection from '../../components/sections/location/show';
-import LocationAddSection from '../../components/sections/location/add';
-import LocationEditSection from '../../components/sections/location/edit';
 
 import LevelListSection from '../../components/sections/level/list';
 import LevelAddSection from '../../components/sections/level/add';
@@ -75,10 +72,7 @@ export default(
     <Route path="/" component={AppHandler} onEnter={requireAuth}>
 
       <Route path="location">
-        <IndexRoute component={LocationListSection} />
-        <Route path="add" component={LocationAddSection} />
         <Route path=":locationId" component={LocationShowSection} />
-        <Route path=":locationId/edit" component={LocationEditSection} />
 
         <Route path=":locationId/level">
           <IndexRoute component={LevelListSection} />
@@ -106,12 +100,6 @@ export default(
       </Route>
 
       <Route path="school/:schoolId" component={DashboardSection} />
-
-      <Route path="activity">
-        <IndexRoute component={ActivityListSection} />
-        <Route path="add" component={ActivityAddSection} />
-        <Route path=":activityId/edit" component={ActivityEditSection} />
-      </Route>
 
       <Route path="document">
         <IndexRoute component={DocumentListSection} />
@@ -162,6 +150,7 @@ export default(
           <Route path="add" component={ActivityAddSection} />
           <Route path="calendar" component={ActivityCalendarSection} />
           <Route path=":activityId" component={ActivityShowSection} />
+          <Route path=":activityId/edit" component={ActivityEditSection} />
         </Route>
 
         <Route path="document">

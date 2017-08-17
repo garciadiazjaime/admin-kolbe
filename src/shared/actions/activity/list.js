@@ -17,7 +17,7 @@ function receiveActivities(groupId, data) {
   return {
     type: RECEIVE_ACTIVITIES,
     groupId,
-    activities: data.entity.data,
+    activities: data.entity.data || [],
     receivedAt: Date.now(),
   };
 }
@@ -63,7 +63,7 @@ export function getActivities(groupId) {
 function deleteActivityHelper(groupId, activityId) {
   return (dispatch) => {
     dispatch(deletingActivity(groupId));
-    return RequestUtil.delete(`${constants.apiUrl}/activity/${activityId}`)
+    return RequestUtil.delete(`${constants.apiUrl}/group/${groupId}/activity/${activityId}`)
       .then(() => dispatch(activityDeleted(groupId, activityId)));
   };
 }

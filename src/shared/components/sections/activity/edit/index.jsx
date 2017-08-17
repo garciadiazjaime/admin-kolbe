@@ -18,19 +18,19 @@ class ActivityEdit extends Component {
 
   componentDidMount() {
     const { dispatch, params } = this.props;
-    dispatch(getActivity(params.activityId));
+    dispatch(getActivity(params.groupId, params.activityId));
   }
 
   componentWillReceiveProps(nextProps) {
-    const { groupId, lastUpdated } = nextProps;
+    const { params, lastUpdated } = nextProps;
     if (lastUpdated) {
-      browserHistory.push(`/group/${groupId}/activity?success`);
+      browserHistory.push(`/group/${params.groupId}/activity?success`);
     }
   }
 
   actionHandler(activityId, data) {
-    const { dispatch } = this.props;
-    dispatch(updateActivity(activityId, data));
+    const { dispatch, params } = this.props;
+    dispatch(updateActivity(params.groupId, activityId, data));
   }
 
   render() {
@@ -52,13 +52,11 @@ ActivityEdit.propTypes = {
   dispatch: PropTypes.func.isRequired,
   activity: PropTypes.shape({}),
   lastUpdated: PropTypes.number,
-  groupId: PropTypes.string,
 };
 
 ActivityEdit.defaultProps = {
   activity: {},
   lastUpdated: null,
-  groupId: null,
 };
 
 
