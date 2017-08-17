@@ -15,9 +15,9 @@ class AcitivityAdd extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { groupId, lastUpdated } = nextProps;
+    const { params, lastUpdated } = nextProps;
     if (lastUpdated) {
-      browserHistory.push(`/group/${groupId}/activity?success`);
+      browserHistory.push(`/group/${params.groupId}/activity?success`);
     }
   }
 
@@ -42,12 +42,10 @@ AcitivityAdd.propTypes = {
   dispatch: PropTypes.func.isRequired,
   params: PropTypes.shape({}).isRequired,
   lastUpdated: PropTypes.number,
-  groupId: PropTypes.string,
 };
 
 AcitivityAdd.defaultProps = {
   lastUpdated: null,
-  groupId: null,
 };
 
 export default ActivityContainer(AcitivityAdd);

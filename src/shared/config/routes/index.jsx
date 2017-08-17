@@ -101,12 +101,6 @@ export default(
 
       <Route path="school/:schoolId" component={DashboardSection} />
 
-      <Route path="activity">
-        <IndexRoute component={ActivityListSection} />
-        <Route path="add" component={ActivityAddSection} />
-        <Route path=":activityId/edit" component={ActivityEditSection} />
-      </Route>
-
       <Route path="document">
         <IndexRoute component={DocumentListSection} />
         <Route path="add" component={DocumentAddSection} />
@@ -156,6 +150,7 @@ export default(
           <Route path="add" component={ActivityAddSection} />
           <Route path="calendar" component={ActivityCalendarSection} />
           <Route path=":activityId" component={ActivityShowSection} />
+          <Route path=":activityId/edit" component={ActivityEditSection} />
         </Route>
 
         <Route path="document">

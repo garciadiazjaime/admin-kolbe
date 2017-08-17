@@ -5,7 +5,6 @@ const mapStateToProps = (state) => {
   const {
     isProcessing,
     lastUpdated,
-    groupId,
     data: activity,
   } = activityHelper || {
     isProcessing: true,
@@ -16,7 +15,6 @@ const mapStateToProps = (state) => {
     isProcessing,
     lastUpdated,
     activity,
-    groupId,
   };
 };
 

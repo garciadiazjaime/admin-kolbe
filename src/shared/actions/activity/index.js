@@ -34,10 +34,10 @@ function activitySaved(groupId) {
   };
 }
 
-function getActivityHelper(activityId) {
+function getActivityHelper(groupId, activityId) {
   return (dispatch) => {
     dispatch(requestActivity());
-    return RequestUtil.get(`${constants.apiUrl}/activity/${activityId}`)
+    return RequestUtil.get(`${constants.apiUrl}/group/${groupId}/activity/${activityId}`)
       .then(response => dispatch(activityReceived(response)));
   };
 }
@@ -50,10 +50,10 @@ function saveActivityHelper(groupId, data) {
   };
 }
 
-function updateActivityHelper(activityId, data) {
+function updateActivityHelper(groupId, activityId, data) {
   return (dispatch) => {
     dispatch(savingActivity());
-    return RequestUtil.put(`${constants.apiUrl}/activity/${activityId}`, data)
+    return RequestUtil.put(`${constants.apiUrl}/group/${groupId}/activity/${activityId}`, data)
       .then(() => dispatch(activitySaved(data.groupId)));
   };
 }
@@ -63,10 +63,10 @@ function shouldProccessActivity(state) {
   return activity.isProcessing !== true;
 }
 
-export function getActivity(activityId) {
+export function getActivity(groupId, activityId) {
   return (dispatch, getState) => {
     if (shouldProccessActivity(getState())) {
-      return dispatch(getActivityHelper(activityId));
+      return dispatch(getActivityHelper(groupId, activityId));
     }
     return null;
   };
@@ -81,10 +81,10 @@ export function saveActivity(groupId, data) {
   };
 }
 
-export function updateActivity(activityId, data) {
+export function updateActivity(groupId, activityId, data) {
   return (dispatch, getState) => {
     if (shouldProccessActivity(getState())) {
-      return dispatch(updateActivityHelper(activityId, data));
+      return dispatch(updateActivityHelper(groupId, activityId, data));
     }
     return null;
   };
