@@ -31,9 +31,8 @@ function document(state = {
     case DOCUMENT_SAVED:
       return Object.assign({}, state, {
         isProcessing: false,
-        didInvalidate: false,
+        didInvalidate: action.didInvalidate,
         lastUpdated: action.receivedAt,
-        groupId: action.groupId,
       });
     default:
       return state;

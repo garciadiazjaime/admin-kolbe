@@ -8,6 +8,7 @@ import LinearProgress from 'material-ui/LinearProgress';
 import DocumentForm from '../form';
 import DocumentContainer from '../../../../containers/document';
 import { getDocument, updateDocument } from '../../../../actions/document';
+import ApiErrorElement from '../../../elements/errorElement';
 
 class DocumentEdit extends Component {
 
@@ -18,31 +19,32 @@ class DocumentEdit extends Component {
 
   componentDidMount() {
     const { dispatch, params } = this.props;
-    dispatch(getDocument(params.documentId));
+    dispatch(getDocument(params.groupId, params.documentId));
   }
 
   componentWillReceiveProps(nextProps) {
-    const { groupId, lastUpdated } = nextProps;
-    if (lastUpdated) {
-      browserHistory.push(`/group/${groupId}/document?success`);
+    const { params, didInvalidate, lastUpdated } = nextProps;
+    if (lastUpdated && !didInvalidate) {
+      browserHistory.push(`/group/${params.groupId}/document?success`);
     }
   }
 
   actionHandler(data) {
-    const { params, dispatch, document } = this.props;
-    dispatch(updateDocument(params.documentId, data, document.groupId));
+    const { params, dispatch } = this.props;
+    dispatch(updateDocument(params.documentId, data, params.groupId));
   }
 
   render() {
-    const { document, lastUpdated } = this.props;
+    const { params, document, didInvalidate, lastUpdated } = this.props;
     return _.isEmpty(document) ? <LinearProgress mode="indeterminate" /> : (<div>
       <DocumentForm
         action={this.actionHandler}
-        groupId={document.groupId}
         document={document}
         lastUpdated={lastUpdated}
+        groupId={params.groupId}
         title="Editar Documento"
       />
+      { lastUpdated && didInvalidate ? <ApiErrorElement /> : null }
     </div>);
   }
 }
@@ -51,15 +53,14 @@ DocumentEdit.propTypes = {
   params: PropTypes.shape({}).isRequired,
   dispatch: PropTypes.func.isRequired,
   document: PropTypes.shape({}),
+  didInvalidate: PropTypes.bool,
   lastUpdated: PropTypes.number,
-  groupId: PropTypes.string,
 };
 
 DocumentEdit.defaultProps = {
   document: {},
+  didInvalidate: false,
   lastUpdated: null,
-  groupId: null,
 };
-
 
 export default DocumentContainer(DocumentEdit);

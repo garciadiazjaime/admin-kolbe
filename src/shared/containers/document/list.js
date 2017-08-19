@@ -12,7 +12,6 @@ const mapStateToProps = (state) => {
   };
 
   return {
-    selectedGroup,
     isFetching,
     lastUpdated,
     documents,

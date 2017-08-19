@@ -63,7 +63,7 @@ export function getDocuments(groupId) {
 function deleteDocumentHelper(groupId, documentId) {
   return (dispatch) => {
     dispatch(deletingDocument(groupId));
-    return RequestUtil.delete(`${constants.apiUrl}/document/${documentId}`)
+    return RequestUtil.delete(`${constants.apiUrl}/group/${groupId}/document/${documentId}`)
       .then(() => dispatch(documentDeleted(groupId, documentId)));
   };
 }

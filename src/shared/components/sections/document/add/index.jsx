@@ -6,6 +6,7 @@ import { browserHistory } from 'react-router';
 import DocumentForm from '../form';
 import DocumentContainer from '../../../../containers/document';
 import { saveDocument } from '../../../../actions/document';
+import ApiErrorElement from '../../../elements/errorElement';
 
 class DocumentAdd extends Component {
 
@@ -15,8 +16,8 @@ class DocumentAdd extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { params, lastUpdated } = nextProps;
-    if (lastUpdated) {
+    const { params, didInvalidate, lastUpdated } = nextProps;
+    if (lastUpdated && !didInvalidate) {
       browserHistory.push(`/group/${params.groupId}/document?success`);
     }
   }
@@ -27,13 +28,14 @@ class DocumentAdd extends Component {
   }
 
   render() {
-    const { params } = this.props;
+    const { params, didInvalidate, lastUpdated } = this.props;
     return (<div>
       <DocumentForm
         action={this.actionHandler}
         groupId={params.groupId}
         title="Agregar Documento"
       />
+      { lastUpdated && didInvalidate ? <ApiErrorElement /> : null }
     </div>);
   }
 }
@@ -41,10 +43,12 @@ class DocumentAdd extends Component {
 DocumentAdd.propTypes = {
   dispatch: PropTypes.func.isRequired,
   params: PropTypes.shape({}).isRequired,
+  didInvalidate: PropTypes.bool,
   lastUpdated: PropTypes.number,
 };
 
 DocumentAdd.defaultProps = {
+  didInvalidate: false,
   lastUpdated: null,
 };
 

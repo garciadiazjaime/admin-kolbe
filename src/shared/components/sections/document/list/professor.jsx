@@ -27,20 +27,21 @@ class DocumentDocumentList extends Component {
 
   deleteHandler(e) {
     const documentId = e.currentTarget.dataset.id;
-    const { dispatch, selectedGroup } = this.props;
-    dispatch(deleteDocument(selectedGroup, documentId));
+    const { dispatch, params } = this.props;
+    dispatch(deleteDocument(params.groupId, documentId));
   }
 
-  renderDocuments(data) {
-    if (data.length) {
+  renderDocuments() {
+    const { documents, params } = this.props;
+    if (documents.length) {
       const style = {
         paddingLeft: '42px',
       };
-      return data.map(item => <TableRow key={item._id}>
+      return documents.map(item => <TableRow key={item._id}>
         <TableRowColumn>{item.name}</TableRowColumn>
         <TableRowColumn style={style}>{moment(item.date).format('DD/MM/YYYY')}</TableRowColumn>
         <TableRowColumn style={style}>
-          <Link to={`/document/${item._id}/edit`}>
+          <Link to={`/group/${params.groupId}/document/${item._id}/edit`}>
             <ContentCreate />
           </Link>
         </TableRowColumn>
@@ -55,7 +56,7 @@ class DocumentDocumentList extends Component {
   }
 
   render() {
-    const { params, documents } = this.props;
+    const { params } = this.props;
     return (<div>
       <Link to={`/group/${params.groupId}/document/add`} className="pull-right">
         <FloatingActionButton mini>
@@ -74,7 +75,7 @@ class DocumentDocumentList extends Component {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false} stripedRows>
-          {this.renderDocuments(documents)}
+          {this.renderDocuments()}
         </TableBody>
       </Table>
     </div>);
@@ -83,13 +84,8 @@ class DocumentDocumentList extends Component {
 
 DocumentDocumentList.propTypes = {
   params: PropTypes.shape({}).isRequired,
-  selectedGroup: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
   documents: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-};
-
-DocumentDocumentList.defaultProps = {
-  selectedGroup: '',
 };
 
 export default DocumentListContainer(DocumentDocumentList);
