@@ -27,7 +27,7 @@ function document(state = {
       return Object.assign({}, state, {
         isProcessing: false,
         didInvalidate: false,
-        data: action.documents,
+        data: action.documents || [],
         lastUpdated: action.receivedAt,
       });
     case DOCUMENT_DELETED:

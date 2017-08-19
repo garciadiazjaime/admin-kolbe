@@ -7,27 +7,15 @@ import LoginSection from '../../components/sections/user/login';
 import LogoutSection from '../../components/sections/user/logout';
 
 import DashboardSection from '../../components/sections/dashboard';
-
 import LocationShowSection from '../../components/sections/location/show';
 
-import LevelListSection from '../../components/sections/level/list';
-import LevelAddSection from '../../components/sections/level/add';
-import LevelEditSection from '../../components/sections/level/edit';
 import LevelShowSection from '../../components/sections/level/show';
 
-import GradeListSection from '../../components/sections/grade/list';
-import GradeAddSection from '../../components/sections/grade/add';
-import GradeEditSection from '../../components/sections/grade/edit';
-
-import GroupListSection from '../../components/sections/group/list';
 import GroupShowSection from '../../components/sections/group/show';
-import GroupAddSection from '../../components/sections/group/add';
-import GroupEditSection from '../../components/sections/group/edit';
 import GroupUploadSection from '../../components/sections/group/upload';
 
 import StudentParentListSection from '../../components/sections/student/list/parent';
 import StudentGroupListSection from '../../components/sections/student/list/group';
-import StudentAddSection from '../../components/sections/student/add';
 import StudentEditSection from '../../components/sections/student/edit';
 
 import ActivityListSection from '../../components/sections/activity/list';
@@ -73,45 +61,9 @@ export default(
 
       <Route path="location">
         <Route path=":locationId" component={LocationShowSection} />
-
-        <Route path=":locationId/level">
-          <IndexRoute component={LevelListSection} />
-          <Route path="add" component={LevelAddSection} />
-          <Route path=":levelId/edit" component={LevelEditSection} />
-
-          <Route path=":levelId/grade">
-            <IndexRoute component={GradeListSection} />
-            <Route path="add" component={GradeAddSection} />
-            <Route path=":gradeId/edit" component={GradeEditSection} />
-
-            <Route path=":gradeId/group">
-              <IndexRoute component={GroupListSection} />
-              <Route path="add" component={GroupAddSection} />
-              <Route path=":groupId/edit" component={GroupEditSection} />
-
-              <Route path=":groupId/student">
-                <IndexRoute component={StudentGroupListSection} />
-                <Route path="add" component={StudentAddSection} />
-                <Route path=":studentId/edit" component={StudentEditSection} />
-              </Route>
-            </Route>
-          </Route>
-        </Route>
       </Route>
 
       <Route path="school/:schoolId" component={DashboardSection} />
-
-      <Route path="document">
-        <IndexRoute component={DocumentListSection} />
-        <Route path="add" component={DocumentAddSection} />
-        <Route path=":documentId/edit" component={DocumentEditSection} />
-      </Route>
-
-      <Route path="newsletter">
-        <IndexRoute component={NewsletterListSection} />
-        <Route path="add" component={NewsletterAddSection} />
-        <Route path=":newsletterId/edit" component={NewsletterEditSection} />
-      </Route>
 
       <Route path="parent">
         <IndexRoute component={ParentListSection} />
@@ -156,11 +108,13 @@ export default(
         <Route path="document">
           <IndexRoute component={DocumentListSection} />
           <Route path="add" component={DocumentAddSection} />
+          <Route path=":documentId/edit" component={DocumentEditSection} />
         </Route>
 
         <Route path="newsletter">
           <IndexRoute component={NewsletterListSection} />
           <Route path="add" component={NewsletterAddSection} />
+          <Route path=":newsletterId/edit" component={NewsletterEditSection} />
         </Route>
 
         <Route path="parent">

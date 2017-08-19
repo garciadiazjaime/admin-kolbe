@@ -26,18 +26,18 @@ function savingDocument() {
   };
 }
 
-function documentSaved(groupId) {
+function documentSaved(response) {
   return {
     type: DOCUMENT_SAVED,
     receivedAt: Date.now(),
-    groupId,
+    didInvalidate: !!response.entity.error,
   };
 }
 
-function getDocumentHelper(documentId) {
+function getDocumentHelper(groupId, documentId) {
   return (dispatch) => {
     dispatch(requestDocument());
-    return RequestUtil.get(`${constants.apiUrl}/document/${documentId}`)
+    return RequestUtil.get(`${constants.apiUrl}/group/${groupId}/document/${documentId}`)
       .then(response => dispatch(receiveDocument(response)));
   };
 }
@@ -46,15 +46,15 @@ function saveDocumentHelper(groupId, data) {
   return (dispatch) => {
     dispatch(savingDocument());
     return RequestUtil.submit(`${constants.apiUrl}/group/${groupId}/document`, data)
-      .then(() => dispatch(documentSaved(groupId)));
+      .then(response => dispatch(documentSaved(response)));
   };
 }
 
 function updateDocumentHelper(documentId, data, groupId) {
   return (dispatch) => {
     dispatch(savingDocument());
-    return RequestUtil.submit(`${constants.apiUrl}/document/${documentId}`, data, 'PUT')
-      .then(() => dispatch(documentSaved(groupId)));
+    return RequestUtil.submit(`${constants.apiUrl}/group/${groupId}/document/${documentId}`, data, 'PUT')
+      .then(response => dispatch(documentSaved(response)));
   };
 }
 
@@ -63,10 +63,10 @@ function shouldProccessDocument(state) {
   return document.isProcessing !== true;
 }
 
-export function getDocument(documentId) {
+export function getDocument(groupId, documentId) {
   return (dispatch, getState) => {
     if (shouldProccessDocument(getState())) {
-      return dispatch(getDocumentHelper(documentId));
+      return dispatch(getDocumentHelper(groupId, documentId));
     }
     return null;
   };

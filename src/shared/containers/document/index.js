@@ -4,8 +4,8 @@ const mapStateToProps = (state) => {
   const { documentHelper } = state;
   const {
     isProcessing,
+    didInvalidate,
     lastUpdated,
-    groupId,
     data: document,
   } = documentHelper || {
     isProcessing: true,
@@ -14,9 +14,9 @@ const mapStateToProps = (state) => {
 
   return {
     isProcessing,
+    didInvalidate,
     lastUpdated,
     document,
-    groupId,
   };
 };
 
