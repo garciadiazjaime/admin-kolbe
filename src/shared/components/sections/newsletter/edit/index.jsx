@@ -8,6 +8,7 @@ import LinearProgress from 'material-ui/LinearProgress';
 import NewsletterForm from '../form';
 import NewsletterContainer from '../../../../containers/newsletter';
 import { getNewsletter, updateNewsletter } from '../../../../actions/newsletter';
+import ApiErrorElement from '../../../elements/errorElement';
 
 class NewsletterEdit extends Component {
 
@@ -18,31 +19,32 @@ class NewsletterEdit extends Component {
 
   componentDidMount() {
     const { dispatch, params } = this.props;
-    dispatch(getNewsletter(params.newsletterId));
+    dispatch(getNewsletter(params.groupId, params.newsletterId));
   }
 
   componentWillReceiveProps(nextProps) {
-    const { groupId, lastUpdated } = nextProps;
-    if (lastUpdated) {
-      browserHistory.push(`/group/${groupId}/newsletter?success`);
+    const { params, didInvalidate, lastUpdated } = nextProps;
+    if (lastUpdated && !didInvalidate) {
+      browserHistory.push(`/group/${params.groupId}/newsletter?success`);
     }
   }
 
-  actionHandler(newsletterId, data) {
-    const { dispatch } = this.props;
-    dispatch(updateNewsletter(newsletterId, data));
+  actionHandler(data) {
+    const { params, dispatch } = this.props;
+    dispatch(updateNewsletter(params.groupId, params.newsletterId, data));
   }
 
   render() {
-    const { newsletter, lastUpdated } = this.props;
+    const { params, newsletter, didInvalidate, lastUpdated } = this.props;
     return _.isEmpty(newsletter) ? <LinearProgress mode="indeterminate" /> : (<div>
       <NewsletterForm
         action={this.actionHandler}
-        groupId={newsletter.groupId}
+        groupId={params.groupId}
         newsletter={newsletter}
         lastUpdated={lastUpdated}
         title="Editar Noticia"
       />
+      { lastUpdated && didInvalidate ? <ApiErrorElement /> : null }
     </div>);
   }
 }
@@ -51,14 +53,14 @@ NewsletterEdit.propTypes = {
   params: PropTypes.shape({}).isRequired,
   dispatch: PropTypes.func.isRequired,
   newsletter: PropTypes.shape({}),
+  didInvalidate: PropTypes.bool,
   lastUpdated: PropTypes.number,
-  groupId: PropTypes.string,
 };
 
 NewsletterEdit.defaultProps = {
   newsletter: {},
+  didInvalidate: false,
   lastUpdated: null,
-  groupId: null,
 };
 
 

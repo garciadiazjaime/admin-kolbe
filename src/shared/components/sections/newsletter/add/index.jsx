@@ -6,6 +6,7 @@ import { browserHistory } from 'react-router';
 import NewsletterForm from '../form';
 import NewsletterContainer from '../../../../containers/newsletter';
 import { saveNewsletter } from '../../../../actions/newsletter';
+import ApiErrorElement from '../../../elements/errorElement';
 
 class NewsletterAdd extends Component {
 
@@ -15,25 +16,26 @@ class NewsletterAdd extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { groupId, lastUpdated } = nextProps;
-    if (lastUpdated) {
-      browserHistory.push(`/group/${groupId}/newsletter?success`);
+    const { params, lastUpdated, didInvalidate } = nextProps;
+    if (lastUpdated && !didInvalidate) {
+      browserHistory.push(`/group/${params.groupId}/newsletter?success`);
     }
   }
 
-  actionHandler(groupId, data) {
-    const { dispatch } = this.props;
-    dispatch(saveNewsletter(groupId, data));
+  actionHandler(data) {
+    const { dispatch, params } = this.props;
+    dispatch(saveNewsletter(params.groupId, data));
   }
 
   render() {
-    const { params } = this.props;
+    const { params, didInvalidate, lastUpdated } = this.props;
     return (<div>
       <NewsletterForm
         action={this.actionHandler}
         groupId={params.groupId}
         title="Agregar Noticia"
       />
+      { lastUpdated && didInvalidate ? <ApiErrorElement /> : null }
     </div>);
   }
 }
@@ -41,13 +43,13 @@ class NewsletterAdd extends Component {
 NewsletterAdd.propTypes = {
   dispatch: PropTypes.func.isRequired,
   params: PropTypes.shape({}).isRequired,
+  didInvalidate: PropTypes.bool,
   lastUpdated: PropTypes.number,
-  groupId: PropTypes.string,
 };
 
 NewsletterAdd.defaultProps = {
+  didInvalidate: false,
   lastUpdated: null,
-  groupId: null,
 };
 
 export default NewsletterContainer(NewsletterAdd);

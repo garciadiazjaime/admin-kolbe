@@ -26,18 +26,18 @@ function savingNewsletter() {
   };
 }
 
-function newsletterSaved(groupId) {
+function newsletterSaved(response) {
   return {
     type: NEWSLETTER_SAVED,
     receivedAt: Date.now(),
-    groupId,
+    didInvalidate: !!response.entity.error,
   };
 }
 
-function getNewsletterHelper(newsletterId) {
+function getNewsletterHelper(groupId, newsletterId) {
   return (dispatch) => {
     dispatch(requestNewsletter());
-    return RequestUtil.get(`${constants.apiUrl}/newsletter/${newsletterId}`)
+    return RequestUtil.get(`${constants.apiUrl}/group/${groupId}/newsletter/${newsletterId}`)
       .then(response => dispatch(receiveNewsletter(response)));
   };
 }
@@ -46,15 +46,15 @@ function saveNewsletterHelper(groupId, data) {
   return (dispatch) => {
     dispatch(savingNewsletter());
     return RequestUtil.post(`${constants.apiUrl}/group/${groupId}/newsletter`, data)
-      .then(() => dispatch(newsletterSaved(groupId)));
+      .then(response => dispatch(newsletterSaved(response)));
   };
 }
 
-function updateNewsletterHelper(newsletterId, data) {
+function updateNewsletterHelper(groupId, newsletterId, data) {
   return (dispatch) => {
     dispatch(savingNewsletter());
-    return RequestUtil.put(`${constants.apiUrl}/newsletter/${newsletterId}`, data)
-      .then(() => dispatch(newsletterSaved(data.groupId)));
+    return RequestUtil.put(`${constants.apiUrl}/group/${groupId}/newsletter/${newsletterId}`, data)
+      .then(response => dispatch(newsletterSaved(response)));
   };
 }
 
@@ -63,10 +63,10 @@ function shouldProccessNewsletter(state) {
   return newsletter.isProcessing !== true;
 }
 
-export function getNewsletter(newsletterId) {
+export function getNewsletter(groupId, newsletterId) {
   return (dispatch, getState) => {
     if (shouldProccessNewsletter(getState())) {
-      return dispatch(getNewsletterHelper(newsletterId));
+      return dispatch(getNewsletterHelper(groupId, newsletterId));
     }
     return null;
   };
@@ -81,10 +81,10 @@ export function saveNewsletter(groupId, data) {
   };
 }
 
-export function updateNewsletter(newsletterId, data) {
+export function updateNewsletter(groupId, newsletterId, data) {
   return (dispatch, getState) => {
     if (shouldProccessNewsletter(getState())) {
-      return dispatch(updateNewsletterHelper(newsletterId, data));
+      return dispatch(updateNewsletterHelper(groupId, newsletterId, data));
     }
     return null;
   };
