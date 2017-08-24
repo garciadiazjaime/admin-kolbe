@@ -28,7 +28,6 @@ export default class ActivityForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.invalidText = 'Obligatorio';
-    this.entityId = _.isEmpty(newsletter) ? groupId : newsletter._id;
   }
 
   handleInputChange(event, newDate) {
@@ -66,7 +65,7 @@ export default class ActivityForm extends Component {
     if (!isReady) {
       this.setState(newState);
     } else {
-      this.props.action(this.entityId, data);
+      this.props.action(data);
     }
   }
 

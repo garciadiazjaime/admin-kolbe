@@ -27,20 +27,21 @@ class NewsletterNewsletterList extends Component {
 
   deleteHandler(e) {
     const newsletterId = e.currentTarget.dataset.id;
-    const { dispatch, selectedGroup } = this.props;
-    dispatch(deleteNewsletter(selectedGroup, newsletterId));
+    const { dispatch, params } = this.props;
+    dispatch(deleteNewsletter(params.groupId, newsletterId));
   }
 
-  renderNewsletters(data) {
-    if (data.length) {
+  renderNewsletters() {
+    const { newsletters, params } = this.props;
+    if (newsletters.length) {
       const style = {
         paddingLeft: '42px',
       };
-      return data.map(item => <TableRow key={item._id}>
+      return newsletters.map(item => <TableRow key={item._id}>
         <TableRowColumn>{item.name}</TableRowColumn>
         <TableRowColumn style={style}>{moment(item.date).format('DD/MM/YYYY')}</TableRowColumn>
         <TableRowColumn style={style}>
-          <Link to={`/newsletter/${item._id}/edit`}>
+          <Link to={`/group/${params.groupId}/newsletter/${item._id}/edit`}>
             <ContentCreate />
           </Link>
         </TableRowColumn>
@@ -55,7 +56,7 @@ class NewsletterNewsletterList extends Component {
   }
 
   render() {
-    const { params, newsletters } = this.props;
+    const { params } = this.props;
     return (<div>
       <Link to={`/group/${params.groupId}/newsletter/add`} className="pull-right">
         <FloatingActionButton mini>
@@ -74,7 +75,7 @@ class NewsletterNewsletterList extends Component {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false} stripedRows>
-          {this.renderNewsletters(newsletters)}
+          {this.renderNewsletters()}
         </TableBody>
       </Table>
     </div>);
@@ -83,13 +84,8 @@ class NewsletterNewsletterList extends Component {
 
 NewsletterNewsletterList.propTypes = {
   params: PropTypes.shape({}).isRequired,
-  selectedGroup: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
   newsletters: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-};
-
-NewsletterNewsletterList.defaultProps = {
-  selectedGroup: '',
 };
 
 export default NewsletterListContainer(NewsletterNewsletterList);

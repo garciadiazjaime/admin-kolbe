@@ -17,7 +17,7 @@ function receiveNewsletters(groupId, data) {
   return {
     type: RECEIVE_NEWSLETTERS,
     groupId,
-    newsletters: data.entity.data,
+    newsletters: data.entity.data || [],
     receivedAt: Date.now(),
   };
 }
@@ -63,7 +63,7 @@ export function getNewsletters(groupId) {
 function deleteNewsletterHelper(groupId, newsletterId) {
   return (dispatch) => {
     dispatch(deletingNewsletter(groupId));
-    return RequestUtil.delete(`${constants.apiUrl}/newsletter/${newsletterId}`)
+    return RequestUtil.delete(`${constants.apiUrl}/group/${groupId}/newsletter/${newsletterId}`)
       .then(() => dispatch(newsletterDeleted(groupId, newsletterId)));
   };
 }
