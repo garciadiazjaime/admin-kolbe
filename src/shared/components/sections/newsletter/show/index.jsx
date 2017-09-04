@@ -14,7 +14,7 @@ class NewsletterShow extends Component {
 
   componentDidMount() {
     const { dispatch, params } = this.props;
-    dispatch(getNewsletter(params.newsletterId));
+    dispatch(getNewsletter(params.groupId, params.newsletterId));
   }
 
   render() {

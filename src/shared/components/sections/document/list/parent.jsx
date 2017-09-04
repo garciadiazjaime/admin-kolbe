@@ -27,7 +27,7 @@ class DocumentParentList extends Component {
         <TableRowColumn>{item.name}</TableRowColumn>
         <TableRowColumn style={style}>{moment(item.date).format('DD/MM/YYYY')}</TableRowColumn>
         <TableRowColumn style={style}>
-          <Link to={`/parent/${parentId}/group/${groupId}/document/${item._id}/show`}>
+          <Link to={`/parent/${parentId}/group/${groupId}/document/${item._id}`}>
             <NavigationChevronRight />
           </Link>
         </TableRowColumn>

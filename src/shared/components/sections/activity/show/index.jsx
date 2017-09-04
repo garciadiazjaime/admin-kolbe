@@ -15,7 +15,7 @@ class ActivityShow extends Component {
 
   componentDidMount() {
     const { dispatch, params } = this.props;
-    dispatch(getActivity(params.activityId));
+    dispatch(getActivity(params.groupId, params.activityId));
   }
 
   render() {

@@ -46,7 +46,7 @@ class ActivityCalendar extends Component {
 
   showEvent(data) {
     const { params } = this.props;
-    const nextUrl = params.parentId ? `/parent/${params.parentId}/group/${params.groupId}/activity/${data.id}/show` : `/group/${params.groupId}/activity/${data.id}`;
+    const nextUrl = params.parentId ? `/parent/${params.parentId}/group/${params.groupId}/activity/${data.id}` : `/group/${params.groupId}/activity/${data.id}`;
     browserHistory.push(nextUrl);
   }
 

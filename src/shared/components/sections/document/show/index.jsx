@@ -15,7 +15,7 @@ class DocumentShow extends Component {
 
   componentDidMount() {
     const { dispatch, params } = this.props;
-    dispatch(getDocument(params.documentId));
+    dispatch(getDocument(params.groupId, params.documentId));
   }
 
   render() {
