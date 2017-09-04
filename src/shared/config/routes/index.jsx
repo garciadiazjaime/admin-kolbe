@@ -82,10 +82,10 @@ export default(
             </Route>
 
             <Route path="document" component={DocumentListSection} />
-            <Route path="document/:documentId/show" component={DocumentShowSection} />
+            <Route path="document/:documentId" component={DocumentShowSection} />
 
             <Route path="newsletter" component={NewsletterListSection} />
-            <Route path="newsletter/:newsletterId/show" component={NewsletterShowSection} />
+            <Route path="newsletter/:newsletterId" component={NewsletterShowSection} />
           </Route>
         </Route>
       </Route>

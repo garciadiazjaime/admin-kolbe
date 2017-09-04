@@ -38,7 +38,7 @@ class ParentList extends Component {
     if (data && data.length) {
       return data.map(item => <TableRow key={item._id}>
         <TableRowColumn>{item.username}</TableRowColumn>
-        <TableRowColumn>{item.code}</TableRowColumn>
+        <TableRowColumn>{item.password}</TableRowColumn>
         <TableRowColumn>
           <a onClick={this.deleteHandler} role="button" tabIndex="0" data-id={item._id}>
             <ContentClear />
