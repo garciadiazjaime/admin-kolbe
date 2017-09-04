@@ -14,10 +14,6 @@ import LevelShowSection from '../../components/sections/level/show';
 import GroupShowSection from '../../components/sections/group/show';
 import GroupUploadSection from '../../components/sections/group/upload';
 
-import StudentParentListSection from '../../components/sections/student/list/parent';
-import StudentGroupListSection from '../../components/sections/student/list/group';
-import StudentEditSection from '../../components/sections/student/edit';
-
 import ActivityListSection from '../../components/sections/activity/list';
 import ActivityShowSection from '../../components/sections/activity/show';
 import ActivityCalendarSection from '../../components/sections/activity/list/calendar';
@@ -36,8 +32,6 @@ import NewsletterEditSection from '../../components/sections/newsletter/edit';
 
 import ParentListSection from '../../components/sections/parent/list';
 import ParentShowSection from '../../components/sections/parent/show';
-import ParentAddSection from '../../components/sections/parent/add';
-import ParentEditSection from '../../components/sections/parent/edit';
 
 import AuthUtil from '../../utils/authUtil';
 
@@ -59,49 +53,33 @@ export default(
 
     <Route path="/" component={AppHandler} onEnter={requireAuth}>
 
-      <Route path="location">
-        <Route path=":locationId" component={LocationShowSection} />
-      </Route>
-
       <Route path="school/:schoolId" component={DashboardSection} />
+      <Route path="location/:locationId" component={LocationShowSection} />
+      <Route path="level/:levelId" component={LevelShowSection} />
 
-      <Route path="parent">
-        <IndexRoute component={ParentListSection} />
-        <Route path="add" component={ParentAddSection} />
+      <Route path="parent/:parentId">
+        <IndexRoute component={ParentShowSection} />
+        <Route path="group/:groupId">
+          <Route path="activity/calendar" component={ActivityCalendarSection} />
+          <Route path="activity/:activityId" component={ActivityShowSection} />
 
-        <Route path=":parentId">
-          <IndexRoute component={ParentShowSection} />
-          <Route path="edit" component={ParentEditSection} />
-          <Route path="student" component={StudentParentListSection} />
+          <Route path="document" component={DocumentListSection} />
+          <Route path="document/:documentId" component={DocumentShowSection} />
 
-          <Route path="group/:groupId">
-            <Route path="activity">
-              <IndexRoute component={ActivityListSection} />
-              <Route path="calendar" component={ActivityCalendarSection} />
-              <Route path=":activityId" component={ActivityShowSection} />
-            </Route>
-
-            <Route path="document" component={DocumentListSection} />
-            <Route path="document/:documentId" component={DocumentShowSection} />
-
-            <Route path="newsletter" component={NewsletterListSection} />
-            <Route path="newsletter/:newsletterId" component={NewsletterShowSection} />
-          </Route>
+          <Route path="newsletter" component={NewsletterListSection} />
+          <Route path="newsletter/:newsletterId" component={NewsletterShowSection} />
         </Route>
       </Route>
-
-      <Route path="student/:studentId/edit" component={StudentEditSection} />
 
       <Route path="group/:groupId">
         <IndexRoute component={GroupShowSection} />
         <Route path="upload" component={GroupUploadSection} />
-        <Route path="student" component={StudentGroupListSection} />
+        <Route path="parent" component={ParentListSection} />
 
         <Route path="activity">
           <IndexRoute component={ActivityListSection} />
           <Route path="add" component={ActivityAddSection} />
           <Route path="calendar" component={ActivityCalendarSection} />
-          <Route path=":activityId" component={ActivityShowSection} />
           <Route path=":activityId/edit" component={ActivityEditSection} />
         </Route>
 
@@ -116,15 +94,6 @@ export default(
           <Route path="add" component={NewsletterAddSection} />
           <Route path=":newsletterId/edit" component={NewsletterEditSection} />
         </Route>
-
-        <Route path="parent">
-          <IndexRoute component={ParentListSection} />
-          <Route path="add" component={ParentAddSection} />
-        </Route>
-      </Route>
-
-      <Route path="level/:levelId">
-        <IndexRoute component={LevelShowSection} />
       </Route>
 
     </Route>
