@@ -2,4 +2,15 @@
 
 .background {
   background-color: $primaryColor!important;
+
+  h1 {
+    margin-left: 120px!important;
+  }
+}
+
+.logo {
+  background-image: url("/images/logo.png");
+  height: 65px;
+  width: 143px;
+  margin-top: -21px;
 }

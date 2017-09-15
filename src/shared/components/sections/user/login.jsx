@@ -63,7 +63,11 @@ class LoginSection extends Component {
     const { isProcessing, error, didInvalidate } = this.props;
     const { data } = this.state;
     return (<div>
-      <AppBar title={constants.appTitle} showMenuIconButton={false} className={style.background} />
+      <AppBar
+        title={constants.appTitle}
+        className={style.background}
+        iconClassNameLeft={style.logo}
+      />
       { isProcessing ? <LinearProgress mode="indeterminate" /> : null }
       <div className="container">
         <TextField

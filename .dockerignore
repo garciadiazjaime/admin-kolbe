@@ -1,0 +1,4 @@
+.git
+.openshift
+node_modules
+npm-debug.log
