@@ -52,3 +52,5 @@ https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens
 
 docker build -t garciadiazjaime/admin-kolbe .
 docker push garciadiazjaime/admin-kolbe
+
+docker pull garciadiazjaime/admin-kolbe

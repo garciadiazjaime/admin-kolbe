@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 3032
 
-CMD [ "npm", "start" ]
+CMD [ "node", "./dist/server.js" ]

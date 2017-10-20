@@ -17,7 +17,7 @@ const config = convict({
     url: {
       doc: 'API URL',
       format: String,
-      default: 'http://127.0.0.1:3000/',
+      default: 'http://127.0.0.1:3033/',
       env: 'KOLBE_API_URL',
     },
   },
