@@ -5,13 +5,13 @@ const config = convict({
     doc: 'IP the application runs on',
     format: 'ipaddress',
     default: '0.0.0.0',
-    env: 'OPENSHIFT_NODEJS_IP',
+    env: 'NODEJS_IP',
   },
   port: {
     doc: 'Port the application listens on',
     format: 'port',
-    default: '3032',
-    env: 'OPENSHIFT_NODEJS_PORT',
+    default: '3030',
+    env: 'NODEJS_PORT',
   },
   api: {
     url: {
