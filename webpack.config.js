@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const _ = require('lodash');
 
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 
 const TARGET = process.env.npm_lifecycle_event;
@@ -17,15 +17,15 @@ const PATHS = {
 
 const common = {
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
   },
-}
+};
 
-if(TARGET === 'dev' || !TARGET) {
+if (TARGET === 'dev' || !TARGET) {
   // JS bundle
   module.exports = _.extend({}, common, {
     entry: {
-      app: path.join(PATHS.app, 'client/entry')
+      app: path.join(PATHS.app, 'client/entry'),
     },
 
     output: {
@@ -56,14 +56,14 @@ if(TARGET === 'dev' || !TARGET) {
       // 0.0.0.0 is available to all network devices unlike default
       // localhost
       host: process.env.HOST,
-      port: process.env.PORT
+      port: process.env.PORT,
     },
 
     plugins: [
       new webpack.NoErrorsPlugin(),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.OccurrenceOrderPlugin(true)
+      new webpack.optimize.OccurrenceOrderPlugin(true),
     ],
 
     module: {
@@ -71,37 +71,32 @@ if(TARGET === 'dev' || !TARGET) {
         {
           test: /\.jsx$|\.js$/,
           loader: 'eslint-loader',
-          include: __dirname + '/src/',
-          exclude: /app\.js$/
-        }
+          include: `${__dirname}/src/`,
+          exclude: /app\.js$/,
+        },
       ],
-     loaders: [
+      loaders: [
         {
           test: /\.jsx$|\.js$/,
           loaders: ['babel-loader'],
-          include: PATHS.app
+          include: PATHS.app,
         },
         {
           test: /\.scss$/,
           loaders: ['style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass'],
-          include: PATHS.app
+          include: PATHS.app,
         },
-        {
-          test: /\.less$/,
-          loaders: ['style', 'css?modules&importLoaders=1&localIdentName=[local]!less'],
-          include: PATHS.calendar
-        },
-     ]
-   },
+      ],
+    },
 
-   devtool: 'source-map',
+    devtool: 'source-map',
   });
 }
 
-if(TARGET === 'build-fe') {
+if (TARGET === 'build-fe') {
   module.exports = _.extend({}, common, {
     entry: {
-      app: path.join(PATHS.app, 'client/entry')
+      app: path.join(PATHS.app, 'client/entry'),
     },
 
     output: {
@@ -110,16 +105,16 @@ if(TARGET === 'build-fe') {
     },
 
     plugins: [
-      new ExtractTextPlugin("../css/screen.css", {
-        allChunks: true
+      new ExtractTextPlugin('../css/screen.css', {
+        allChunks: true,
       }),
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify('production')
+        'process.env.NODE_ENV': JSON.stringify('production'),
       }),
-      new ExtractTextPlugin("../static/css/screen.css", { allChunks: true}),
+      new ExtractTextPlugin('../static/css/screen.css', { allChunks: true }),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.OccurrenceOrderPlugin(),
-      new webpack.optimize.UglifyJsPlugin()
+      new webpack.optimize.UglifyJsPlugin(),
     ],
 
     module: {
@@ -127,35 +122,30 @@ if(TARGET === 'build-fe') {
         {
           test: /\.jsx$|\.js$/,
           loader: 'eslint-loader',
-          include: __dirname + '/src/',
-          exclude: /app\.js$/
-        }
+          include: `${__dirname}/src/`,
+          exclude: /app\.js$/,
+        },
       ],
-     loaders: [
+      loaders: [
         {
           test: /\.jsx$|\.js$/,
           loaders: ['babel-loader'],
-          include: PATHS.app
+          include: PATHS.app,
         },
         {
           test: /\.scss$/,
           loader: ExtractTextPlugin.extract('css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass'),
-          include: PATHS.app
+          include: PATHS.app,
         },
-        {
-          test: /\.less$/,
-          loaders: ['style', 'css?modules&importLoaders=1&localIdentName=[local]!less'],
-          include: PATHS.calendar
-        },
-     ]
-   },
+      ],
+    },
   });
 }
 
-if(TARGET === 'build-be') {
+if (TARGET === 'build-be') {
   module.exports = _.extend({}, common, {
     entry: {
-      app: path.join(PATHS.app, 'server/server')
+      app: path.join(PATHS.app, 'server/server'),
     },
 
     externals: [nodeExternals()],
@@ -167,12 +157,12 @@ if(TARGET === 'build-be') {
 
     plugins: [
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify('production')
+        'process.env.NODE_ENV': JSON.stringify('production'),
       }),
-      new ExtractTextPlugin("../static/css/screen.css", { allChunks: true}),
+      new ExtractTextPlugin('../static/css/screen.css', { allChunks: true }),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.OccurrenceOrderPlugin(),
-      new webpack.optimize.UglifyJsPlugin()
+      new webpack.optimize.UglifyJsPlugin(),
     ],
 
     module: {
@@ -180,27 +170,22 @@ if(TARGET === 'build-be') {
         {
           test: /\.jsx$|\.js$/,
           loader: 'eslint-loader',
-          include: __dirname + '/src/',
-          exclude: /app\.js$/
-        }
+          include: `${__dirname}/src/`,
+          exclude: /app\.js$/,
+        },
       ],
-     loaders: [
+      loaders: [
         {
           test: /\.jsx$|\.js$/,
           loaders: ['babel-loader'],
-          include: PATHS.app
+          include: PATHS.app,
         },
         {
           test: /\.scss$/,
           loader: ExtractTextPlugin.extract('css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass'),
-          include: PATHS.app
+          include: PATHS.app,
         },
-        {
-          test: /\.less$/,
-          loaders: ['style', 'css?modules&importLoaders=1&localIdentName=[local]!less'],
-          include: PATHS.calendar
-        },
-     ]
-   },
+      ],
+    },
   });
 }

@@ -64,7 +64,7 @@ class DocumentDocumentList extends Component {
         </FloatingActionButton>
       </Link>
       <div className="clearfix" />
-      <Subheader>Documentos</Subheader>
+      <Subheader>Documentos y Tareas</Subheader>
       <Table selectable={false} displayRowCheckbox={false}>
         <TableHeader displaySelectAll={false}>
           <TableRow>

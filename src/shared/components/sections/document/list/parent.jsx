@@ -39,7 +39,7 @@ class DocumentParentList extends Component {
   render() {
     const { documents, parentId, groupId } = this.props;
     return (<div>
-      <Subheader>Documentos</Subheader>
+      <Subheader>Documentos y Tareas</Subheader>
       <Table selectable={false} displayRowCheckbox={false}>
         <TableHeader displaySelectAll={false}>
           <TableRow>

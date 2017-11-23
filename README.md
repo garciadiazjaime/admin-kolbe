@@ -14,7 +14,7 @@ b) let's run the server
 
 `npm start`
 
-By default server will run on http://127.0.0.1:3030/
+By default server will run on http://127.0.0.1:3032/
 
 Note: `npm run sprites` requires 'sass'
 http://sass-lang.com/install
@@ -49,3 +49,8 @@ rhc env list -a app
 https://scotch.io/tutorials/easy-node-authentication-setup-and-local
 https://scotch.io/tutorials/build-a-react-flux-app-with-user-authentication
 https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens
+
+docker build -t garciadiazjaime/admin-kolbe .
+docker push garciadiazjaime/admin-kolbe
+
+docker pull garciadiazjaime/admin-kolbe

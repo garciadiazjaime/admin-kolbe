@@ -65,6 +65,7 @@ class Menu extends Component {
       onLeftIconButtonTouchTap={this.menuClickHandler}
       iconElementRight={<FlatButton label="Salir" href="/logout" />}
       className={style.background}
+      iconClassNameLeft={style.logo}
     />);
   }
 }

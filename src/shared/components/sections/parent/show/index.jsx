@@ -23,7 +23,7 @@ class ParentShow extends Component {
               <Link to={`/parent/${parentId}/group/${item.groupId}/activity/calendar`}>Actividades</Link>
             </TableRowColumn>
             <TableRowColumn>
-              <Link to={`/parent/${parentId}/group/${item.groupId}/document`}>Documentos</Link>
+              <Link to={`/parent/${parentId}/group/${item.groupId}/document`}>Documentos y Tareas</Link>
             </TableRowColumn>
             <TableRowColumn>
               <Link to={`/parent/${parentId}/group/${item.groupId}/newsletter`}>Noticias</Link>

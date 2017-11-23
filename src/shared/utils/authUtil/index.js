@@ -11,6 +11,7 @@ export default class AuthUtil {
   static isTokenValid() {
     return new Promise((resolve, reject) => {
       const token = StoreUtil.get('token');
+      console.log('constants', constants.apiUrl);
       if (token) {
         RequestUtil.get(`${constants.apiUrl}/session`)
           .then((results) => {
