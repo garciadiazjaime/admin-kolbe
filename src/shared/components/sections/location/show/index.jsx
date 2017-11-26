@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import Subheader from 'material-ui/Subheader';
 import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import { FileFileUpload } from 'material-ui/svg-icons';
 
 import { selectLocation } from '../../../../actions/location';
 import LocationContainer from '../../../../containers/location';
@@ -61,6 +63,12 @@ class LocationShow extends Component {
   render() {
     const { location } = this.props;
     return (<div>
+      <Link to={`/location/${location.id}/upload`} className="pull-right">
+        <FloatingActionButton mini>
+          <FileFileUpload />
+        </FloatingActionButton>
+      </Link>
+      <div className="clearfix" />
       {LocationShow.renderLevels(location)}
     </div>);
   }

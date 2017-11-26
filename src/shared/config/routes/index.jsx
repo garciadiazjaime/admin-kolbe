@@ -8,6 +8,7 @@ import LogoutSection from '../../components/sections/user/logout';
 
 import DashboardSection from '../../components/sections/dashboard';
 import LocationShowSection from '../../components/sections/location/show';
+import LocationUploadSection from '../../components/sections/location/upload';
 
 import LevelShowSection from '../../components/sections/level/show';
 
@@ -54,7 +55,10 @@ export default(
     <Route path="/" component={AppHandler} onEnter={requireAuth}>
 
       <Route path="school/:schoolId" component={DashboardSection} />
-      <Route path="location/:locationId" component={LocationShowSection} />
+      <Route path="location/:locationId">
+        <IndexRoute component={LocationShowSection} />
+        <Route path="upload" component={LocationUploadSection} />
+      </Route>
       <Route path="level/:levelId" component={LevelShowSection} />
 
       <Route path="parent/:parentId">

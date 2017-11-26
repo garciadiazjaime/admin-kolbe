@@ -14,7 +14,7 @@ b) let's run the server
 
 `npm start`
 
-By default server will run on http://127.0.0.1:3032/
+By default server will run on http://127.0.0.1:3000/
 
 Note: `npm run sprites` requires 'sass'
 http://sass-lang.com/install

@@ -26,10 +26,10 @@ function fileUploaded() {
   };
 }
 
-function uploadHelper(groupId, data) {
+function uploadHelper(groupId, locationId, data) {
   return (dispatch) => {
     dispatch(uploadingFile());
-    return RequestUtil.submit(`${constants.apiUrl}/group/${groupId}/upload`, data)
+    return RequestUtil.submit(`${constants.apiUrl}/group/${groupId}/upload?locationId=${locationId}`, data)
       .then(() => dispatch(fileUploaded()));
   };
 }
@@ -39,10 +39,10 @@ function shouldProccessUpload(state) {
   return upload.isProcessing !== true;
 }
 
-export function uploadDocument(groupId, data) {
+export function uploadDocument(groupId, locationId, data) {
   return (dispatch, getState) => {
     if (shouldProccessUpload(getState())) {
-      return dispatch(uploadHelper(groupId, data));
+      return dispatch(uploadHelper(groupId, locationId, data));
     }
     return null;
   };

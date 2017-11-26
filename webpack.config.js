@@ -86,6 +86,11 @@ if (TARGET === 'dev' || !TARGET) {
           loaders: ['style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass'],
           include: PATHS.app,
         },
+        {
+          test: /\.less$/,
+          loaders: ['style', 'css?modules&importLoaders=1&localIdentName=[local]!less'],
+          include: PATHS.calendar,
+        },
       ],
     },
 
@@ -137,6 +142,11 @@ if (TARGET === 'build-fe') {
           loader: ExtractTextPlugin.extract('css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass'),
           include: PATHS.app,
         },
+        {
+          test: /\.less$/,
+          loaders: ['style', 'css?modules&importLoaders=1&localIdentName=[local]!less'],
+          include: PATHS.calendar,
+        },
       ],
     },
   });
@@ -184,6 +194,11 @@ if (TARGET === 'build-be') {
           test: /\.scss$/,
           loader: ExtractTextPlugin.extract('css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass'),
           include: PATHS.app,
+        },
+        {
+          test: /\.less$/,
+          loaders: ['style', 'css?modules&importLoaders=1&localIdentName=[local]!less'],
+          include: PATHS.calendar,
         },
       ],
     },
