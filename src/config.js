@@ -10,14 +10,14 @@ const config = convict({
   port: {
     doc: 'Port the application listens on',
     format: 'port',
-    default: '3030',
+    default: '3000',
     env: 'NODEJS_PORT',
   },
   api: {
     url: {
       doc: 'API URL',
       format: String,
-      default: 'http://127.0.0.1:3033/',
+      default: 'http://127.0.0.1:3000/',
       env: 'KOLBE_API_URL',
     },
   },

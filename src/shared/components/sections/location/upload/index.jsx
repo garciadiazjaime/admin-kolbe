@@ -8,8 +8,8 @@ import Subheader from 'material-ui/Subheader';
 import FormData from 'form-data';
 import LinearProgress from 'material-ui/LinearProgress';
 
-import GroupUploadContainer from '../../../../containers/group/upload';
-import { uploadDocument } from '../../../../actions/group';
+import LocationUploadContainer from '../../../../containers/location/upload';
+import { uploadDocument } from '../../../../actions/school';
 import style from './style.scss';
 
 class GroupUploadForm extends Component {
@@ -27,7 +27,7 @@ class GroupUploadForm extends Component {
   componentWillReceiveProps(nextProps) {
     const { params, lastUpdated } = nextProps;
     if (lastUpdated) {
-      browserHistory.push(`/group/${params.groupId}/parent?action=upload&status=true`);
+      browserHistory.push(`/location/${params.locationId}`);
     }
   }
 
@@ -38,9 +38,9 @@ class GroupUploadForm extends Component {
       const extension = file.name.split('.').pop().toLowerCase();
       if (this.extensionsAllowed.indexOf(extension) !== -1) {
         const data = new FormData();
-        const { params, dispatch, selectedLocation } = this.props;
+        const { params, dispatch } = this.props;
         data.append('data', file);
-        dispatch(uploadDocument(params.groupId, selectedLocation, data));
+        dispatch(uploadDocument(params.locationId, data));
       } else {
         this.setState({
           valid: false,
@@ -90,4 +90,4 @@ GroupUploadForm.defaultProps = {
   lastUpdated: null,
 };
 
-export default GroupUploadContainer(GroupUploadForm);
+export default LocationUploadContainer(GroupUploadForm);

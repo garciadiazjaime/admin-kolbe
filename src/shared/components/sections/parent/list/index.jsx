@@ -36,9 +36,9 @@ class ParentList extends Component {
 
   renderParents(data) {
     if (data && data.length) {
-      return data.map(item => <TableRow key={item._id}>
+      return data.map((item, index) => <TableRow key={item._id}>
+        <TableRowColumn>{index + 1}</TableRowColumn>
         <TableRowColumn>{item.username}</TableRowColumn>
-        <TableRowColumn>{item.password}</TableRowColumn>
         <TableRowColumn>
           <a onClick={this.deleteHandler} role="button" tabIndex="0" data-id={item._id}>
             <ContentClear />
@@ -63,8 +63,8 @@ class ParentList extends Component {
       <Table selectable={false} displayRowCheckbox={false}>
         <TableHeader displaySelectAll={false}>
           <TableRow>
+            <TableHeaderColumn>#</TableHeaderColumn>
             <TableHeaderColumn>Email</TableHeaderColumn>
-            <TableHeaderColumn>Código</TableHeaderColumn>
             <TableHeaderColumn>Eliminar</TableHeaderColumn>
           </TableRow>
         </TableHeader>
