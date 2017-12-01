@@ -34,7 +34,7 @@ class ActivityEdit extends Component {
   }
 
   render() {
-    const { activity, lastUpdated } = this.props;
+    const { activity, lastUpdated, location } = this.props;
     return _.isEmpty(activity) ? <LinearProgress mode="indeterminate" /> : (<div>
       <ActivityForm
         action={this.actionHandler}
@@ -42,6 +42,7 @@ class ActivityEdit extends Component {
         activity={activity}
         lastUpdated={lastUpdated}
         title="Editar Actividad"
+        location={location}
       />
     </div>);
   }
@@ -52,6 +53,7 @@ ActivityEdit.propTypes = {
   dispatch: PropTypes.func.isRequired,
   activity: PropTypes.shape({}),
   lastUpdated: PropTypes.number,
+  location: PropTypes.shape({}).isRequired,
 };
 
 ActivityEdit.defaultProps = {

@@ -32,7 +32,13 @@ export default class ActivityForm extends Component {
     this.onGroupChange = this.onGroupChange.bind(this);
     this.invalidText = 'Obligatorio';
     this.entityId = _.isEmpty(activity) ? groupId : activity._id;
+
     this.groupsSelected = {};
+    if (_.isArray(activity.groups) && activity.groups.length) {
+      activity.groups.forEach((item) => {
+        this.groupsSelected[item] = true;
+      });
+    }
   }
 
   onGroupChange(groupId, __, isInputChecked) {
@@ -74,7 +80,7 @@ export default class ActivityForm extends Component {
     if (!isReady) {
       this.setState(newState);
     } else {
-      const groups = Object.keys(this.groupsSelected).filter(groupId => groupId);
+      const groups = Object.keys(this.groupsSelected).filter(groupId => this.groupsSelected[groupId]);
       _.assign(data, {
         groups,
       });
@@ -97,7 +103,7 @@ export default class ActivityForm extends Component {
       <br />
       <DatePicker name="date" floatingLabelText="Fecha" fullWidth onChange={this.handleInputChange} autoOk defaultDate={new Date(data.date)} />
       <br />
-      <ListGroupsSettings location={location} onChange={this.onGroupChange} />
+      <ListGroupsSettings location={location} onChange={this.onGroupChange} groups={this.groupsSelected} />
       <br />
       <RaisedButton label="Guardar" primary fullWidth onTouchTap={this.handleSubmit} />
       <br />
