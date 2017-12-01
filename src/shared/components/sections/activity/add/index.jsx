@@ -27,12 +27,13 @@ class AcitivityAdd extends Component {
   }
 
   render() {
-    const { params } = this.props;
+    const { params, location } = this.props;
     return (<div>
       <ActivityForm
         action={this.actionHandler}
         groupId={params.groupId}
         title="Agregar Actividad"
+        location={location}
       />
     </div>);
   }
@@ -42,6 +43,7 @@ AcitivityAdd.propTypes = {
   dispatch: PropTypes.func.isRequired,
   params: PropTypes.shape({}).isRequired,
   lastUpdated: PropTypes.number,
+  location: PropTypes.shape({}).isRequired,
 };
 
 AcitivityAdd.defaultProps = {

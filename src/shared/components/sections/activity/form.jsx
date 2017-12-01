@@ -11,6 +11,8 @@ import { ContentClear } from 'material-ui/svg-icons';
 import LinearProgress from 'material-ui/LinearProgress';
 import Subheader from 'material-ui/Subheader';
 
+import ListGroupsSettings from '../../elements/listGroupsSettings';
+
 export default class ActivityForm extends Component {
 
   constructor(args) {
@@ -27,8 +29,14 @@ export default class ActivityForm extends Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.onGroupChange = this.onGroupChange.bind(this);
     this.invalidText = 'Obligatorio';
     this.entityId = _.isEmpty(activity) ? groupId : activity._id;
+    this.groupsSelected = {};
+  }
+
+  onGroupChange(groupId, __, isInputChecked) {
+    this.groupsSelected[groupId] = isInputChecked;
   }
 
   handleInputChange(event, newDate) {
@@ -66,12 +74,16 @@ export default class ActivityForm extends Component {
     if (!isReady) {
       this.setState(newState);
     } else {
+      const groups = Object.keys(this.groupsSelected).filter(groupId => groupId);
+      _.assign(data, {
+        groups,
+      });
       this.props.action(this.entityId, data);
     }
   }
 
   render() {
-    const { isProcessing, groupId, title } = this.props;
+    const { isProcessing, groupId, title, location } = this.props;
     const { data, valid, touch } = this.state;
     return (<div>
       <Link to={`/group/${groupId}/activity`} className="pull-right">
@@ -84,6 +96,8 @@ export default class ActivityForm extends Component {
       <TextField name="description" floatingLabelText="Descripción" floatingLabelFixed multiLine rows={4} fullWidth onChange={this.handleInputChange} errorText={!valid.description && touch.description ? this.invalidText : null} defaultValue={data.description} />
       <br />
       <DatePicker name="date" floatingLabelText="Fecha" fullWidth onChange={this.handleInputChange} autoOk defaultDate={new Date(data.date)} />
+      <br />
+      <ListGroupsSettings location={location} onChange={this.onGroupChange} />
       <br />
       <RaisedButton label="Guardar" primary fullWidth onTouchTap={this.handleSubmit} />
       <br />
@@ -98,6 +112,7 @@ ActivityForm.propTypes = {
   action: PropTypes.func.isRequired,
   groupId: PropTypes.string,
   title: PropTypes.string.isRequired,
+  location: PropTypes.shape({}).isRequired,
 };
 
 ActivityForm.defaultProps = {
