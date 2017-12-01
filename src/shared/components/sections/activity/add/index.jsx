@@ -27,13 +27,14 @@ class AcitivityAdd extends Component {
   }
 
   render() {
-    const { params, location } = this.props;
+    const { params, location, selectedRole } = this.props;
     return (<div>
       <ActivityForm
         action={this.actionHandler}
         groupId={params.groupId}
         title="Agregar Actividad"
         location={location}
+        selectedRole={selectedRole}
       />
     </div>);
   }
@@ -44,6 +45,7 @@ AcitivityAdd.propTypes = {
   params: PropTypes.shape({}).isRequired,
   lastUpdated: PropTypes.number,
   location: PropTypes.shape({}).isRequired,
+  selectedRole: PropTypes.number.isRequired,
 };
 
 AcitivityAdd.defaultProps = {

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
-  const { activityHelper, selectedLocation, locationById } = state;
+  const { activityHelper, selectedLocation, locationById, selectedRole } = state;
   const {
     isProcessing,
     lastUpdated,
@@ -18,6 +18,7 @@ const mapStateToProps = (state) => {
     lastUpdated,
     activity,
     location,
+    selectedRole,
   };
 };
 

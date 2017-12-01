@@ -10,6 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { ContentClear } from 'material-ui/svg-icons';
 import LinearProgress from 'material-ui/LinearProgress';
 import Subheader from 'material-ui/Subheader';
+import { hasUserPermission, PERMISSIONS } from '../../../utils/roleUtil';
 
 import ListGroupsSettings from '../../elements/listGroupsSettings';
 
@@ -89,7 +90,7 @@ export default class ActivityForm extends Component {
   }
 
   render() {
-    const { isProcessing, groupId, title, location } = this.props;
+    const { isProcessing, groupId, title, location, selectedRole } = this.props;
     const { data, valid, touch } = this.state;
     return (<div>
       <Link to={`/group/${groupId}/activity`} className="pull-right">
@@ -103,7 +104,8 @@ export default class ActivityForm extends Component {
       <br />
       <DatePicker name="date" floatingLabelText="Fecha" fullWidth onChange={this.handleInputChange} autoOk defaultDate={new Date(data.date)} />
       <br />
-      <ListGroupsSettings location={location} onChange={this.onGroupChange} groups={this.groupsSelected} />
+      { hasUserPermission(PERMISSIONS.groupSettings, selectedRole) ?
+        <ListGroupsSettings location={location} onChange={this.onGroupChange} groups={this.groupsSelected} /> : null }
       <br />
       <RaisedButton label="Guardar" primary fullWidth onTouchTap={this.handleSubmit} />
       <br />
@@ -119,6 +121,7 @@ ActivityForm.propTypes = {
   groupId: PropTypes.string,
   title: PropTypes.string.isRequired,
   location: PropTypes.shape({}).isRequired,
+  selectedRole: PropTypes.number.isRequired,
 };
 
 ActivityForm.defaultProps = {
