@@ -9,11 +9,17 @@ import style from './style.scss';
 
 class ListGroupsSettings extends Component {
 
+  renderCheckbox(_groupId) {
+    const { groups, onChange, groupId } = this.props;
+    return groupId === _groupId ?
+      (<Checkbox onCheck={onChange.bind(this, _groupId)} checked disabled />) : //eslint-disable-line
+      (<Checkbox onCheck={onChange.bind(this, _groupId)} defaultChecked={!!groups[_groupId]} />); //eslint-disable-line
+  }
+
   renderGroup(data) {
-    const { onChange, groups } = this.props;
     return (data && data.group ? data.group.map(item => <ListItem
       key={item.id}
-      leftCheckbox={<Checkbox onCheck={onChange.bind(this, item.id)} defaultChecked={!!groups[item.id]} />} //eslint-disable-line
+      leftCheckbox={this.renderCheckbox(item.id)}
       primaryText={`${data.name} ${item.name}`}
     />) : null);
   }
@@ -46,6 +52,7 @@ ListGroupsSettings.propTypes = {
   location: PropTypes.shape({}).isRequired,
   onChange: PropTypes.func.isRequired,
   groups: PropTypes.shape({}),
+  groupId: PropTypes.string.isRequired,
 };
 
 ListGroupsSettings.defaultProps = {

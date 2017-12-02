@@ -21,7 +21,6 @@ export default class ActivityForm extends Component {
     const { groupId, activity } = this.props;
     const initData = _.isEmpty(activity) ? {
       date: new Date(),
-      groupId,
     } : activity;
     this.state = {
       data: initData,
@@ -32,9 +31,10 @@ export default class ActivityForm extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onGroupChange = this.onGroupChange.bind(this);
     this.invalidText = 'Obligatorio';
-    this.entityId = _.isEmpty(activity) ? groupId : activity._id;
 
-    this.groupsSelected = {};
+    this.groupsSelected = {
+      [groupId]: true,
+    };
     if (_.isArray(activity.groups) && activity.groups.length) {
       activity.groups.forEach((item) => {
         this.groupsSelected[item] = true;
@@ -82,10 +82,8 @@ export default class ActivityForm extends Component {
       this.setState(newState);
     } else {
       const groups = Object.keys(this.groupsSelected).filter(groupId => this.groupsSelected[groupId]);
-      _.assign(data, {
-        groups,
-      });
-      this.props.action(this.entityId, data);
+      _.assign(data, { groups });
+      this.props.action(data);
     }
   }
 
@@ -105,7 +103,7 @@ export default class ActivityForm extends Component {
       <DatePicker name="date" floatingLabelText="Fecha" fullWidth onChange={this.handleInputChange} autoOk defaultDate={new Date(data.date)} />
       <br />
       { hasUserPermission(PERMISSIONS.groupSettings, selectedRole) ?
-        <ListGroupsSettings location={location} onChange={this.onGroupChange} groups={this.groupsSelected} /> : null }
+        <ListGroupsSettings location={location} onChange={this.onGroupChange} groups={this.groupsSelected} groupId={groupId} /> : null }
       <br />
       <RaisedButton label="Guardar" primary fullWidth onTouchTap={this.handleSubmit} />
       <br />
