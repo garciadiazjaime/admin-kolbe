@@ -18,7 +18,7 @@ class ActivityEdit extends Component {
 
   componentDidMount() {
     const { dispatch, params } = this.props;
-    dispatch(getActivity(params.groupId, params.activityId));
+    dispatch(getActivity(params.activityId));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,20 +28,22 @@ class ActivityEdit extends Component {
     }
   }
 
-  actionHandler(activityId, data) {
+  actionHandler(data) {
     const { dispatch, params } = this.props;
-    dispatch(updateActivity(params.groupId, activityId, data));
+    dispatch(updateActivity(params.activityId, data));
   }
 
   render() {
-    const { activity, lastUpdated } = this.props;
+    const { activity, lastUpdated, location, selectedRole, params } = this.props;
     return _.isEmpty(activity) ? <LinearProgress mode="indeterminate" /> : (<div>
       <ActivityForm
         action={this.actionHandler}
-        groupId={activity.groupId}
+        groupId={params.groupId}
         activity={activity}
         lastUpdated={lastUpdated}
         title="Editar Actividad"
+        location={location}
+        selectedRole={selectedRole}
       />
     </div>);
   }
@@ -52,6 +54,8 @@ ActivityEdit.propTypes = {
   dispatch: PropTypes.func.isRequired,
   activity: PropTypes.shape({}),
   lastUpdated: PropTypes.number,
+  location: PropTypes.shape({}).isRequired,
+  selectedRole: PropTypes.number.isRequired,
 };
 
 ActivityEdit.defaultProps = {

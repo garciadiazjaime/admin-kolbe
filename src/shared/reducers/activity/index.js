@@ -30,7 +30,6 @@ function activity(state = {
         isProcessing: false,
         didInvalidate: false,
         lastUpdated: action.receivedAt,
-        groupId: action.groupId,
       });
     default:
       return state;

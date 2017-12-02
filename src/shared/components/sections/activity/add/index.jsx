@@ -15,24 +15,26 @@ class AcitivityAdd extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { params, lastUpdated } = nextProps;
+    const { selectedGroup, lastUpdated } = nextProps;
     if (lastUpdated) {
-      browserHistory.push(`/group/${params.groupId}/activity?success`);
+      browserHistory.push(`/group/${selectedGroup}/activity?success`);
     }
   }
 
-  actionHandler(groupId, data) {
+  actionHandler(data) {
     const { dispatch } = this.props;
-    dispatch(saveActivity(groupId, data));
+    dispatch(saveActivity(data));
   }
 
   render() {
-    const { params } = this.props;
+    const { selectedGroup, location, selectedRole } = this.props;
     return (<div>
       <ActivityForm
         action={this.actionHandler}
-        groupId={params.groupId}
+        groupId={selectedGroup}
         title="Agregar Actividad"
+        location={location}
+        selectedRole={selectedRole}
       />
     </div>);
   }
@@ -40,8 +42,10 @@ class AcitivityAdd extends Component {
 
 AcitivityAdd.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  params: PropTypes.shape({}).isRequired,
   lastUpdated: PropTypes.number,
+  location: PropTypes.shape({}).isRequired,
+  selectedRole: PropTypes.number.isRequired,
+  selectedGroup: PropTypes.string.isRequired,
 };
 
 AcitivityAdd.defaultProps = {

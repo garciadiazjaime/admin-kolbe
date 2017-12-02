@@ -10,6 +10,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { ContentClear } from 'material-ui/svg-icons';
 import LinearProgress from 'material-ui/LinearProgress';
 import Subheader from 'material-ui/Subheader';
+import { hasUserPermission, PERMISSIONS } from '../../../utils/roleUtil';
+
+import ListGroupsSettings from '../../elements/listGroupsSettings';
 
 export default class ActivityForm extends Component {
 
@@ -18,7 +21,6 @@ export default class ActivityForm extends Component {
     const { groupId, activity } = this.props;
     const initData = _.isEmpty(activity) ? {
       date: new Date(),
-      groupId,
     } : activity;
     this.state = {
       data: initData,
@@ -27,8 +29,21 @@ export default class ActivityForm extends Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.onGroupChange = this.onGroupChange.bind(this);
     this.invalidText = 'Obligatorio';
-    this.entityId = _.isEmpty(activity) ? groupId : activity._id;
+
+    this.groupsSelected = {
+      [groupId]: true,
+    };
+    if (_.isArray(activity.groups) && activity.groups.length) {
+      activity.groups.forEach((item) => {
+        this.groupsSelected[item] = true;
+      });
+    }
+  }
+
+  onGroupChange(groupId, __, isInputChecked) {
+    this.groupsSelected[groupId] = isInputChecked;
   }
 
   handleInputChange(event, newDate) {
@@ -66,12 +81,14 @@ export default class ActivityForm extends Component {
     if (!isReady) {
       this.setState(newState);
     } else {
-      this.props.action(this.entityId, data);
+      const groups = Object.keys(this.groupsSelected).filter(groupId => this.groupsSelected[groupId]);
+      _.assign(data, { groups });
+      this.props.action(data);
     }
   }
 
   render() {
-    const { isProcessing, groupId, title } = this.props;
+    const { isProcessing, groupId, title, location, selectedRole } = this.props;
     const { data, valid, touch } = this.state;
     return (<div>
       <Link to={`/group/${groupId}/activity`} className="pull-right">
@@ -84,6 +101,9 @@ export default class ActivityForm extends Component {
       <TextField name="description" floatingLabelText="Descripción" floatingLabelFixed multiLine rows={4} fullWidth onChange={this.handleInputChange} errorText={!valid.description && touch.description ? this.invalidText : null} defaultValue={data.description} />
       <br />
       <DatePicker name="date" floatingLabelText="Fecha" fullWidth onChange={this.handleInputChange} autoOk defaultDate={new Date(data.date)} />
+      <br />
+      { hasUserPermission(PERMISSIONS.groupSettings, selectedRole) ?
+        <ListGroupsSettings location={location} onChange={this.onGroupChange} groups={this.groupsSelected} groupId={groupId} /> : null }
       <br />
       <RaisedButton label="Guardar" primary fullWidth onTouchTap={this.handleSubmit} />
       <br />
@@ -98,6 +118,8 @@ ActivityForm.propTypes = {
   action: PropTypes.func.isRequired,
   groupId: PropTypes.string,
   title: PropTypes.string.isRequired,
+  location: PropTypes.shape({}).isRequired,
+  selectedRole: PropTypes.number.isRequired,
 };
 
 ActivityForm.defaultProps = {

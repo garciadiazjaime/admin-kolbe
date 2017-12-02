@@ -26,35 +26,34 @@ function savingActivity() {
   };
 }
 
-function activitySaved(groupId) {
+function activitySaved() {
   return {
     type: ACTIVITY_SAVED,
     receivedAt: Date.now(),
-    groupId,
   };
 }
 
-function getActivityHelper(groupId, activityId) {
+function getActivityHelper(activityId) {
   return (dispatch) => {
     dispatch(requestActivity());
-    return RequestUtil.get(`${constants.apiUrl}/group/${groupId}/activity/${activityId}`)
+    return RequestUtil.get(`${constants.apiUrl}/activity/${activityId}`)
       .then(response => dispatch(activityReceived(response)));
   };
 }
 
-function saveActivityHelper(groupId, data) {
+function saveActivityHelper(data) {
   return (dispatch) => {
     dispatch(savingActivity());
-    return RequestUtil.post(`${constants.apiUrl}/group/${groupId}/activity`, data)
-      .then(() => dispatch(activitySaved(groupId)));
+    return RequestUtil.post(`${constants.apiUrl}/activity`, data)
+      .then(() => dispatch(activitySaved()));
   };
 }
 
-function updateActivityHelper(groupId, activityId, data) {
+function updateActivityHelper(activityId, data) {
   return (dispatch) => {
     dispatch(savingActivity());
-    return RequestUtil.put(`${constants.apiUrl}/group/${groupId}/activity/${activityId}`, data)
-      .then(() => dispatch(activitySaved(data.groupId)));
+    return RequestUtil.put(`${constants.apiUrl}/activity/${activityId}`, data)
+      .then(() => dispatch(activitySaved()));
   };
 }
 
@@ -63,28 +62,28 @@ function shouldProccessActivity(state) {
   return activity.isProcessing !== true;
 }
 
-export function getActivity(groupId, activityId) {
+export function getActivity(activityId) {
   return (dispatch, getState) => {
     if (shouldProccessActivity(getState())) {
-      return dispatch(getActivityHelper(groupId, activityId));
+      return dispatch(getActivityHelper(activityId));
     }
     return null;
   };
 }
 
-export function saveActivity(groupId, data) {
+export function saveActivity(data) {
   return (dispatch, getState) => {
     if (shouldProccessActivity(getState())) {
-      return dispatch(saveActivityHelper(groupId, data));
+      return dispatch(saveActivityHelper(data));
     }
     return null;
   };
 }
 
-export function updateActivity(groupId, activityId, data) {
+export function updateActivity(activityId, data) {
   return (dispatch, getState) => {
     if (shouldProccessActivity(getState())) {
-      return dispatch(updateActivityHelper(groupId, activityId, data));
+      return dispatch(updateActivityHelper(activityId, data));
     }
     return null;
   };
