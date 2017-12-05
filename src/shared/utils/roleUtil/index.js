@@ -2,7 +2,7 @@ export const PERMISSIONS = {
   groupSettings: 'group_settings',
 };
 
-const ROLES = {
+export const ROLES = {
   level: 1,
   group: 2,
   parent: 3,
