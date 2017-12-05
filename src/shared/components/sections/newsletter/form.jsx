@@ -11,6 +11,8 @@ import { ContentClear } from 'material-ui/svg-icons';
 import LinearProgress from 'material-ui/LinearProgress';
 import Subheader from 'material-ui/Subheader';
 
+import style from './style.scss';
+
 export default class ActivityForm extends Component {
 
   constructor(args) {
@@ -72,7 +74,7 @@ export default class ActivityForm extends Component {
   render() {
     const { isProcessing, groupId, title } = this.props;
     const { data, valid, touch } = this.state;
-    return (<div>
+    return (<div className={style.container}>
       <Link to={`/group/${groupId}/newsletter`} className="pull-right">
         <ContentClear />
       </Link>

@@ -103,7 +103,7 @@ export default class ActivityForm extends Component {
   render() {
     const { isProcessing, groupId, title } = this.props;
     const { data, valid, touch } = this.state;
-    return (<div>
+    return (<div className={style.container}>
       <Link to={`/group/${groupId}/document`} className="pull-right">
         <ContentClear />
       </Link>

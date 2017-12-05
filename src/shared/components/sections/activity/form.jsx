@@ -11,8 +11,10 @@ import { ContentClear } from 'material-ui/svg-icons';
 import LinearProgress from 'material-ui/LinearProgress';
 import Subheader from 'material-ui/Subheader';
 import { hasUserPermission, PERMISSIONS } from '../../../utils/roleUtil';
-
 import ListGroupsSettings from '../../elements/listGroupsSettings';
+
+import style from './style.scss';
+
 
 export default class ActivityForm extends Component {
 
@@ -90,7 +92,7 @@ export default class ActivityForm extends Component {
   render() {
     const { isProcessing, groupId, title, location, selectedRole } = this.props;
     const { data, valid, touch } = this.state;
-    return (<div>
+    return (<div className={style.container}>
       <Link to={`/group/${groupId}/activity`} className="pull-right">
         <ContentClear />
       </Link>
