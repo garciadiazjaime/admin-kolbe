@@ -7,3 +7,4 @@ static/js
 build
 static/libs/
 static/css/screen*
+static/static

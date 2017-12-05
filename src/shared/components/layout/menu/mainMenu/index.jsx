@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 
 import constants from '../../../../../constants';
 import LocationContainer from '../../../../containers/location';
+import { ROLES } from '../../../../utils/roleUtil';
 
 import style from './style.scss';
 
@@ -18,7 +19,7 @@ class Menu extends Component {
   }
 
   getTitle() {
-    const { location } = this.props;
+    const { location, selectedLocation, selectedRole, selectedParent, selectedSchool } = this.props;
     const { groupById, groupId } = this.props;
     const title = [constants.appTitle];
 
@@ -29,7 +30,14 @@ class Menu extends Component {
       title.push(groupById[groupId]);
     }
     const separator = title.length > 1 ? ' | ' : '';
-    return title.join(separator);
+
+    let url = '';
+    if (selectedRole === ROLES.parent) {
+      url = `/parent/${selectedParent}`;
+    } else {
+      url = selectedLocation ? `/location/${selectedLocation}` : `/school/${selectedSchool}`;
+    }
+    return (<Link to={url} className={style.title}>{title.join(separator)}</Link>);
   }
 
   menuClickHandler() {
